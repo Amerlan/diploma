@@ -27,6 +27,6 @@ class CreateDepartmentModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department_models');
+        Schema::dropIfExists('departments');
     }
 }

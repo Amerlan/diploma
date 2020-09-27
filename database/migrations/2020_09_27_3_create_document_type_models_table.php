@@ -27,6 +27,6 @@ class CreateDocumentTypeModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_type_models');
+        Schema::dropIfExists('document_types');
     }
 }
