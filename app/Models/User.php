@@ -2,39 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasFactory, Notifiable;
-
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @param string|array $roles
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
-
+    public function authorizeRoles($roles)
+    {
+        if (is_array($roles)) {
+            return $this->hasAnyRole($roles) ||
+                abort(401, 'This action is unauthorized.');
+        }
+        return $this->hasRole($roles) ||
+            abort(401, 'This action is unauthorized.');
+    }
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * Check multiple roles
+     * @param array $roles
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
+    public function hasAnyRole($roles)
+    {
+        return null !== $this->roles()->whereIn('role_name', $roles)->first();
+    }
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * Check one role
+     * @param string $role
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function hasRole($role)
+    {
+        return null !== $this->roles()->where('role_name', $role)->first();
+    }
 }
