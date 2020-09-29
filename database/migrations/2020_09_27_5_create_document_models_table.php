@@ -28,8 +28,8 @@ class CreateDocumentModelsTable extends Migration
 
 
             $table->foreign('document_type')->references('document_type')->on('document_types');
-            $table->foreign('executor_id')->references('user_id')->on('users');
-            $table->foreign('created_by')->references('user_id')->on('users');
+            $table->foreign('executor_id')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
