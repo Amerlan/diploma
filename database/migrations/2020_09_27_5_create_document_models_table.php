@@ -16,14 +16,16 @@ class CreateDocumentModelsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('document_id');
             $table->string('document_type', 100);
-            $table->string('status', 25);
+            $table->string('status', 25)->default('In process');
+            $table->unsignedSmallInteger('current_stage')->default(0);
             $table->foreignId('executor_id');
+            $table->foreignId('created_by');
             $table->boolean('is_rejected')->default(false);
             $table->dateTime('created_date', 0)->useCurrent();
             $table->dateTime('signed_date', 0)->nullable();
             $table->dateTime('last_change_date', 0)->useCurrent();
             $table->boolean('is_closed')->default(false);
-            $table->foreignId('created_by');
+
 
             $table->foreign('document_type')->references('document_type')->on('document_types');
             $table->foreign('executor_id')->references('user_id')->on('users');

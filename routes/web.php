@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
+use Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/doc_types', [DocumentTypeController::class, 'index']);
+Route::get('/doc_types/create_form', [DocumentTypeController::class, 'create'])->name('create_doctype');
+Route::post('/create', [DocumentTypeController::class, 'store'])->name('create');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
