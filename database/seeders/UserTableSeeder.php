@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
         $role_adminKafedri = Role::where('role_name', 'adminKafedri')->first();
 
         $admin = new User();
-        $admin->user_name = 'Admin Name';
+        $admin->name = 'Admin Name';
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('secret');
         $admin->dl_id = 23001;
@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach($role_admin);
 
         $zafKafedroi = new User();
-        $zafKafedroi->user_name = 'zafKafedroi Name';
+        $zafKafedroi->name = 'zafKafedroi Name';
         $zafKafedroi->email = 'zafKafedroi@example.com';
         $zafKafedroi->password = bcrypt('secret');
         $zafKafedroi->dl_id = 23002;
@@ -43,7 +43,7 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->roles()->attach($role_zafKafedroi);
 
         $adminKafedri = new User();
-        $adminKafedri->user_name = 'adminKafedri Name';
+        $adminKafedri->name = 'adminKafedri Name';
         $adminKafedri->email = 'adminKafedri@example.com';
         $adminKafedri->password = bcrypt('secret');
         $adminKafedri->dl_id = 23003;
@@ -55,7 +55,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->roles()->attach($role_adminKafedri);
 
         $teacher = new User();
-        $teacher->user_name = 'Teacher Name';
+        $teacher->name = 'Teacher Name';
         $teacher->email = 'teacher@example.com';
         $teacher->password = bcrypt('secret');
         $teacher->dl_id = 23004;
@@ -67,7 +67,7 @@ class UserTableSeeder extends Seeder
         $teacher->roles()->attach($role_teacher);
 
         $student = new User();
-        $student->user_name = 'Student Name';
+        $student->name = 'Student Name';
         $student->email = 'student@example.com';
         $student->password = bcrypt('secret');
         $student->dl_id = 23005;
