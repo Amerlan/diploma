@@ -12,6 +12,8 @@ class DocumentTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         $docs = DocumentTypes::all();

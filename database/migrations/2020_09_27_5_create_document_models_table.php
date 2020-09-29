@@ -16,8 +16,8 @@ class CreateDocumentModelsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('document_id');
             $table->string('document_type', 100);
-            $table->string('status', 25)->default('In process');
-            $table->unsignedSmallInteger('current_stage')->default(0);
+//            $table->string('status', 25)->default('Waiting for sign');
+            $table->unsignedSmallInteger('current_stage')->default(1);
             $table->foreignId('executor_id');
             $table->foreignId('created_by');
             $table->boolean('is_rejected')->default(false);

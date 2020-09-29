@@ -3,7 +3,7 @@
     <title> Document types</title>
 </head>
 <body>
-<form action="{{URL::to('/create')}}" method="POST">
+<form action="{{route('create_doctype')}}" method="POST">
     @csrf
     <p>Document type: <input type="text" name="doc_type"></p>
         <p>Stage count: <input type="text" name="stage_count"></p>
