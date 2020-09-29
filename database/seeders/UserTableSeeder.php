@@ -18,35 +18,14 @@ class UserTableSeeder extends Seeder
         $role_zafKafedroi = Role::where('role_name', 'zafKafedroi')->first();
         $role_adminKafedri = Role::where('role_name', 'adminKafedri')->first();
 
-        $student = new User();
-        $student->user_name = 'Student Name';
-        $student->email = 'student@example.com';
-        $student->password = bcrypt('secret');
-        $student->dl_id = 23001;
-        $student->dl_mail = '23001@iitu.kz';
-        //$student->department = 1;
-        //$student->user_role = 2;
-        $student->save();
-        $student->roles()->attach($role_student);
-
-        $teacher = new User();
-        $teacher->user_name = 'Teacher Name';
-        $teacher->email = 'teacher@example.com';
-        $teacher->password = bcrypt('secret');
-        $teacher->dl_id = 23002;
-        $teacher->dl_mail = '23002@iitu.kz';
-        //$teacher->department = 2;
-        //$teacher->user_role = 3;
-        $teacher->save();
-        $teacher->roles()->attach($role_teacher);
-
         $admin = new User();
         $admin->user_name = 'Admin Name';
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('secret');
-        $admin->dl_id = 23003;
-        $admin->dl_mail = '23003@iitu.kz';
-        //$admin->department = 3;
+        $admin->dl_id = 23001;
+        $admin->dl_mail = '23001@iitu.kz';
+        $admin->user_priority = 1;
+        //$admin->department = 1;
         //$admin->user_role = 1;
         $admin->save();
         $admin->roles()->attach($role_admin);
@@ -55,10 +34,11 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->user_name = 'zafKafedroi Name';
         $zafKafedroi->email = 'zafKafedroi@example.com';
         $zafKafedroi->password = bcrypt('secret');
-        $zafKafedroi->dl_id = 23004;
-        $zafKafedroi->dl_mail = '23004@iitu.kz';
-        //$zafKafedroi->department = 5;
-        //$zafKafedroi->user_role = 4;
+        $zafKafedroi->dl_id = 23002;
+        $zafKafedroi->dl_mail = '23002@iitu.kz';
+        $zafKafedroi->user_priority = 2;
+        //$zafKafedroi->department = 2;
+        //$zafKafedroi->user_role = 2;
         $zafKafedroi->save();
         $zafKafedroi->roles()->attach($role_zafKafedroi);
 
@@ -66,11 +46,37 @@ class UserTableSeeder extends Seeder
         $adminKafedri->user_name = 'adminKafedri Name';
         $adminKafedri->email = 'adminKafedri@example.com';
         $adminKafedri->password = bcrypt('secret');
-        $adminKafedri->dl_id = 23005;
-        $adminKafedri->dl_mail = '23005@iitu.kz';
-        //$adminKafedri->department = 4;
-        //$adminKafedri->user_role = 5;
+        $adminKafedri->dl_id = 23003;
+        $adminKafedri->dl_mail = '23003@iitu.kz';
+        $adminKafedri->user_priority = 3;
+        //$adminKafedri->department = 3;
+        //$adminKafedri->user_role = 3;
         $adminKafedri->save();
         $adminKafedri->roles()->attach($role_adminKafedri);
+
+        $teacher = new User();
+        $teacher->user_name = 'Teacher Name';
+        $teacher->email = 'teacher@example.com';
+        $teacher->password = bcrypt('secret');
+        $teacher->dl_id = 23004;
+        $teacher->dl_mail = '23004@iitu.kz';
+        $teacher->user_priority = 4;
+        //$teacher->department = 4;
+        //$teacher->user_role = 4;
+        $teacher->save();
+        $teacher->roles()->attach($role_teacher);
+
+        $student = new User();
+        $student->user_name = 'Student Name';
+        $student->email = 'student@example.com';
+        $student->password = bcrypt('secret');
+        $student->dl_id = 23005;
+        $student->dl_mail = '23005@iitu.kz';
+        $student->user_priority = 5;
+        //$student->department = 5;
+        //$student->user_role = 5;
+        $student->save();
+        $student->roles()->attach($role_student);
+
     }
 }
