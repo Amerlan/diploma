@@ -14,6 +14,7 @@ class DocumentTypeSeeder extends Seeder
      */
     public function run()
     {
+        // Test different types of documents
         $doctype = new DocumentTypes();
         $doctype->document_type = 'Тип 1';
         $doctype->stageCount = 2;
