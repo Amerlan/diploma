@@ -2,28 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Documents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentController extends Controller
 {
-    // Displays all documents
-    public function index()
-    {
-        return view('documents_list');
+
+    // Просмотр всех заявок
+    public function all(Request $request){
+        if ($request->user()){
+            if ($request->user()->authorizeRoles(['admin'])){
+                return DB::table('documents')->orderBy('created_date')->get()->all();
+            }
+        }
+        else{
+            return None;
+        }
     }
 
-
-    // Creates a new document
+    // Shows page with creating new document form
     public function create()
     {
-        //
+        //return view('documents_create');
     }
 
 
-    // Need to change for private function.
+    // Stores a new document in DB.
     public function store(Request $request)
     {
-        //
+        $document = new Documents();
+        $document->document_type = $request->type;
+        $document->executor_id = $request->executor;
+        $document->created_by = $request->user()->id;
     }
 
 

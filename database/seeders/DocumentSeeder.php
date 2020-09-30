@@ -41,5 +41,37 @@ class DocumentSeeder extends Seeder
         $document->executor_id = 2;
         $document->created_by = 4;
         $document->save();
+
+
+        // FOR REJECT AND CLOSE blades
+        $document = new Documents();
+        $document->document_type = 'Тип 2';
+        $document->executor_id = 4;
+        $document->created_by = 5;
+        $document->is_rejected = True;
+        $document->save();
+
+        // Teacher created doc. Admin Kafedry must sign
+        $document = new Documents();
+        $document->document_type = 'Тип 3';
+        $document->executor_id = 3;
+        $document->created_by = 4;
+        $document->is_rejected = True;
+        $document->save();
+
+        // Teacher created doc. Zav Kafedry must sign
+        $document = new Documents();
+        $document->document_type = 'Тип 2';
+        $document->executor_id = 2;
+        $document->created_by = 4;
+        $document->is_closed = True;
+        $document->save();
+
+        $document = new Documents();
+        $document->document_type = 'Тип 1';
+        $document->executor_id = 2;
+        $document->created_by = 5;
+        $document->is_closed = True;
+        $document->save();
     }
 }
