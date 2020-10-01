@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DocumentTypes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentTypeController extends Controller
 {
@@ -25,9 +26,13 @@ class DocumentTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('doctypes_create');
+        if ($request->user()){
+            if ($request->user()->authorizeRoles(['admin'])) {
+                return view('doctypes_create');
+            }
+        }
     }
 
     /**
@@ -38,12 +43,20 @@ class DocumentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $new_doc = new DocumentTypes;
-        $new_doc->document_type = $request->doc_type;
-        $new_doc->stageCount = $request->stage_count;
-        $new_doc->document_priority = $request->priority;
-        $new_doc->save();
-        return $this->index();
+        if ($request->user()){
+            if ($request->user()->authorizeRoles(['admin'])){
+                $new_doc = new DocumentTypes;
+                $new_doc->document_type = $request->doc_type;
+                $new_doc->stageCount = $request->stage_count;
+                $new_doc->document_priority = $request->priority;
+                $new_doc->save();
+                return $this->index();
+            }
+        }
+        else{
+            return None;
+        }
+
     }
 
 
