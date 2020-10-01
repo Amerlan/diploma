@@ -37,9 +37,9 @@ Route::get('/signed_from', [UserController::class, 'signed_from'])->name('sign_f
 Route::get('/ongoing_from', [UserController::class, 'ongoing_from'])->name('ongoing_out'); // Documents that user need to sign
 Route::get('/rejected_from', [UserController::class, 'rejected_from'])->name('rejected_from'); // Documents where user got reject
 
-Route::post('/sign/{doc_id}', [UserController::class, 'toSign'])->name('sign');
-Route::post('/reject/{doc_id}', [UserController::class, 'toReject'])->name('reject');
-Route::post('/return/{doc_id', [UserController::class, 'toReturn'])->name('return');
+Route::get('/sign/{doc_id}', [UserController::class, 'toSign'])->name('sign');
+Route::get('/reject/{doc_id}', [UserController::class, 'toReject'])->name('reject');
+Route::get('/return/{doc_id}', [UserController::class, 'toReturn'])->name('return');
 
 // For ADMIN only
 Route::get('/all', [DocumentController::class, 'all']);
