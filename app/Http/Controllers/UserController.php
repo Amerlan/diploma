@@ -7,28 +7,60 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    // Displays all documents that user have created
-    public function rejected(Request $request)
+    // Displays all documents that user have rejected
+    public function rejected_by(Request $request)
     {
         $user_id =  $request->user()->id;
-        return DB::table('documents')->where([['created_by', $user_id], ['is_rejected', True]])->get();
-//        return view('');
+        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_rejected', True]])->get();
+        //return $documents;
+        return view('document_list', compact('documents'));
+    }
+
+    // Displays all documents that user wait for signing from other
+    public function ongoing_by(Request $request)
+    {
+        $user_id =  $request->user()->id;
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
+            ['is_rejected', False]])->get();
+        //return $documents;
+        return view('document_list', compact('documents'));
+    }
+
+    // Displays all documents that user have signed
+    public function signed_by(Request $request)
+    {
+        $user_id =  $request->user()->id;
+        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_closed', True]])->get();
+        return view('document_list', compact('documents'));
+    }
+
+
+
+    // Displays all documents where user got reject
+    public function rejected_from(Request $request)
+    {
+        $user_id =  $request->user()->id;
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_rejected', True]])->get();
+        //return $documents;
+        return view('document_list', compact('documents'));
     }
 
     // Displays all documents that user need to sign
-    public function ongoing(Request $request)
+    public function ongoing_from(Request $request)
     {
         $user_id =  $request->user()->id;
-        return DB::table('documents')->where([['executor_id', $user_id], ['is_closed', False],
+        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_closed', False],
             ['is_rejected', False]])->get();
-//        return view('');
+        //return $documents;
+        return view('document_list', compact('documents'));
     }
 
-    public function signed(Request $request)
+    // Documents that were signed by other
+    public function signed_from(Request $request)
     {
         $user_id =  $request->user()->id;
-        return DB::table('documents')->where([['executor_id', $user_id], ['is_closed', True]])->get();
-//        return view('');
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])->get();
+        return view('document_list', compact('documents'));
     }
 
     public function toSign(Request $request, $doc_id)
