@@ -11,7 +11,12 @@ class UserController extends Controller
     public function rejected_by(Request $request)
     {
         $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_rejected', True]])->get();
+        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_rejected', True]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         //return $documents;
         return view('document_list', compact('documents'));
     }
@@ -21,7 +26,12 @@ class UserController extends Controller
     {
         $user_id =  $request->user()->id;
         $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
-            ['is_rejected', False]])->get();
+            ['is_rejected', False]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         //return $documents;
         return view('document_list', compact('documents'));
     }
@@ -30,7 +40,12 @@ class UserController extends Controller
     public function signed_by(Request $request)
     {
         $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_closed', True]])->get();
+        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_closed', True]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         return view('document_list', compact('documents'));
     }
 
@@ -40,7 +55,12 @@ class UserController extends Controller
     public function rejected_from(Request $request)
     {
         $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_rejected', True]])->get();
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_rejected', True]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         //return $documents;
         return view('document_list', compact('documents'));
     }
@@ -50,63 +70,72 @@ class UserController extends Controller
     {
         $user_id =  $request->user()->id;
         $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_closed', False],
-            ['is_rejected', False]])->get();
+            ['is_rejected', False]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         //return $documents;
-        return view('document_list', compact('documents'));
+        return view('ongoing', compact('documents'));
     }
 
     // Documents that were signed by other
     public function signed_from(Request $request)
     {
         $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])->get();
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
         return view('document_list', compact('documents'));
     }
 
     public function toSign(Request $request, $doc_id)
     {
         $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $doc_type = $document->get('document_type');
+        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
         $max_stage = DB::table('document_types')
             ->where('document_type', $doc_type)
-            ->get('stageCount'); // get Total amount of stages
-        $current_stage = $document->get('current_stage'); // get current stage
-
-        $document->update('current_stage', $current_stage+1); // increment our stage because of signing
-        $document->update('last_change_date', date("Y-m-d H:i:s"));
+            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
+        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
+        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
+        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
 
 //        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
 
         // check was it last stage?
         if ($max_stage == $current_stage){
             // if yes, close document
-            $document->update('is_closed', True);
-            $document->update('signed_date', date("Y-m-d H:i:s"));
+            $document->update(['is_closed' => True]);
+            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
         }
-        return redirect('/ongoing');
+        return redirect()->back();
     }
 
     public function toReject(Request $request, $doc_id)
     {
         $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
 
-        $document->update('current_stage', -1); // increment our stage because of signing
-        $document->update('last_change_date', date("Y-m-d H:i:s"));
-        $document->update('is_rejected', True);
+        $document->update(['current_stage' => -1]); // increment our stage because of signing
+        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
+        $document->update(['is_rejected' => True]);
 
-        return redirect('/ongoing');
+        return redirect()->back();
     }
 
     public function toReturn(Request $request, $doc_id)
     {
         $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $current_stage = $document->get('current_stage'); // get current stage
-        if (!($current_stage == 1)) {
-            $document->update('current_stage', $current_stage - 1);
+        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
+        if ($current_stage != 1) {
+            $document->update(['current_stage' => ($current_stage - 1)]);
         }
 //        $document->update('executor_id', $previous); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ИЗМЕНЕНИЯ НАЗАД.
 
-        return redirect('/ongoing');
+        return redirect()->back();
     }
 
     /**
