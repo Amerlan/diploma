@@ -20,6 +20,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('rejected_from')}}">Rejected from other</a>
             </li>
+
+        </ul>
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('document_form')}}">Create new document</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('doctype_form')}}">Create new document type</a>
+            </li>
         </ul>
 
     </div>

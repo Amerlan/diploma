@@ -16,15 +16,17 @@ class DocumentController extends Controller
                 return DB::table('documents')->orderBy('created_date')->get()->all();
             }
         }
-        else{
-            return None;
-        }
     }
 
     // Shows page with creating new document form
-    public function create()
+    public function create(Request $request)
     {
-        //return view('documents_create');
+        $user_id = $request->user()->id;
+        $user_role_id = DB::table('role_user')->where('user_id','=',$user_id)->get('role_id')[0]->role_id;
+        $types = DB::table('document_types')->get('document_type')->all();
+        $executors = DB::table('role_user')->where('role_id','<', $user_role_id)->
+            join('users', 'users.id', '=', 'role_user.user_id')->get(['user_id','name']);
+        return view('documents_create', compact(['types','executors']));
     }
 
 
@@ -32,9 +34,11 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $document = new Documents();
-        $document->document_type = $request->type;
-        $document->executor_id = $request->executor;
+        $document->document_type = $request->document_type;
+        $document->executor_id = $request->executor_id;
         $document->created_by = $request->user()->id;
+        $document->save();
+        return redirect('ongoing_by');
     }
 
 
