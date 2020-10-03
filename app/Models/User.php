@@ -31,7 +31,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
+    public function isAdmin()
+    {
+        return $this->roles()->where('role_id', 1)->first();
+    }
     /**
      * @param string|array $roles
      */
