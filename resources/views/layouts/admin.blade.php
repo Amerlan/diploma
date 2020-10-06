@@ -344,6 +344,7 @@
         $("#example1").DataTable({
             "responsive": true,
             "autoWidth": false,
+            "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]]
         });
         $('#example2').DataTable({
             "paging": true,
