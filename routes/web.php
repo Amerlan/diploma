@@ -20,7 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::redirect('/home', '/');
 
 
-Route::get('/doc_types', [DocumentTypeController::class, 'index']);
+Route::get('/doc_types', [DocumentTypeController::class, 'index'])->name('see_doctypes');
 
 Route::get('/doc_types/create_form', [DocumentTypeController::class, 'create'])->name('doctype_form');
 Route::post('/create_document_type', [DocumentTypeController::class, 'store'])->name('create_doctype');

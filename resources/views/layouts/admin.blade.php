@@ -245,6 +245,23 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                Document types
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('see_doctypes')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>See document types</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-header">EXIT</li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
