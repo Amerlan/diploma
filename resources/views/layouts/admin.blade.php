@@ -163,7 +163,7 @@
                     <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{ Auth::user()->email }}</a>
+                        <a href="#" class="d-block">{{ Auth::user()->email }}</a>
                 </div>
             </div>
             <!-- Sidebar Menu -->
@@ -268,9 +268,10 @@
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             <i class="nav-icon far fa-circle text-danger"></i>
-                            <p>{{ __('Logout') }}</p>
+                            {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
                         </form>
                     </li>
                 </ul>
