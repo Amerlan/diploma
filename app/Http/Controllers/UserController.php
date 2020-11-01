@@ -10,14 +10,13 @@ class UserController extends Controller
     // Displays all documents that user have rejected
     public function rejected_by(Request $request)
     {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['executor_id', $user_id], ['is_rejected', True]])
+        $user_role =  $request->user()->role_id;
+        $documents = DB::table('documents')->where([['executor_role_id', $user_role], ['is_rejected', True]])
             ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_id',
                 'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
                 'signed_date', 'last_change_date','is_closed']);
-        //return $documents;
+        return $documents;
         return view('document_list', compact('documents'));
     }
 
