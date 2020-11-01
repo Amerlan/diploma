@@ -29,6 +29,9 @@ class DocumentController extends Controller
     // Stores a new document in DB.
     public function store(Request $request)
     {
+        return DB::table('document_types')->
+        where('document_type', $request->document_type)->get('executor_role_id')[0];
+        
         $document = new Documents();
         $document->document_type = $request->document_type;
         $executor_role = DB::table('document_types')->
