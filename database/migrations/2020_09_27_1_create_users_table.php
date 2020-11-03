@@ -23,10 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('dl_mail')->unique();
             //$table->unsignedTinyInteger('department');
             $table->unsignedTinyInteger('user_priority')->default(5);
-            //$table->unsignedTinyInteger('user_role');
+            $table->foreignId('user_role');
             $table->timestamps();
             //$table->foreign('department')->references('dep_id')->on('departments');
-            //$table->foreign('user_role')->references('role_id')->on('roles');
+            $table->foreign('user_role')->references('id')->on('roles');
         });
     }
 

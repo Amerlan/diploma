@@ -21,7 +21,8 @@ class DocumentController extends Controller
     // Shows page with creating new document form
     public function create(Request $request)
     {
-        $types = DB::table('document_types')->get('document_type')->all();
+        $role = $request->user()->user_role;
+        $types = DB::table('document_types')->where([['executor_role', $role]])->get('document_type')->all();
         return view('documents_create', compact('types'));
     }
 
@@ -29,13 +30,12 @@ class DocumentController extends Controller
     // Stores a new document in DB.
     public function store(Request $request)
     {
-        return DB::table('document_types')->
-        where('document_type', $request->document_type)->get('executor_role_id')[0];
-        
         $document = new Documents();
         $document->document_type = $request->document_type;
-        $executor_role = DB::table('document_types')->
-                            where('document_type', $request->document_type)->get('executor_role_id')[0];
+        $executor_role = DB::table('document_types')
+                                ->where('document_type', '=',$request->document_type)
+                                ->get('executor_role')
+                                ->all()[0]->executor_role;
         $document->executor_role_id = $executor_role;
         $document->created_by = $request->user()->id;
         $document->save();

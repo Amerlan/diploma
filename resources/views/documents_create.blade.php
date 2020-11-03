@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>
-
+        Create a new document to sign.
     </title>
 </head>
 <body>
