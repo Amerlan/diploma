@@ -26,7 +26,7 @@ class UserTableSeeder extends Seeder
         $admin->dl_mail = '23001@iitu.kz';
         $admin->user_priority = 1;
         //$admin->department = 1;
-        //$admin->user_role = 1;
+        $admin->user_role = 1;
         $admin->save();
         $admin->roles()->attach($role_admin);
 
@@ -38,7 +38,7 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->dl_mail = '23002@iitu.kz';
         $zafKafedroi->user_priority = 2;
         //$zafKafedroi->department = 2;
-        //$zafKafedroi->user_role = 2;
+        $zafKafedroi->user_role = 2;
         $zafKafedroi->save();
         $zafKafedroi->roles()->attach($role_zafKafedroi);
 
@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->dl_mail = '23003@iitu.kz';
         $adminKafedri->user_priority = 3;
         //$adminKafedri->department = 3;
-        //$adminKafedri->user_role = 3;
+        $adminKafedri->user_role = 3;
         $adminKafedri->save();
         $adminKafedri->roles()->attach($role_adminKafedri);
 
@@ -62,7 +62,7 @@ class UserTableSeeder extends Seeder
         $teacher->dl_mail = '23004@iitu.kz';
         $teacher->user_priority = 4;
         //$teacher->department = 4;
-        //$teacher->user_role = 4;
+        $teacher->user_role = 4;
         $teacher->save();
         $teacher->roles()->attach($role_teacher);
 
@@ -74,7 +74,7 @@ class UserTableSeeder extends Seeder
         $student->dl_mail = '23005@iitu.kz';
         $student->user_priority = 5;
         //$student->department = 5;
-        //$student->user_role = 5;
+        $student->user_role = 5;
         $student->save();
         $student->roles()->attach($role_student);
 

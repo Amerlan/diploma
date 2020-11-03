@@ -17,28 +17,28 @@ class DocumentSeeder extends Seeder
         // Student created doc. Zav kafedroi must sign
         $document = new Documents();
         $document->document_type = 'Тип 1';
-        $document->executor_id = 2;
+        $document->executor_role_id = 4;
         $document->created_by = 5;
         $document->save();
 
         // Student created doc. Teacher must sign
         $document = new Documents();
         $document->document_type = 'Тип 2';
-        $document->executor_id = 4;
+        $document->executor_role_id = 2;
         $document->created_by = 5;
         $document->save();
 
         // Teacher created doc. Admin Kafedry must sign
         $document = new Documents();
         $document->document_type = 'Тип 3';
-        $document->executor_id = 3;
+        $document->executor_role_id = 3;
         $document->created_by = 4;
         $document->save();
 
         // Teacher created doc. Zav Kafedry must sign
         $document = new Documents();
         $document->document_type = 'Тип 2';
-        $document->executor_id = 2;
+        $document->executor_role_id = 2;
         $document->created_by = 4;
         $document->save();
 
@@ -46,7 +46,7 @@ class DocumentSeeder extends Seeder
         // FOR REJECT AND CLOSE blades
         $document = new Documents();
         $document->document_type = 'Тип 2';
-        $document->executor_id = 4;
+        $document->executor_role_id = 2;
         $document->created_by = 5;
         $document->current_stage = -1;
         $document->is_rejected = True;
@@ -55,7 +55,7 @@ class DocumentSeeder extends Seeder
 
         $document = new Documents();
         $document->document_type = 'Тип 3';
-        $document->executor_id = 3;
+        $document->executor_role_id = 3;
         $document->created_by = 5;
         $document->current_stage = -1;
         $document->is_rejected = True;
@@ -64,7 +64,7 @@ class DocumentSeeder extends Seeder
 
         $document = new Documents();
         $document->document_type = 'Тип 2';
-        $document->executor_id = 2;
+        $document->executor_role_id = 2;
         $document->created_by = 5;
         $document->current_stage = 4;
         $document->is_closed = True;
@@ -72,7 +72,7 @@ class DocumentSeeder extends Seeder
 
         $document = new Documents();
         $document->document_type = 'Тип 1';
-        $document->executor_id = 2;
+        $document->executor_role_id = 4;
         $document->created_by = 5;
         $document->current_stage = 2;
         $document->is_closed = True;

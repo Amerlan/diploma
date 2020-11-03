@@ -18,7 +18,7 @@ class CreateDocumentModelsTable extends Migration
             $table->string('document_type', 100);
 //            $table->string('status', 25)->default('Waiting for sign');
             $table->smallInteger('current_stage')->default(1);
-            $table->foreignId('executor_id');
+            $table->foreignId('executor_role_id');
             $table->foreignId('created_by');
             $table->boolean('is_rejected')->default(false);
             $table->dateTime('created_date', 0)->useCurrent();
@@ -28,7 +28,7 @@ class CreateDocumentModelsTable extends Migration
 
 
             $table->foreign('document_type')->references('document_type')->on('document_types');
-            $table->foreign('executor_id')->references('id')->on('users');
+            $table->foreign('executor_role_id')->references('executor_role')->on('document_types');
             $table->foreign('created_by')->references('id')->on('users');
         });
     }

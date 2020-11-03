@@ -24,19 +24,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Executor</label>
-                                <select class="form-control" name="executor_id">
-                                    @for($i = 0; $i < sizeof($executors); $i++)
-                                        <option value="{{$executors[$i]->user_id}}">{{$executors[$i]->name}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-footer">
                         <input type="submit" value="Submit" class="btn btn-primary">
                         <a class="btn btn-default float-right" href="{{URL::to('/')}}">Cancel</a>
