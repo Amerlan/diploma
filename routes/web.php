@@ -42,4 +42,6 @@ Route::get('/reject/{doc_id}', [UserController::class, 'toReject'])->name('rejec
 Route::get('/return/{doc_id}', [UserController::class, 'toReturn'])->name('return');
 
 // For ADMIN only
-Route::get('/all', [DocumentController::class, 'all']);
+Route::get('/all', [DocumentController::class, 'all'])->name('all');
+Route::get('/users_list', [UserController::class, 'all_users'])->name('users_list');
+Route::get('/roles_list', [UserController::class, 'all_roles'])->name('roles_list');

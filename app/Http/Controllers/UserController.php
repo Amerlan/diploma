@@ -7,6 +7,27 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    // Display all users for Admin
+    public function all_users(Request $request)
+    {
+        if ($request->user()) {
+            if ($request->user()->authorizeRoles(['admin'])) {
+                $users = DB::table('users')->get()->all();
+                return view('users_list', compact('users'));
+            }
+        }
+    }
+
+    public function all_roles(Request $request)
+    {
+        if ($request->user()) {
+            if ($request->user()->authorizeRoles(['admin'])) {
+                $roles = DB::table('roles')->get()->all();
+                return view('roles_list', compact('roles'));
+            }
+        }
+    }
+
     // Displays all documents that user have rejected
     public function rejected_by(Request $request)
     {

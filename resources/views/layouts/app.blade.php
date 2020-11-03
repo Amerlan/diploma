@@ -56,7 +56,8 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
+        @if(auth()->check())
+            @if(auth()->user()->isAdmin())
         <!-- Heading -->
         <div class="sidebar-heading">
             Параметры
@@ -71,7 +72,7 @@
             <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="add_user.html"><i class="fas fa-plus mr-2"></i>Добавить</a>
-                    <a class="collapse-item" href="list_users.html"><i class="fas fa-list mr-2"></i>Список</a>
+                    <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>Список</a>
                 </div>
             </div>
         </li>
@@ -85,7 +86,7 @@
             <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="add_role.html"><i class="fas fa-plus mr-2"></i>Добавить</a>
-                    <a class="collapse-item" href="list_roles.html"><i class="fas fa-list mr-2"></i>Список</a>
+                    <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>Список</a>
                 </div>
             </div>
         </li>
@@ -98,12 +99,15 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>Настроить</a>
+                    <a class="collapse-item" href="{{route('all')}}"><i class="fas fa-list mr-2"></i>Все документы</a>
                 </div>
             </div>
         </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
+            @endif
+        @endif
 
         <!-- Heading -->
         <div class="sidebar-heading">
