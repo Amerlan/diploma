@@ -47,6 +47,7 @@ class DocumentTypeController extends Controller
             if ($request->user()->authorizeRoles(['admin'])){
                 $new_doc = new DocumentTypes;
                 $new_doc->document_type = $request->doc_type;
+                $new_doc->executor_role = $request->exector_role;
                 $new_doc->stageCount = $request->stage_count;
                 $new_doc->document_priority = $request->priority;
                 $new_doc->save();

@@ -13,7 +13,13 @@ class DocumentController extends Controller
     public function all(Request $request){
         if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])){
-                return DB::table('documents')->orderBy('created_date')->get()->all();
+                $documents = DB::table('documents')
+                    ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+                    ->join('users AS executor', 'documents.executor_id', '=', 'executor.id')
+                    ->get(['document_id', 'document_type', 'current_stage', 'executor_id', 'executor.name as ename',
+                        'created_by', 'creator.name as cname', 'is_rejected', 'created_date',
+                        'signed_date', 'last_change_date','is_closed']);
+                return view('all_documents', compact('documents'));
             }
         }
     }
@@ -21,12 +27,9 @@ class DocumentController extends Controller
     // Shows page with creating new document form
     public function create(Request $request)
     {
-        $user_id = $request->user()->id;
-        $user_role_id = DB::table('role_user')->where('user_id','=',$user_id)->get('role_id')[0]->role_id;
-        $types = DB::table('document_types')->get('document_type')->all();
-        $executors = DB::table('role_user')->where('role_id','<', $user_role_id)->
-            join('users', 'users.id', '=', 'role_user.user_id')->get(['user_id','name']);
-        return view('documents_create', compact(['types','executors']));
+        $role = $request->user()->user_role;
+        $types = DB::table('document_types')->where([['executor_role', $role]])->get('document_type')->all();
+        return view('documents_create', compact('types'));
     }
 
 
@@ -35,7 +38,11 @@ class DocumentController extends Controller
     {
         $document = new Documents();
         $document->document_type = $request->document_type;
-        $document->executor_id = $request->executor_id;
+        $executor_role = DB::table('document_types')
+                                ->where('document_type', '=',$request->document_type)
+                                ->get('executor_role')
+                                ->all()[0]->executor_role;
+        $document->executor_role_id = $executor_role;
         $document->created_by = $request->user()->id;
         $document->save();
         return redirect('ongoing_by');
