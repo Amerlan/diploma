@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Документооборот Кафедры</title>
+    <title>@lang('messages.page_title')</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('design/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -51,7 +51,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="{{URL::to('/')}}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Панель меню</span></a>
+                <span>@lang('messages.menu_panel')</span></a>
         </li>
 
         <!-- Divider -->
@@ -59,19 +59,19 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Параметры
+            @lang('messages.parameters')
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
                 <i class="fas fa-users"></i>
-                <span>Пользователи</span>
+                <span>@lang('messages.users')</span>
             </a>
             <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_user.html"><i class="fas fa-plus mr-2"></i>Добавить</a>
-                    <a class="collapse-item" href="list_users.html"><i class="fas fa-list mr-2"></i>Список</a>
+                    <a class="collapse-item" href="add_user.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
+                    <a class="collapse-item" href="list_users.html"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
                 </div>
             </div>
         </li>
@@ -80,12 +80,12 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
                 <i class="fas fa-users-cog"></i>
-                <span>Роли</span>
+                <span>@lang('messages.roles')</span>
             </a>
             <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_role.html"><i class="fas fa-plus mr-2"></i>Добавить</a>
-                    <a class="collapse-item" href="list_roles.html"><i class="fas fa-list mr-2"></i>Список</a>
+                    <a class="collapse-item" href="add_role.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
+                    <a class="collapse-item" href="list_roles.html"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
                 </div>
             </div>
         </li>
@@ -93,11 +93,11 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-cogs"></i>
-                <span>Настройки документов</span>
+                <span>@lang('messages.doc_settings')</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>Настроить</a>
+                    <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>@lang('messages.customize')</a>
                 </div>
             </div>
         </li>
@@ -107,19 +107,19 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Документы
+            @lang('messages.documents')
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
                 <i class="fas fa-file-alt"></i>
-                <span>Мои документы</span>
+                <span>@lang('messages.my_documents')</span>
             </a>
             <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="create_document.html"><i class="fas fa-plus mr-2"></i>Создать документ</a>
-                    <a class="collapse-item" href="list_docuemnts.html"><i class="fas fa-list mr-2"></i>Список докуемнтов</a>
+                    <a class="collapse-item" href="create_document.html"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
+                    <a class="collapse-item" href="list_docuemnts.html"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
                 </div>
             </div>
         </li>
@@ -128,12 +128,12 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#proccessesPage" aria-expanded="true" aria-controls="proccessesPage">
                 <i class="fas fa-stream"></i>
-                <span>Процессы</span>
+                <span>@lang('messages.processes')</span>
             </a>
             <div id="proccessesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="create_process.html"><i class="fas fa-plus mr-2"></i>Создать процесс</a>
-                    <a class="collapse-item" href="list_processes.html"><i class="fas fa-list mr-2"></i>Список процессов</a>
+                    <a class="collapse-item" href="create_process.html"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                    <a class="collapse-item" href="list_processes.html"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
                 </div>
             </div>
         </li>
@@ -142,7 +142,7 @@
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Статистика</span></a>
+                <span>@lang('messages.statistics')</span></a>
         </li>
 
         <!-- Divider -->
@@ -173,7 +173,7 @@
                 <!-- Topbar Search -->
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Поиск" aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="@lang('messages.search')" aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
@@ -204,6 +204,28 @@
                             </form>
                         </div>
                     </li>
+
+
+                    <!-- Nav Item - Language menu-->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">@lang('messages.language_name')</span>
+                            <i class='fas fa-angle-down'></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="<?= route('setlocale', ['lang' => 'ru']) ?>">
+                                Русский(ru)
+                            </a>
+                            <a class="dropdown-item" href="<?= route('setlocale', ['lang' => 'en']) ?>">
+                                English(en)
+                            </a>
+                            <a class="dropdown-item" href="<?= route('setlocale', ['lang' => 'kz']) ?>">
+                                Қазақша(kz)
+                            </a>
+                        </div>
+                    </li>
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
 
                     <!-- Nav Item - Alerts -->
                     <li class="nav-item dropdown no-arrow mx-1">
@@ -256,7 +278,6 @@
                     </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
-
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
