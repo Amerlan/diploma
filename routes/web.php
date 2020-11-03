@@ -45,7 +45,9 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
     // For ADMIN only
-    Route::get('/all', [Controllers\DocumentController::class, 'all']);
+    Route::get('/all', [Controllers\DocumentController::class, 'all'])->name('all');;
+    Route::get('/users_list', [Controllers\UserController::class, 'all_users'])->name('users_list');
+    Route::get('/roles_list', [Controllers\UserController::class, 'all_roles'])->name('roles_list');
 });
 
 Route::get('setlocale/{lang}', function ($lang) {
