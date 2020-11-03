@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document_stages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -122,6 +123,17 @@ class UserController extends Controller
             $document->update(['signed_date' => date("Y-m-d H:i:s")]);
         }
 
+        // Затравочка на будущее
+//        $stages = new Document_stages();
+//        $stages->document_id = $doc_id;
+//        $stages->current_role_id = $request->user()->user_role - 1;
+//        $stages->signed_by = $request->user()->id;
+//        $stages->returned_by = null;
+//        $stages->rejected_by = null;
+//        $stages->comment = $request->comment;
+//        $stages->save();
+
+
         return redirect()->back();
     }
 
@@ -132,6 +144,16 @@ class UserController extends Controller
         $document->update(['current_stage' => -1]); // increment our stage because of signing
         $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
         $document->update(['is_rejected' => True]);
+
+        // Затравочка на будущее
+//        $stages = new Document_stages();
+//        $stages->document_id = $doc_id;
+//        $stages->current_role_id = $request->user()->user_role - 1;
+//        $stages->signed_by = null;
+//        $stages->returned_by = null;
+//        $stages->rejected_by = $request->user()->id;
+//        $stages->comment = $request->comment;
+//        $stages.save();
 
         return redirect()->back();
     }
@@ -144,6 +166,16 @@ class UserController extends Controller
             $document->update(['current_stage' => ($current_stage - 1)]);
         }
 //        $document->update('executor_id', $previous); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ИЗМЕНЕНИЯ НАЗАД.
+
+        // Затравочка на будущее
+//        $stages = new Document_stages();
+//        $stages->document_id = $doc_id;
+//        $stages->current_role_id = $request->user()->user_role - 1;
+//        $stages->signed_by = null;
+//        $stages->returned_by = $request->user()->id;
+//        $stages->rejected_by = null;
+//        $stages->comment = $request->comment;
+//        $stages.save();
 
         return redirect()->back();
     }

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document_stages extends Model
 {
-    use HasFactory;
+    public $timestamps = false;
 }
