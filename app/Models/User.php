@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name', 'email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -31,7 +31,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
+    public function isAdmin()
+    {
+        return $this->roles()->where('role_id', 1)->first();
+    }
     /**
      * @param string|array $roles
      */
