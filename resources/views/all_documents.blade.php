@@ -22,8 +22,8 @@
                 <tr>
                     <td>{{$document->document_id}}</td>
                     <td>{{$document->document_type}}</td>
-                    <td>{{$document->ename}} {{$document->executor_id}}</td>
-                    <td>{{$document->cname}} {{$document->created_by}}</td>
+                    <td>{{$document->executor_role}} {{$document->executor_role_id}}</td>
+                    <td>{{$document->name}} {{$document->created_by}}</td>
                     <td>{{$document->current_stage}}</td>
                     @if($document->is_rejected == 1) <td>Yes <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>No <i class="fas fa-circle" style="color:green"></i></td> @endif
                     <td>{{$document->created_date}}</td>

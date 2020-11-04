@@ -122,8 +122,8 @@
             </a>
             <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="create_document.html"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
-                    <a class="collapse-item" href="list_docuemnts.html"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+                    <a class="collapse-item" href="DOCUMENT TYPE???"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
+                    <a class="collapse-item" href="LIST OF DOCUMENT TYPES???"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
                 </div>
             </div>
         </li>
@@ -136,8 +136,8 @@
             </a>
             <div id="proccessesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="create_process.html"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
-                    <a class="collapse-item" href="list_processes.html"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
+                    <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                    <a class="collapse-item" href="ALL PROCESSES (ONLY FOR ADMIN)"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
                 </div>
             </div>
         </li>
