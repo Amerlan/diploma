@@ -1,20 +1,41 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-        @foreach($documents as $document)
-            <h3>doc id: {{$document->document_id}}</h3>
-            <h2>doc type: {{$document->document_type}}</h2>
-            <h4>executor role: {{$document->executor_role}} {{$document->executor_role_id}}</h4>
-            <h4>Initiator: {{$document->name}} {{$document->created_by}}</h4>
-            <h4>Current stage: {{$document->current_stage}}</h4>
-            <h4 style="@if($document->is_rejected)background-color:green; @else background-color:red; @endif">Is rejected: {{$document->is_rejected}}</h4>
-            <h5>Created date: {{$document->created_date}}</h5>
-            <h5>Signed date: {{$document->signed_date}}</h5>
-            <h5>Last change date: {{$document->last_change_date}}</h5>
-            <h4 style="@if($document->is_closed)background-color:green; @else background-color:red; @endif">Is closed: {{$document->is_closed}}</h4>
-            <a href="{{route('sign', ['doc_id'=>$document->document_id])}}"><h2>Sign</h2></a>
-            <a href="{{route('reject', ['doc_id'=>$document->document_id])}}"><h2>Reject</h2></a>
-            <a href="{{route('return', ['doc_id'=>$document->document_id])}}"><h2>Return</h2></a>
-            <hr>
-        @endforeach
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Document type</th>
+                <th>Executor id</th>
+                <th>Created By</th>
+                <th>Current Stage</th>
+                <th>Is rejected</th>
+                <th>Created date</th>
+                <th>Signed date</th>
+                <th>Last change date</th>
+                <th>Is closed</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($documents as $document)
+                <tr>
+                    <td>{{$document->document_id}}</td>
+                    <td>{{$document->document_type}}</td>
+                    <td>{{$document->executor_role}} {{$document->executor_role_id}}</td>
+                    <td>{{$document->name}} {{$document->created_by}}</td>
+                    <td>{{$document->current_stage}}</td>
+                    @if($document->is_rejected == 1) <td>Yes <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>No <i class="fas fa-circle" style="color:green"></i></td> @endif
+                    <td>{{$document->created_date}}</td>
+                    <td>{{$document->signed_date}}</td>
+                    <td>{{$document->last_change_date}}</td>
+                    @if($document->is_closed == 1) <td>Yes <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>No <i class="fas fa-circle" style="color:green"></i></td> @endif
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+    <!--<a href="{{route('sign', ['doc_id'=>$document->document_id])}}"><h2>Sign</h2></a>
+    <a href="{{route('reject', ['doc_id'=>$document->document_id])}}"><h2>Reject</h2></a>
+    <a href="{{route('return', ['doc_id'=>$document->document_id])}}"><h2>Return</h2></a>-->
 @endsection
