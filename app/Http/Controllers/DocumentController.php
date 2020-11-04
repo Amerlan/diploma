@@ -13,7 +13,7 @@ class DocumentController extends Controller
     public function all(Request $request){
         if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])){
-                DB::table('documents')
+                $documents = DB::table('documents')
                     ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
                     ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
                     ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
