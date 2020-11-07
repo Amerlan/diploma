@@ -11,19 +11,111 @@ class ProcessController extends Controller
     public function all(Request $request){
         if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])){
-                $documents = DB::table('processes')
-                    ->join('roles', 'roles.id', '=', 'processes.executor_role_id')
+                $processes = DB::table('processes')
                     ->join('users AS creator', 'processes.created_by', '=', 'creator.id')
-                    ->join('documents as docs', 'processes.document_id', '=', 'docs.document_id')
-                    ->get(['process_id', 'document_name', 'current_stage', 'executor_role_id',
-                        'roles.role_name as executor_role',
-                        'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                        'signed_date', 'last_change_date','is_closed']);
-                return view('all_documents', compact('documents'));
+                    ->join('documents as docs', 'processes.document_name', '=', 'docs.document_name')
+                    ->get(['process_id', 'docs.document_name', 'stageCount','creator.name as name', 'current_stage',
+                        'is_rejected', 'is_closed', 'created_date',
+                        'closed_date', 'last_change_date']);
+
+                return view('all_documents', compact('processes'));
             }
         }
     }
 
+    // Displays all documents that user have rejected
+    public function rejected_by(Request $request)
+    {
+        $role =  $request->user()->role_id;
+        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('document_list', compact('documents'));
+    }
+
+    // Displays all documents that user wait for signing from other
+    public function ongoing_by(Request $request)
+    {
+        $user_id =  $request->user()->id;
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
+            ['is_rejected', False]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('document_list', compact('documents'));
+    }
+
+    // Displays all documents that user have signed
+    public function signed_by(Request $request)
+    {
+        $role = $request->user()->user_role;
+        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_closed', True]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('document_list', compact('documents'));
+    }
+
+
+
+    // Displays all documents where user got reject
+    public function rejected_from(Request $request)
+    {
+        $role = $request->user()->user_role;
+        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('document_list', compact('documents'));
+    }
+
+    // Displays all documents that user need to sign
+    public function ongoing_from(Request $request)
+    {
+        $role = $request->user()->user_role;
+        $documents = DB::table('documents')->where([['executor_role_id', $role],
+            ['is_closed', False], ['is_rejected', False]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('ongoing', compact('documents'));
+    }
+
+    // Documents that were signed by other
+    public function signed_from(Request $request)
+    {
+        $user_id =  $request->user()->id;
+        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])
+            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
+            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
+            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                'roles.role_name as executor_role',
+                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
+                'signed_date', 'last_change_date','is_closed']);
+
+        return view('document_list', compact('documents'));
+    }
 
     public function index()
     {

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DocumentStagesSeeder extends Seeder
+class ProcessStagesSeeder extends Seeder
 {
     /**
      * Run the database seeds.

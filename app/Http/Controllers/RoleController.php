@@ -2,36 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DocumentTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DocumentTypeController extends Controller
+class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
+    public function all_roles(Request $request)
+    {
+        if ($request->user()) {
+            if ($request->user()->authorizeRoles(['admin'])) {
+                $roles = DB::table('roles')->get()->all();
+                return view('roles_list', compact('roles'));
+            }
+        }
+        return abort(401, 'Unauthorized request');
+    }
 
     public function index()
     {
-        $docs = DocumentTypes::all();
-        return view('doctypes', compact('docs'));
+        //
     }
 
-
-    public function create(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        if ($request->user()){
-            if ($request->user()->authorizeRoles(['admin'])) {
-                return view('doctypes_create');
-            }
-        }
-
-        return abort(401, 'Unauthorized request');
-
+        //
     }
 
     /**
@@ -42,20 +41,8 @@ class DocumentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->user()){
-            if ($request->user()->authorizeRoles(['admin'])){
-                $new_doc = new DocumentTypes;
-                $new_doc->document_type = $request->document_type;
-                $new_doc->save();
-                return $this->index();
-            }
-        }
-        else{
-            return abort(401, 'Unauthorized request');;
-        }
-
+        //
     }
-
 
     /**
      * Display the specified resource.

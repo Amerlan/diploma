@@ -14,19 +14,19 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        $status = new Status();
+        $status = new Statuses();
         $status->status = 'Ожидание';
         $status->save();
 
-        $status = new Status();
+        $status = new Statuses();
         $status->status = 'Подписано';
         $status->save();
 
-        $status = new Status();
+        $status = new Statuses();
         $status->status = 'Отказано';
         $status->save();
 
-        $status = new Status();
+        $status = new Statuses();
         $status->status = 'Возравщено на доработку';
         $status->save();
     }
