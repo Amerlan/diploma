@@ -21,11 +21,7 @@ class DocumentTypeController extends Controller
         return view('doctypes', compact('docs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(Request $request)
     {
         if ($request->user()){
@@ -33,6 +29,9 @@ class DocumentTypeController extends Controller
                 return view('doctypes_create');
             }
         }
+
+        return abort(401, 'Unauthorized request');
+
     }
 
     /**
@@ -46,10 +45,7 @@ class DocumentTypeController extends Controller
         if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])){
                 $new_doc = new DocumentTypes;
-                $new_doc->document_type = $request->doc_type;
-                $new_doc->executor_role = $request->exector_role;
-                $new_doc->stageCount = $request->stage_count;
-                $new_doc->document_priority = $request->priority;
+                $new_doc->document_type = $request->document_type;
                 $new_doc->save();
                 return $this->index();
             }

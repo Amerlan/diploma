@@ -17,6 +17,7 @@ class UserController extends Controller
                 return view('users_list', compact('users'));
             }
         }
+        return abort(401, 'Unauthorized request');
     }
 
     public function all_roles(Request $request)
@@ -27,6 +28,7 @@ class UserController extends Controller
                 return view('roles_list', compact('roles'));
             }
         }
+        return abort(401, 'Unauthorized request');
     }
 
     // Displays all documents that user have rejected

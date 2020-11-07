@@ -15,21 +15,15 @@ class CreateDocumentRolesTable extends Migration
     {
         Schema::create('document_roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_name');
-            $table->foreignId('role_id');
+            $table->string('document_name');
+            $table->bigInteger('role_id')->references('id')->on('roles');;
             $table->unsignedSmallInteger('sign_order');
 
             # foreign keys
-            $table->foreign('document_name')->references('documents')->on('document_name');
-
+            $table->foreign('document_name')->references('document_name')->on('documents');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('document_roles');

@@ -17,14 +17,13 @@ class CreateProcessStagesTable extends Migration
             $table->id();
             $table->foreignId('process_id');
             $table->unsignedSmallInteger('stage_number');
-            $table->string('status');
+            $table->string('status')->references('statuses')->on('status');;
             $table->foreignId('done_by')->nullable()->default(null);
             $table->dateTime('last_edited_date', 0)->useCurrent();
             $table->text('comment')->nullable();
 
             # foreign keys
-            $table->foreign('process_id')->references('processes')->on('process_id');
-            $table->foreign('status')->references('statuses')->on('status');
+            $table->foreign('process_id')->references('process_id')->on('processes');
             $table->foreign('done_by')->references('id')->on('users');
         });
     }
