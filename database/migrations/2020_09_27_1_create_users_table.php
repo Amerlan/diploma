@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('dl_id')->unique();
             $table->string('dl_mail')->unique();
             //$table->unsignedTinyInteger('department');
-            $table->unsignedTinyInteger('user_priority')->default(5);
             $table->foreignId('user_role');
             $table->timestamps();
             //$table->foreign('department')->references('dep_id')->on('departments');

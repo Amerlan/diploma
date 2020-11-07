@@ -24,25 +24,26 @@ class ProcessController extends Controller
     }
 
     // Displays all documents that user have rejected
-    public function rejected_by(Request $request)
+    public function user_processes(Request $request)
     {
-        $role =  $request->user()->role_id;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+        $user =  $request->user()->id;
+        $processes = DB::table('processes')->where([['created_by', $user]])
+            ->get(['process_id', 'document_name', 'current_stage',
+                'roles.role_name as executor_role', 'created_date',
+                'closed_date', 'last_change_date','is_rejected', 'is_closed'])
+            ->orderBy('is_closed', 'asc')
+            ->orderBy('is_rejected', 'asc');
 
+        return $processes;
         return view('document_list', compact('documents'));
     }
 
-    // Displays all documents that user wait for signing from other
-    public function ongoing_by(Request $request)
+    // Displays all INCOMING requests to sign
+    public function ongoing(Request $request)
     {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
+        $user_role =  $request->user()->role_id;
+        
+        $documents = DB::table('processes')->where([['created_by', $user_id], ['is_closed', False],
             ['is_rejected', False]])
             ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
             ->join('users AS creator', 'documents.created_by', '=', 'creator.id')

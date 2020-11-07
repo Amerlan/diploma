@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -19,17 +20,24 @@ use Auth;
 */
 Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Auth::routes();
+
+    # HOME PAGE
     Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
     Route::redirect('/home', '/');
 
-
+    # Get all document types (for admin only)
     Route::get('/doc_types', [Controllers\DocumentTypeController::class, 'index'])->name('see_doctypes');
 
+    # Create and insert Document Types
     Route::get('/doc_types/create_form', [Controllers\DocumentTypeController::class, 'create'])->name('doctype_form');
     Route::post('/create_document_type', [Controllers\DocumentTypeController::class, 'store'])->name('create_doctype');
 
+    # Create and insert Documents
     Route::get('documents/create_form', [Controllers\DocumentController::class, 'create'])->name('document_form');
     Route::post('/create_document', [Controllers\DocumentController::class, 'store'])->name('create_doc');
+
+    # Get User's Processes
+    Route::get('/my_processes', [Controller\ProcessController::class, 'user_processes'])->name('processes');
 
     // For all of roles but in the future need to change access
     Route::get('/signed_by', [Controllers\UserController::class, 'signed_by'])->name('sign_by'); // Documents that user wait for signing from other
@@ -45,7 +53,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
     // For ADMIN only
-    Route::get('/all', [Controllers\ProcessController::class, 'all'])->name('all');;
+    Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all');;
     Route::get('/users_list', [Controllers\UserController::class, 'all_users'])->name('users_list');
     Route::get('/roles_list', [Controllers\UserController::class, 'all_roles'])->name('roles_list');
 });
