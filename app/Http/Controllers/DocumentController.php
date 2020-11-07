@@ -13,10 +13,11 @@ class DocumentController extends Controller
     public function all(Request $request){
         if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])){
-                $documents = DB::table('documents')
-                    ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-                    ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-                    ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
+                $documents = DB::table('processes')
+                    ->join('roles', 'roles.id', '=', 'processes.executor_role_id')
+                    ->join('users AS creator', 'processes.created_by', '=', 'creator.id')
+                    ->join('documents as docs', 'processes.document_id', '=', 'docs.document_id')
+                    ->get(['process_id', 'document_name', 'current_stage', 'executor_role_id',
                         'roles.role_name as executor_role',
                         'created_by', 'creator.name as name', 'is_rejected', 'created_date',
                         'signed_date', 'last_change_date','is_closed']);
@@ -29,10 +30,13 @@ class DocumentController extends Controller
     public function create(Request $request)
     {
         $role = $request->user()->user_role;
-        $types = DB::table('document_types')->where([['executor_role', $role]])->get('document_type')->all();
+        #
+        $types = DB::table('document_types')
+            ->get('document_type')->all();
+//            ->where([['executor_role', $role]])
+
         return view('documents_create', compact('types'));
     }
-
 
     // Stores a new document in DB.
     public function store(Request $request)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentStagesTable extends Migration
+class CreateProcessStagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateDocumentStagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('document_stages', function (Blueprint $table) {
+        Schema::create('process_stages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_id');
+            $table->foreignId('process_id');
             $table->foreignId('current_role_id');
             $table->foreignId('signed_by')->nullable();
             $table->foreignId('returned_by')->nullable();

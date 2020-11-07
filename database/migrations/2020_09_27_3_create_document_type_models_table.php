@@ -15,7 +15,6 @@ class CreateDocumentTypeModelsTable extends Migration
     {
         Schema::create('document_types', function (Blueprint $table) {
             $table->string('document_type', 100)->primary();
-            $table->foreignId('executor_role');
             $table->unsignedSmallInteger('stageCount');
             $table->unsignedSmallInteger('document_priority');
 
