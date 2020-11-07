@@ -15,20 +15,19 @@ class CreateProcessesTable extends Migration
     {
         Schema::create('processes', function (Blueprint $table) {
             $table->bigIncrements('process_id');
-            $table->foreignId('document_id');
-            $table->foreignId('executor_role_id');
+            $table->string('document_name');
             $table->foreignId('created_by');
-            $table->smallInteger('current_stage')->default(1);
+            $table->unsignedSmallInteger('current_stage')->default(1);
             $table->boolean('is_rejected')->default(false);
-            $table->dateTime('last_change_date', 0)->useCurrent();
             $table->boolean('is_closed')->default(false);
+            $table->dateTime('last_change_date', 0)->useCurrent();
             $table->dateTime('created_date', 0)->useCurrent();
             $table->dateTime('closed_date', 0)->nullable();
 
-            $table->foreign('document_id')->references('document_id')->on('documents');
+            # foreign keys
+            $table->foreign('document_name')->references('document_name')->on('documents');
             $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('executor_role_id')->references('executor_role')->on('document_types');
-        });
+           });
     }
 
     /**

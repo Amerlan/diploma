@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentTypeModelsTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateDocumentTypeModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('document_types', function (Blueprint $table) {
-            $table->string('document_type', 100)->primary();
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->string('status')->primary();
         });
     }
 
@@ -25,6 +25,6 @@ class CreateDocumentTypeModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_types');
+        Schema::dropIfExists('statuses');
     }
 }

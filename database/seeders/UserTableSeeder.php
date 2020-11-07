@@ -24,7 +24,6 @@ class UserTableSeeder extends Seeder
         $admin->password = bcrypt('secret');
         $admin->dl_id = 23001;
         $admin->dl_mail = '23001@iitu.kz';
-        $admin->user_priority = 1;
         //$admin->department = 1;
         $admin->user_role = 1;
         $admin->save();
@@ -36,7 +35,6 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->password = bcrypt('secret');
         $zafKafedroi->dl_id = 23002;
         $zafKafedroi->dl_mail = '23002@iitu.kz';
-        $zafKafedroi->user_priority = 2;
         //$zafKafedroi->department = 2;
         $zafKafedroi->user_role = 2;
         $zafKafedroi->save();
@@ -48,7 +46,6 @@ class UserTableSeeder extends Seeder
         $adminKafedri->password = bcrypt('secret');
         $adminKafedri->dl_id = 23003;
         $adminKafedri->dl_mail = '23003@iitu.kz';
-        $adminKafedri->user_priority = 3;
         //$adminKafedri->department = 3;
         $adminKafedri->user_role = 3;
         $adminKafedri->save();
@@ -60,7 +57,6 @@ class UserTableSeeder extends Seeder
         $teacher->password = bcrypt('secret');
         $teacher->dl_id = 23004;
         $teacher->dl_mail = '23004@iitu.kz';
-        $teacher->user_priority = 4;
         //$teacher->department = 4;
         $teacher->user_role = 4;
         $teacher->save();
@@ -72,7 +68,6 @@ class UserTableSeeder extends Seeder
         $student->password = bcrypt('secret');
         $student->dl_id = 23005;
         $student->dl_mail = '23005@iitu.kz';
-        $student->user_priority = 5;
         //$student->department = 5;
         $student->user_role = 5;
         $student->save();

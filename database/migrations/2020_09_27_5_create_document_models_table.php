@@ -14,10 +14,9 @@ class CreateDocumentModelsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->bigIncrements('document_id');
+            $table->string('document_name', 100)->primary();
             $table->string('document_type', 100);
-            $table->string('document_name', 100)->unique();
-//            $table->string('status', 25)->default('Waiting for sign');
+            $table->unsignedSmallInteger('stageCount');
 
             # foreign keys
             $table->foreign('document_type')->references('document_type')->on('document_types');
