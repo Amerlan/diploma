@@ -99,7 +99,7 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>@lang('messages.customize')</a>
-                    <a class="collapse-item" href="{{route('all')}}"><i class="fas fa-list mr-2"></i>!!!Все документы</a>
+                    <a class="collapse-item" href="{{route('all')}}"><i class="fas fa-list mr-2"></i>@lang('messages.all_documents')</a>
                 </div>
             </div>
         </li>
@@ -132,7 +132,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statusesPage" aria-expanded="true" aria-controls="statusesPage">
                 <i class="fa fa-object-group"></i>
-                <span>Статусы документов</span>
+                <span>@lang('messages.doc_statuses')</span>
             </a>
             <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -259,7 +259,7 @@
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">
-                                Уведомления
+                                @lang('messages.notifications')
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="mr-3">
@@ -292,10 +292,10 @@
                                 </div>
                                 <div>
                                     <div class="small text-gray-500">08.12.2020</div>
-                                    Долумент "Изменения оценки в DL" подписан
+                                    Документ "Изменения оценки в DL" подписан
                                 </div>
                             </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Все уведомления</a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">@lang('messages.all_notifications')</a>
                         </div>
                     </li>
 
@@ -310,20 +310,20 @@
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Профиль
+                                @lang('messages.profile')
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Настройки
+                                @lang('messages.options')
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                История действии
+                                @lang('messages.action_history')
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Выход
+                                @lang('messages.exit')
                             </a>
                         </div>
                     </li>
@@ -370,12 +370,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите выйти?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@lang('messages.logout_message1')</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Нажмите на "Выход" чтобы выйти</div>
+            <div class="modal-body">@lang('messages.logout_message2')</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Отмена</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
@@ -407,6 +407,31 @@
 
 <!-- Page level custom scripts -->
 <script src="{{ asset('design/js/demo/datatables-demo.js') }}"></script>
+
+<script type="text/javascript">
+    $('#dataTable').DataTable({
+        "language": {
+            "sProcessing": "@lang('messages.processing')",
+            "sLengthMenu": "@lang('messages.show_entries')",
+            "sZeroRecords": "@lang('messages.zero_records')",
+            "sEmptyTable": "@lang('messages.empty_table')",
+            "sInfo": "",
+            "sInfoEmpty": "@lang('messages.info_empty')",
+            "sInfoFiltered": "@lang('messages.info_filtered')",
+            "sInfoPostFix": "",
+            "sSearch": "@lang('messages.search')",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "@lang('messages.loading')",
+            "oPaginate": {
+                "sFirst": "@lang('messages.first')", "sLast": "@lang('messages.last')", "sNext": "@lang('messages.next')", "sPrevious": "@lang('messages.previous')"
+            },
+            "oAria": {
+                "sSortAscending": "@lang('messages.sort_ascending')", "sSortDescending": "@lang('messages.sort_descending')"
+            }
+        }
+    });
+</script>
 
 </body>
 

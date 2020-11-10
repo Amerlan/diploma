@@ -6,9 +6,9 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Название роли</th>
-                <th>Дата создания</th>
-                <th>Дата обновления</th>
+                <th>@lang('messages.role_name')</th>
+                <th>@lang('messages.created_date')</th>
+                <th>@lang('messages.updated_date')</th>
             </tr>
             </thead>
             <tbody>

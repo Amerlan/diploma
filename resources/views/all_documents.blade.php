@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+    <div class="col-12">
+        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Document type</th>
-                <th>Executor id</th>
-                <th>Created By</th>
-                <th>Current Stage</th>
-                <th>Is rejected</th>
-                <th>Created date</th>
-                <th>Signed date</th>
-                <th>Last change date</th>
-                <th>Is closed</th>
+                <th>@lang('messages.doc_type')</th>
+                <th>@lang('messages.executor')</th>
+                <th>@lang('messages.created_by')</th>
+                <th>@lang('messages.current_stage')</th>
+                <th>@lang('messages.is_rejected')</th>
+                <th>@lang('messages.created_date')</th>
+                <th>@lang('messages.signed_date')</th>
+                <th>@lang('messages.last_change_date')</th>
+                <th>@lang('messages.is_closed')</th>
             </tr>
             </thead>
             <tbody>
@@ -25,11 +25,11 @@
                     <td>{{$document->executor_role}} {{$document->executor_role_id}}</td>
                     <td>{{$document->name}} {{$document->created_by}}</td>
                     <td>{{$document->current_stage}}</td>
-                    @if($document->is_rejected == 1) <td>Yes <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>No <i class="fas fa-circle" style="color:green"></i></td> @endif
+                    @if($document->is_rejected == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                     <td>{{$document->created_date}}</td>
                     <td>{{$document->signed_date}}</td>
                     <td>{{$document->last_change_date}}</td>
-                    @if($document->is_closed == 1) <td>Yes <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>No <i class="fas fa-circle" style="color:green"></i></td> @endif
+                    @if($document->is_closed == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                 </tr>
             @endforeach
             </tbody>

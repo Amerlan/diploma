@@ -6,13 +6,13 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>ФИО пользователя</th>
-                <th>Почта</th>
+                <th>@lang('messages.username')</th>
+                <th>@lang('messages.email')</th>
                 <th>DL ID</th>
-                <th>DL почта</th>
-                <th>Приорити</th>
-                <th>Дата создания</th>
-                <th>Дата обновления</th>
+                <th>@lang('messages.dl_email')</th>
+                <th>@lang('messages.priority')</th>
+                <th>@lang('messages.created_date')</th>
+                <th>@lang('messages.updated_date')</th>
             </tr>
             </thead>
             <tbody>
