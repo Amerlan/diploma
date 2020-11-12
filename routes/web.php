@@ -37,8 +37,9 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::post('/create_document', [Controllers\DocumentController::class, 'store'])->name('create_doc');
 
     # Get User's Processes
-    Route::get('/my_processes', [Controller\ProcessController::class, 'user_processes'])->name('processes');
-
+    Route::get('/my_processes', [Controllers\ProcessController::class, 'user_processes'])->name('processes');
+    Route::get('/ongoing', [Controllers\ProcessController::class, 'ongoing'])->name('ongoing');
+    Route::get('/signed', [Controllers\ProcessController::class, 'signed'])->name('signed');
     // For all of roles but in the future need to change access
     Route::get('/signed_by', [Controllers\UserController::class, 'signed_by'])->name('sign_by'); // Documents that user wait for signing from other
     Route::get('/ongoing_by', [Controllers\UserController::class, 'ongoing_by'])->name('ongoing_in'); // displays documents that YOU need to sign

@@ -22,26 +22,39 @@ class UserController extends Controller
 
 
 
-    public function toSign(Request $request, $doc_id)
+    public function toSign(Request $request, $process_id, $stage, $document_name)
     {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
-        $max_stage = DB::table('document_types')
-            ->where('document_type', $doc_type)
-            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
+        $validator_role = DB::table('processes')
+            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+            ->whereColumn('current_stage', '=', 'sign_order')
+            ->where('current_stage', '=', $stage)
+            ->where('process_id', '=', $process_id)
+            ->get('role_id')->take(1)[0]->role_id;
 
-        //ВРЕМЕННО ОФНУТО
-//        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
+        if ($request->user()->role_user === $validator_role){
+            $last_stage = DB::table('documents')->where('document_name', '=', $document_name);
 
-        // check was it last stage?
-        if ($max_stage == $current_stage){
-            // if yes, close document
-            $document->update(['is_closed' => True]);
-            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
         }
+
+
+//        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
+//        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
+//        $max_stage = DB::table('document_types')
+//            ->where('document_type', $doc_type)
+//            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
+//        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
+//        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
+//        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
+//
+//        //ВРЕМЕННО ОФНУТО
+////        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
+//
+//        // check was it last stage?
+//        if ($max_stage == $current_stage){
+//            // if yes, close document
+//            $document->update(['is_closed' => True]);
+//            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
+//        }
 
         // Затравочка на будущее
 //        $stages = new Document_stages();

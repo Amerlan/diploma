@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Process_stages;
 use Illuminate\Database\Seeder;
 
 class ProcessStagesSeeder extends Seeder
@@ -13,6 +14,29 @@ class ProcessStagesSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $processStage = new Process_stages();
+        $processStage->process_id = 2;
+        $processStage->stage_number = 1;
+        $processStage->status = 'Ожидание';
+        $processStage->done_by = 4;
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 2;
+        $processStage->stage_number = 2;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 2;
+        $processStage->stage_number = 3;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 2;
+        $processStage->stage_number = 4;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
     }
 }

@@ -35,88 +35,35 @@ class ProcessController extends Controller
             ->orderBy('is_rejected', 'asc');
 
         return $processes;
-        return view('document_list', compact('documents'));
+        return view('document_list', compact('processes'));
     }
 
     // Displays all INCOMING requests to sign
     public function ongoing(Request $request)
     {
-        $user_role =  $request->user()->role_id;
-        
-        $documents = DB::table('processes')->where([['created_by', $user_id], ['is_closed', False],
-            ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+        $user_role =  $request->user()->user_role;
+        $user_id = $request->user()->id;
+        return DB::table('processes')
+            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+            ->whereColumn('current_stage', '=', 'sign_order')
+            ->where('role_id', '=', $user_role)
+            ->get(["process_id", "processes.document_name", "created_by", "created_date", 'current_stage'])->all();
 
         return view('document_list', compact('documents'));
     }
 
     // Displays all documents that user have signed
-    public function signed_by(Request $request)
+    public function signed(Request $request)
     {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+        $user_role = $request->user()->user_role;
+
+        return DB::table('process_stages')
+            ->where('done_by', '=', $user_role)
+            ->get("process_id")->all();
 
         return view('document_list', compact('documents'));
     }
 
-
-
-    // Displays all documents where user got reject
-    public function rejected_from(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user need to sign
-    public function ongoing_from(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role],
-            ['is_closed', False], ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('ongoing', compact('documents'));
-    }
-
-    // Documents that were signed by other
-    public function signed_from(Request $request)
-    {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
 
     public function index()
     {
