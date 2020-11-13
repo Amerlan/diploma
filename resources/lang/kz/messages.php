@@ -12,7 +12,7 @@ return [
     'customize' => 'Реттеу',
     'parameters' => 'Параметрлері',
     'documents' => 'Құжаттар',
-    'my_documents' => 'Менің құжаттарым',
+    'my_documents' => 'Құжаттардың үлгілері',
     'create_document' => 'Құжат құру',
     'doc_list' => 'Құжаттар тізімі',
     'processes' => 'Процестер',

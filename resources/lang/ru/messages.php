@@ -12,7 +12,7 @@ return [
     'customize' => 'Настроить',
     'parameters' => 'Параметры',
     'documents' => 'Документы',
-    'my_documents' => 'Мои документы',
+    'my_documents' => 'Образцы документов',
     'create_document' => 'Создать документ',
     'doc_list' => 'Список документов',
     'processes' => 'Процессы',

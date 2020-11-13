@@ -12,7 +12,7 @@ return [
     'customize' => 'Customize',
     'parameters' => 'Parameters',
     'documents' => 'Documents',
-    'my_documents' => 'My documents',
+    'my_documents' => 'Documents samples',
     'create_document' => 'Create document',
     'doc_list' => 'Documents list',
     'processes' => 'Processes',
