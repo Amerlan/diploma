@@ -50,6 +50,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all');;
     Route::get('/users_list', [Controllers\UserController::class, 'all_users'])->name('users_list');
     Route::get('/roles_list', [Controllers\RoleController::class, 'all_roles'])->name('roles_list');
+
+    Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 });
 
 Route::get('setlocale/{lang}', function ($lang) {

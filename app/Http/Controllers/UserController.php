@@ -143,9 +143,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        if ($request->user()) {
+
+                $user = DB::table('users')
+                    ->join('roles', 'roles.id', '=', 'user_role')
+                    ->where('users.id', '=', $request->user()->id)
+                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'role_name', 'users.created_at'])
+                    ->all();
+
+                return $user;
+
+                # return view('', compact('user'));
+        }
+
+        return abort(401, 'Unauthorized request');
+
+
     }
 
     /**
