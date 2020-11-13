@@ -52,7 +52,7 @@ class ProcessController extends Controller
             ->join('users', 'users.id', '=', 'created_by')
             ->whereColumn('current_stage', '=', 'sign_order')
             ->where('role_id', '=', $user_role)
-            ->get(['process_id', 'document_name', 'current_stage',
+            ->get(['process_id', 'processes.document_name', 'current_stage',
                 'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])->all();
 
         return $ongoing_processes;
