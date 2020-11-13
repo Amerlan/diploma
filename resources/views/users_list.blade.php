@@ -10,7 +10,7 @@
                 <th>@lang('messages.email')</th>
                 <th>DL ID</th>
                 <th>@lang('messages.dl_email')</th>
-                <th>@lang('messages.priority')</th>
+                <th>@lang('messages.roles')</th>
                 <th>@lang('messages.created_date')</th>
                 <th>@lang('messages.updated_date')</th>
             </tr>
@@ -23,7 +23,7 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->dl_id}}</td>
                         <td>{{$user->dl_mail}}</td>
-                        <td>{{$user->user_priority}}</td>
+                        <td>{{$user->role_name}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
                     </tr>

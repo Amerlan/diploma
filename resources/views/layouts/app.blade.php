@@ -136,12 +136,7 @@
             </a>
             <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{route('sign_by')}}"><i class="fas fa-circle mr-2"></i>Signed by user</a>
-                    <a class="collapse-item" href="{{route('sign_from')}}"><i class="fas fa-circle mr-2"></i>Signed from other</a>
-                    <a class="collapse-item" href="{{route('ongoing_out')}}"><i class="fas fa-circle mr-2"></i>Ongoing outcoming</a>
-                    <a class="collapse-item" href="{{route('ongoing_in')}}"><i class="fas fa-circle mr-2"></i>Ongoing incoming</a>
-                    <a class="collapse-item" href="{{route('rejected_by')}}"><i class="fas fa-circle mr-2"></i>Rejected by user</a>
-                    <a class="collapse-item" href="{{route('rejected_from')}}"><i class="fas fa-circle mr-2"></i>Rejected from other</a>
+
                 </div>
             </div>
         </li>
