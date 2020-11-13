@@ -10,7 +10,7 @@
                 <th>Почта</th>
                 <th>DL ID</th>
                 <th>DL почта</th>
-                <th>Приорити</th>
+                <th>Роль</th>
                 <th>Дата создания</th>
                 <th>Дата обновления</th>
             </tr>
@@ -23,7 +23,7 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->dl_id}}</td>
                         <td>{{$user->dl_mail}}</td>
-                        <td>{{$user->user_priority}}</td>
+                        <td>{{$user->role_name}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
                     </tr>

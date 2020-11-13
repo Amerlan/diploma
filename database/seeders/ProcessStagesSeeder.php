@@ -17,8 +17,9 @@ class ProcessStagesSeeder extends Seeder
         $processStage = new Process_stages();
         $processStage->process_id = 2;
         $processStage->stage_number = 1;
-        $processStage->status = 'Ожидание';
+        $processStage->status = 'Подписано';
         $processStage->done_by = 4;
+        $processStage->comment = 'Teacher test comment';
         $processStage->save();
 
         $processStage = new Process_stages();

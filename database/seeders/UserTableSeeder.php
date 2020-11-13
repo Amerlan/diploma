@@ -22,6 +22,7 @@ class UserTableSeeder extends Seeder
         $admin->name = 'Admin Name';
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('secret');
+        $admin->secret_password = bcrypt('secret');
         $admin->dl_id = 23001;
         $admin->dl_mail = '23001@iitu.kz';
         //$admin->department = 1;
@@ -33,6 +34,7 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->name = 'zafKafedroi Name';
         $zafKafedroi->email = 'zafKafedroi@example.com';
         $zafKafedroi->password = bcrypt('secret');
+        $zafKafedroi->secret_password = bcrypt('secret');
         $zafKafedroi->dl_id = 23002;
         $zafKafedroi->dl_mail = '23002@iitu.kz';
         //$zafKafedroi->department = 2;
@@ -44,6 +46,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->name = 'adminKafedri Name';
         $adminKafedri->email = 'adminKafedri@example.com';
         $adminKafedri->password = bcrypt('secret');
+        $adminKafedri->secret_password = bcrypt('secret');
         $adminKafedri->dl_id = 23003;
         $adminKafedri->dl_mail = '23003@iitu.kz';
         //$adminKafedri->department = 3;
@@ -55,6 +58,7 @@ class UserTableSeeder extends Seeder
         $teacher->name = 'Teacher Name';
         $teacher->email = 'teacher@example.com';
         $teacher->password = bcrypt('secret');
+        $teacher->secret_password = bcrypt('secret');
         $teacher->dl_id = 23004;
         $teacher->dl_mail = '23004@iitu.kz';
         //$teacher->department = 4;
@@ -66,6 +70,7 @@ class UserTableSeeder extends Seeder
         $student->name = 'Student Name';
         $student->email = 'student@example.com';
         $student->password = bcrypt('secret');
+        $student->secret_password = bcrypt('secret');
         $student->dl_id = 23005;
         $student->dl_mail = '23005@iitu.kz';
         //$student->department = 5;

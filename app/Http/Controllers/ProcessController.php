@@ -18,7 +18,9 @@ class ProcessController extends Controller
                         'is_rejected', 'is_closed', 'created_date',
                         'closed_date', 'last_change_date']);
 
-                return view('all_documents', compact('processes'));
+                return $processes;
+
+                # return view('', compact('processes'));
             }
         }
     }
@@ -27,29 +29,35 @@ class ProcessController extends Controller
     public function user_processes(Request $request)
     {
         $user =  $request->user()->id;
+
         $processes = DB::table('processes')->where([['created_by', $user]])
-            ->get(['process_id', 'document_name', 'current_stage',
-                'roles.role_name as executor_role', 'created_date',
-                'closed_date', 'last_change_date','is_rejected', 'is_closed'])
             ->orderBy('is_closed', 'asc')
-            ->orderBy('is_rejected', 'asc');
+            ->orderBy('is_rejected', 'asc')
+            ->get(['process_id', 'document_name', 'current_stage',
+                'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])
+            ->all();
 
         return $processes;
-        return view('document_list', compact('processes'));
+
+        # return view('document_list', compact('processes'));
     }
 
     // Displays all INCOMING requests to sign
     public function ongoing(Request $request)
     {
         $user_role =  $request->user()->user_role;
-        $user_id = $request->user()->id;
-        return DB::table('processes')
+
+        $ongoing_processes = DB::table('processes')
             ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+            ->join('users', 'users.id', '=', 'created_by')
             ->whereColumn('current_stage', '=', 'sign_order')
             ->where('role_id', '=', $user_role)
-            ->get(["process_id", "processes.document_name", "created_by", "created_date", 'current_stage'])->all();
+            ->get(['process_id', 'document_name', 'current_stage',
+                'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])->all();
 
-        return view('document_list', compact('documents'));
+        return $ongoing_processes;
+
+        #return view('document_list', compact('documents'));
     }
 
     // Displays all documents that user have signed
@@ -57,11 +65,16 @@ class ProcessController extends Controller
     {
         $user_role = $request->user()->user_role;
 
-        return DB::table('process_stages')
+        $signed_processes = DB::table('process_stages as stages')
+            ->join('processes as p', 'p.process_id', '=', 'stages.process_id')
             ->where('done_by', '=', $user_role)
-            ->get("process_id")->all();
+            ->get(['p.process_id', 'document_name', 'comment',
+                'last_change_date as edit_date'])
+            ->all();
 
-        return view('document_list', compact('documents'));
+        return $signed_processes;
+
+        # return view('document_list', compact('documents'));
     }
 
 

@@ -13,13 +13,16 @@ class UserController extends Controller
     {
         if ($request->user()) {
             if ($request->user()->authorizeRoles(['admin'])) {
-                $users = DB::table('users')->get()->all();
+                $users = DB::table('users')
+                    ->join('roles', 'roles.id', '=', 'user_role')
+                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'role_name', 'users.created_at', 'users.updated_at'])
+                    ->all();
                 return view('users_list', compact('users'));
             }
         }
         return abort(401, 'Unauthorized request');
     }
-
 
 
     public function toSign(Request $request, $process_id, $stage, $document_name)
@@ -31,7 +34,7 @@ class UserController extends Controller
             ->where('process_id', '=', $process_id)
             ->get('role_id')->take(1)[0]->role_id;
 
-        if ($request->user()->role_user === $validator_role){
+        if ($request->user()->authorizeRoles([$validator_role]) ){
             $last_stage = DB::table('documents')->where('document_name', '=', $document_name);
 
         }
