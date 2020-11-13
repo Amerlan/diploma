@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="card">
@@ -7,7 +7,7 @@
         <a href="{{route('doctype_form')}}" style="float: right;">+ Create new doc type</a>
     </div>
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>TYPE</th>

@@ -12,7 +12,7 @@ return [
     'customize' => 'Реттеу',
     'parameters' => 'Параметрлері',
     'documents' => 'Құжаттар',
-    'my_documents' => 'Құжаттардың үлгілері',
+    'documents_samples' => 'Құжаттардың үлгілері',
     'create_document' => 'Құжат құру',
     'doc_list' => 'Құжаттар тізімі',
     'processes' => 'Процестер',
@@ -61,6 +61,11 @@ return [
     'is_closed'=> 'Жабық',
     'yes'=> 'Иә',
     'no'=> 'Жоқ',
+    'cancel'=> 'Бас тарту',
+    'sign_in'=> 'Кіру',
+    'remember_me'=> 'Мені есте сақтау',
+    'password'=> 'Кілтсөз',
+    'login_openid'=> 'Тіркелгі арқылы кіру:',
 
 ];
 

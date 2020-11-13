@@ -12,7 +12,7 @@ return [
     'customize' => 'Customize',
     'parameters' => 'Parameters',
     'documents' => 'Documents',
-    'my_documents' => 'Documents samples',
+    'documents_samples' => 'Documents samples',
     'create_document' => 'Create document',
     'doc_list' => 'Documents list',
     'processes' => 'Processes',
@@ -24,9 +24,9 @@ return [
     'profile'=> 'Profile',
     'options' => 'Options',
     'action_history' => 'Action history',
-    'exit' => 'Exit',
+    'exit' => 'Logout',
     'logout_message1'=> 'Are you sure you want to log out?',
-    'logout_message2'=> 'Click on "Exit" to exit.',
+    'logout_message2'=> 'Click on "Logout" to exit.',
     'username' => 'User\'s fullname',
     'email'=> 'Email',
     'dl_email'=> 'DL Email',
@@ -61,6 +61,11 @@ return [
     'is_closed'=> 'Is closed',
     'yes'=> 'Yes',
     'no'=> 'No',
+    'cancel'=> 'Cancel',
+    'sign_in'=> 'Sign In',
+    'remember_me'=> 'Remember Me',
+    'password'=> 'Password',
+    'login_openid'=> 'Log in using your account on:',
 
 ];
 

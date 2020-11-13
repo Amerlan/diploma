@@ -118,11 +118,11 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
                 <i class="fas fa-file-alt"></i>
-                <span>@lang('messages.my_documents')</span>
+                <span>@lang('messages.documents_samples')</span>
             </a>
             <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="DOCUMENT TYPE???"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
+                    <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
                     <a class="collapse-item" href="LIST OF DOCUMENT TYPES???"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
                 </div>
             </div>
@@ -377,11 +377,11 @@
             </div>
             <div class="modal-body">@lang('messages.logout_message2')</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Отмена</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">@lang('messages.cancel')</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    {{ __('messages.exit') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf

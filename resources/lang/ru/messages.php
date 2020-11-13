@@ -12,7 +12,7 @@ return [
     'customize' => 'Настроить',
     'parameters' => 'Параметры',
     'documents' => 'Документы',
-    'my_documents' => 'Образцы документов',
+    'documents_samples' => 'Образцы документов',
     'create_document' => 'Создать документ',
     'doc_list' => 'Список документов',
     'processes' => 'Процессы',
@@ -61,6 +61,11 @@ return [
     'is_closed'=> 'Закрыто',
     'yes'=> 'Да',
     'no'=> 'Нет',
+    'cancel'=> 'Отмена',
+    'sign_in'=> 'Войти',
+    'remember_me'=> 'Запомнить меня',
+    'password'=> 'Пароль',
+    'login_openid'=> 'Войти с использованием учетной записи:',
 
 ];
 

@@ -20,12 +20,12 @@
 
 </head>
 
-<body class="bg-gradient-dark">
+<body class="bg-gradient-light">
 
 <div class="container">
 
     <!-- Outer Row -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="padding-top: 5%;">
         <div class="col-xl-5 col-lg-10 col-md-10">
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
@@ -40,7 +40,7 @@
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="input-group mb-3">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" autofocus>
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="@lang('messages.email')" autofocus>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-envelope"></span>
@@ -53,7 +53,7 @@
                                         @enderror
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="@lang('messages.password')">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-lock"></span>
@@ -66,24 +66,49 @@
                                         @enderror
                                     </div>
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-7">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="remember">
-                                                    {{ __('Remember Me') }}
+                                                    {{ __('messages.remember_me') }}
                                                 </label>
                                             </div>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-4">
+                                        <div class="col-5">
                                             <button type="submit" class="btn btn-primary btn-block">
-                                                {{ __('Sign In') }}
+                                                {{ __('messages.sign_in') }}
                                             </button>
                                         </div>
                                         <!-- /.col -->
                                     </div>
+                                    <hr>
+                                    <div>
+                                        <div class="text-center">
+                                            <h6>@lang('messages.login_openid')</h6>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <a href="#" title="OpenID Connect" class="btn btn-secondary btn-block">
+                                                <img src="https://dl.iitu.kz/theme/image.php/classic/auth_oidc/1603298378/o365" alt="" width="24" height="24"/>
+                                                OpenID Connect
+                                            </a>
+                                        </div>
+                                    </div>
                                 </form>
                                 <hr>
+                                <div style="text-align: center">
+                                    <a href="<?= route('setlocale', ['lang' => 'ru']) ?>">
+                                        <small>Русский</small>
+                                    </a>
+                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a href="<?= route('setlocale', ['lang' => 'en']) ?>">
+                                        <small>English</small>
+                                    </a>
+                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a href="<?= route('setlocale', ['lang' => 'kz']) ?>">
+                                        <small>Қазақша</small>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
