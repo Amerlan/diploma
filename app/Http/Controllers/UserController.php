@@ -13,136 +13,51 @@ class UserController extends Controller
     {
         if ($request->user()) {
             if ($request->user()->authorizeRoles(['admin'])) {
-                $users = DB::table('users')->get()->all();
+                $users = DB::table('users')
+                    ->join('roles', 'roles.id', '=', 'user_role')
+                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'role_name', 'users.created_at', 'users.updated_at'])
+                    ->all();
                 return view('users_list', compact('users'));
             }
         }
+        return abort(401, 'Unauthorized request');
     }
 
-    public function all_roles(Request $request)
+
+    public function toSign(Request $request, $process_id, $stage, $document_name)
     {
-        if ($request->user()) {
-            if ($request->user()->authorizeRoles(['admin'])) {
-                $roles = DB::table('roles')->get()->all();
-                return view('roles_list', compact('roles'));
-            }
+        $validator_role = DB::table('processes')
+            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+            ->whereColumn('current_stage', '=', 'sign_order')
+            ->where('current_stage', '=', $stage)
+            ->where('process_id', '=', $process_id)
+            ->get('role_id')->take(1)[0]->role_id;
+
+        if ($request->user()->authorizeRoles([$validator_role]) ){
+            $last_stage = DB::table('documents')->where('document_name', '=', $document_name);
+
         }
-    }
-
-    // Displays all documents that user have rejected
-    public function rejected_by(Request $request)
-    {
-        $role =  $request->user()->role_id;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user wait for signing from other
-    public function ongoing_by(Request $request)
-    {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
-            ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user have signed
-    public function signed_by(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
 
 
-
-    // Displays all documents where user got reject
-    public function rejected_from(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user need to sign
-    public function ongoing_from(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role],
-            ['is_closed', False], ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('ongoing', compact('documents'));
-    }
-
-    // Documents that were signed by other
-    public function signed_from(Request $request)
-    {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    public function toSign(Request $request, $doc_id)
-    {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
-        $max_stage = DB::table('document_types')
-            ->where('document_type', $doc_type)
-            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-
-        //ВРЕМЕННО ОФНУТО
-//        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
-
-        // check was it last stage?
-        if ($max_stage == $current_stage){
-            // if yes, close document
-            $document->update(['is_closed' => True]);
-            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
-        }
+//        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
+//        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
+//        $max_stage = DB::table('document_types')
+//            ->where('document_type', $doc_type)
+//            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
+//        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
+//        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
+//        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
+//
+//        //ВРЕМЕННО ОФНУТО
+////        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
+//
+//        // check was it last stage?
+//        if ($max_stage == $current_stage){
+//            // if yes, close document
+//            $document->update(['is_closed' => True]);
+//            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
+//        }
 
         // Затравочка на будущее
 //        $stages = new Document_stages();
@@ -228,9 +143,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        if ($request->user()) {
+
+                $user = DB::table('users')
+                    ->join('roles', 'roles.id', '=', 'user_role')
+                    ->where('users.id', '=', $request->user()->id)
+                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'role_name', 'users.created_at'])
+                    ->all();
+
+                return $user;
+
+                # return view('', compact('user'));
+        }
+
+        return abort(401, 'Unauthorized request');
+
+
     }
 
     /**

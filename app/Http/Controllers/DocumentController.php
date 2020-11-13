@@ -9,42 +9,25 @@ use Illuminate\Support\Facades\DB;
 class DocumentController extends Controller
 {
 
-    // Просмотр всех заявок
-    public function all(Request $request){
-        if ($request->user()){
-            if ($request->user()->authorizeRoles(['admin'])){
-                $documents = DB::table('documents')
-                    ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-                    ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-                    ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                        'roles.role_name as executor_role',
-                        'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                        'signed_date', 'last_change_date','is_closed']);
-                return view('all_documents', compact('documents'));
-            }
-        }
-    }
 
     // Shows page with creating new document form
-    public function create(Request $request)
+    public function create()
     {
-        $role = $request->user()->user_role;
-        $types = DB::table('document_types')->where([['executor_role', $role]])->get('document_type')->all();
+        $types = DB::table('document_types')
+            ->get('document_type')->all();
+
         return view('documents_create', compact('types'));
     }
-
 
     // Stores a new document in DB.
     public function store(Request $request)
     {
         $document = new Documents();
+
+        $document->document_name = $request->document_name;
         $document->document_type = $request->document_type;
-        $executor_role = DB::table('document_types')
-                                ->where('document_type', '=',$request->document_type)
-                                ->get('executor_role')
-                                ->all()[0]->executor_role;
-        $document->executor_role_id = $executor_role;
-        $document->created_by = $request->user()->id;
+        $document->stageCount = $request->stageCount;
+
         $document->save();
         return redirect('ongoing_by');
     }
