@@ -47,7 +47,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
     // For ADMIN only
-    Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all');;
+    Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all_processes');;
     Route::get('/users_list', [Controllers\UserController::class, 'all_users'])->name('users_list');
     Route::get('/roles_list', [Controllers\RoleController::class, 'all_roles'])->name('roles_list');
 

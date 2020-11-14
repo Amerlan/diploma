@@ -18,9 +18,8 @@ class ProcessController extends Controller
                         'is_rejected', 'is_closed', 'created_date',
                         'closed_date', 'last_change_date']);
 
-                return $processes;
 
-                # return view('', compact('processes'));
+                return view('all_processes', compact('processes'));
             }
         }
     }
@@ -37,9 +36,7 @@ class ProcessController extends Controller
                 'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])
             ->all();
 
-        return $processes;
-
-        # return view('document_list', compact('processes'));
+        return view('my_processes', compact('processes'));
     }
 
     // Displays all INCOMING requests to sign
@@ -55,9 +52,7 @@ class ProcessController extends Controller
             ->get(['process_id', 'processes.document_name', 'current_stage',
                 'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])->all();
 
-        return $ongoing_processes;
-
-        #return view('document_list', compact('documents'));
+        return view('ongoing', compact('ongoing_processes'));
     }
 
     // Displays all documents that user have signed
@@ -72,9 +67,8 @@ class ProcessController extends Controller
                 'last_change_date as edit_date'])
             ->all();
 
-        return $signed_processes;
 
-        # return view('document_list', compact('documents'));
+        return view('signed', compact('signed_processes'));
     }
 
 

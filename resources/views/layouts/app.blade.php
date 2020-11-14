@@ -56,58 +56,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-        @if(auth()->check())
-            @if(auth()->user()->isAdmin())
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            @lang('messages.parameters')
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
-                <i class="fas fa-users"></i>
-                <span>@lang('messages.users')</span>
-            </a>
-            <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_user.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
-                    <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
-                <i class="fas fa-users-cog"></i>
-                <span>@lang('messages.roles')</span>
-            </a>
-            <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_role.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
-                    <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
-                </div>
-            </div>
-        </li>
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-cogs"></i>
-                <span>@lang('messages.doc_settings')</span>
-            </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>@lang('messages.customize')</a>
-                    <a class="collapse-item" href="{{route('all')}}"><i class="fas fa-list mr-2"></i>@lang('messages.all_documents')</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-            @endif
-        @endif
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -115,32 +63,36 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
-                <i class="fas fa-file-alt"></i>
-                <span>@lang('messages.documents_samples')</span>
-            </a>
-            <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
-                    <a class="collapse-item" href="LIST OF DOCUMENT TYPES???"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+        @if(auth()->check())
+            @if(auth()->user()->isAdmin())
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statusesPage" aria-expanded="true" aria-controls="statusesPage">
+                    <i class="fa fa-object-group"></i>
+                    <span>@lang('messages.doc_templates')</span>
+                </a>
+                <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('doctype_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_template')</a>
+                        <a class="collapse-item" href="{{route('see_doctypes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statusesPage" aria-expanded="true" aria-controls="statusesPage">
-                <i class="fa fa-object-group"></i>
-                <span>@lang('messages.doc_statuses')</span>
-            </a>
-            <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
+                    <i class="fas fa-file-alt"></i>
+                    <span>@lang('messages.documents_samples')</span>
+                </a>
+                <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
+                        <a class="collapse-item" href="List of documents"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+                    </div>
                 </div>
-            </div>
-        </li>
-
+            </li>
+        @endif
+    @endif
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#proccessesPage" aria-expanded="true" aria-controls="proccessesPage">
@@ -149,12 +101,58 @@
             </a>
             <div id="proccessesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
-                    <a class="collapse-item" href="ALL PROCESSES (ONLY FOR ADMIN)"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
+                    <a class="collapse-item" href="Create process"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                    @if(auth()->check())
+                        @if(auth()->user()->isAdmin())
+                        <a class="collapse-item" href="{{route('all_processes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
+                        @endif
+                    @endif
+                    <a class="collapse-item" href="{{route('processes')}}"><i class="fas fa-tasks mr-2"></i>@lang('messages.my_processes')</a>
+                    <a class="collapse-item" href="{{route('ongoing')}}"><i class="fas fa-inbox mr-2"></i>@lang('messages.incoming_processes')</a>
+                    <a class="collapse-item" href="{{route('signed')}}"><i class="fas fa-check mr-2"></i>@lang('messages.signed_processes')</a>
                 </div>
             </div>
         </li>
+        <hr class="sidebar-divider">
+        @if(auth()->check())
+            @if(auth()->user()->isAdmin())
+                <!-- Heading -->
+                    <div class="sidebar-heading">
+                        @lang('messages.parameters')
+                    </div>
 
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                            <i class="fas fa-users"></i>
+                            <span>@lang('messages.users')</span>
+                        </a>
+                        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="Create user"><i class="fas fa-plus mr-2"></i>@lang('messages.add_user')</a>
+                                <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_users')</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
+                            <i class="fas fa-users-cog"></i>
+                            <span>@lang('messages.roles')</span>
+                        </a>
+                        <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="Create role"><i class="fas fa-plus mr-2"></i>@lang('messages.add_role')</a>
+                                <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_roles')</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+            @endif
+        @endif
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="#">
@@ -303,7 +301,7 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{route('profile')}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 @lang('messages.profile')
                             </a>

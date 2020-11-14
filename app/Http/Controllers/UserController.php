@@ -154,9 +154,7 @@ class UserController extends Controller
                         'email', 'role_name', 'users.created_at'])
                     ->all();
 
-                return $user;
-
-                # return view('', compact('user'));
+                return view('profile', compact('user'));
         }
 
         return abort(401, 'Unauthorized request');
