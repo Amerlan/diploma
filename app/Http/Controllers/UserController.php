@@ -53,9 +53,9 @@ class UserController extends Controller
             ->where('p.process_id', '=', $request->process_id)
             ->get('stageCount')->take(1)[0]->stageCount;
 
-        DB::table('process_stages as ps')
-            ->where('stage_number', '=', $request->stage)
-            ->;
+//        DB::table('process_stages as ps')
+//            ->where('stage_number', '=', $request->stage)
+//            ->;
         return $last_stage;
 
 //        if ($request->user()->authorizeRoles([$validator_role]) ){
