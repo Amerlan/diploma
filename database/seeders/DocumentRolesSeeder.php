@@ -43,5 +43,11 @@ class DocumentRolesSeeder extends Seeder
         $docrole->role_id = 1;
         $docrole->sign_order = 4;
         $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Обходной лист';
+        $docrole->role_id = 6;
+        $docrole->sign_order = 5;
+        $docrole->save();
     }
 }

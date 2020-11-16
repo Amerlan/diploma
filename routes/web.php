@@ -46,6 +46,10 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
     Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
+//    TEST
+    Route::post('/sign', [Controllers\UserController::class, 'toSign'])->name('sign');
+//    TEST
+
     // For ADMIN only
     Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all_processes');;
     Route::get('/users_list', [Controllers\UserController::class, 'all_users'])->name('users_list');

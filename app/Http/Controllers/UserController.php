@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document_stages;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,30 +15,53 @@ class UserController extends Controller
         if ($request->user()) {
             if ($request->user()->authorizeRoles(['admin'])) {
                 $users = DB::table('users')
-                    ->join('roles', 'roles.id', '=', 'user_role')
-                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
-                        'email', 'role_name', 'users.created_at', 'users.updated_at'])
+                    ->join('role_user', 'role_user.user_id', '=', 'users.id')
+                    ->join('roles', 'role_id', '=', 'roles.id')
+                    ->groupBy('users.id')
+                    ->groupBy('dl_id')
+                    ->groupBy('dl_mail')
+                    ->groupBy('email')
+                    ->groupBy('user_id')
+                    ->groupBy('name')
+                    ->groupBy('users.created_at')
+                    ->groupBy('users.updated_at')
+                    ->select('users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'users.created_at', 'users.updated_at')
+                    ->selectRaw('GROUP_CONCAT(role_name) as roles')
+                    ->get()
                     ->all();
-                return view('users_list', compact('users'));
+                return $users;
+//                return view('users_list', compact('users'));
             }
         }
         return abort(401, 'Unauthorized request');
     }
 
 
-    public function toSign(Request $request, $process_id, $stage, $document_name)
+    public function toSign(Request $request)
     {
         $validator_role = DB::table('processes')
             ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
             ->whereColumn('current_stage', '=', 'sign_order')
-            ->where('current_stage', '=', $stage)
-            ->where('process_id', '=', $process_id)
+            ->where('current_stage', '=', $request->stage)
+            ->where('process_id', '=', $request->process_id)
             ->get('role_id')->take(1)[0]->role_id;
 
-        if ($request->user()->authorizeRoles([$validator_role]) ){
-            $last_stage = DB::table('documents')->where('document_name', '=', $document_name);
 
-        }
+        $last_stage = DB::table('processes as p')
+            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
+            ->where('p.process_id', '=', $request->process_id)
+            ->get('stageCount')->take(1)[0]->stageCount;
+
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=', $request->stage)
+            ->;
+        return $last_stage;
+
+//        if ($request->user()->authorizeRoles([$validator_role]) ){
+//
+//
+//        }
 
 
 //        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id

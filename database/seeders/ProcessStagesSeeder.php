@@ -39,5 +39,48 @@ class ProcessStagesSeeder extends Seeder
         $processStage->stage_number = 4;
         $processStage->status = 'Ожидание';
         $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 2;
+        $processStage->stage_number = 5;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 3;
+        $processStage->stage_number = 1;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 3;
+        $processStage->stage_number = 2;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 3;
+        $processStage->stage_number = 3;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 3;
+        $processStage->stage_number = 4;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 3;
+        $processStage->stage_number = 5;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
+        $processStage = new Process_stages();
+        $processStage->process_id = 1;
+        $processStage->stage_number = 1;
+        $processStage->status = 'Ожидание';
+        $processStage->save();
+
     }
 }

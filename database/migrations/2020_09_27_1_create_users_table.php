@@ -23,12 +23,12 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('dl_id')->unique();
             $table->string('dl_mail')->unique();
             //$table->unsignedTinyInteger('department');
-            $table->foreignId('user_role');
+//            $table->foreignId('user_role');
             $table->timestamps();
 
             # Foreign keys
             //$table->foreign('department')->references('dep_id')->on('departments');
-            $table->foreign('user_role')->references('id')->on('roles');
+//            $table->foreign('user_role')->references('id')->on('roles');
         });
     }
 
