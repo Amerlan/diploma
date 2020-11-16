@@ -57,9 +57,11 @@ class ProcessController extends Controller
                       OR
                     done_by='.$request->user()->id.')';
 
-        $processes = DB::select($query);
+        $ongoing_processes = DB::select($query);
 
-        return $processes;
+        //return $processes;
+
+        return view('ongoing', compact('ongoing_processes'));
     }
 
     // Displays all documents that user have signed

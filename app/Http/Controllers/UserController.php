@@ -30,8 +30,8 @@ class UserController extends Controller
                     ->selectRaw('GROUP_CONCAT(role_name) as roles')
                     ->get()
                     ->all();
-                return $users;
-//                return view('users_list', compact('users'));
+                //return $users;
+                return view('users_list', compact('users'));
             }
         }
         return abort(401, 'Unauthorized request');

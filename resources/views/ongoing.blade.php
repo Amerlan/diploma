@@ -19,9 +19,7 @@
             <tr>
                 <th>@lang('messages.process') ID</th>
                 <th>@lang('messages.document_name')</th>
-                <th>@lang('messages.current_stage')</th>
                 <th>@lang('messages.created_date')</th>
-                <th>@lang('messages.closed_date')</th>
                 <th>@lang('messages.last_change_date')</th>
                 <th>@lang('messages.is_rejected')</th>
                 <th>@lang('messages.is_closed')</th>
@@ -35,9 +33,7 @@
                 <tr>
                     <td>{{$process->process_id}}</td>
                     <td>{{$process->document_name}}</td>
-                    <td>{{$process->current_stage}}</td>
                     <td>{{$process->created_date}}</td>
-                    <td>{{$process->closed_date}}</td>
                     <td>{{$process->last_change_date}}</td>
                     @if($process->is_rejected == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                     @if($process->is_closed == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif

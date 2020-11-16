@@ -34,7 +34,7 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->dl_id}}</td>
                         <td>{{$user->dl_mail}}</td>
-                        <td>{{$user->role_name}}</td>
+                        <td>{{$user->roles}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
                     </tr>
