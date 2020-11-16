@@ -1,6 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@lang('messages.create_document')</li>
+        </ol>
+    </nav>
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@lang('messages.create_document')</h1>
+    </div>
     <div class="col-lg-7" style="float:none;margin:auto;padding-top: 7%">
         <!-- general form elements disabled -->
         <div class="card card-success">

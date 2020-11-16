@@ -56,58 +56,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-        @if(auth()->check())
-            @if(auth()->user()->isAdmin())
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            @lang('messages.parameters')
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
-                <i class="fas fa-users"></i>
-                <span>@lang('messages.users')</span>
-            </a>
-            <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_user.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
-                    <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
-                <i class="fas fa-users-cog"></i>
-                <span>@lang('messages.roles')</span>
-            </a>
-            <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="add_role.html"><i class="fas fa-plus mr-2"></i>@lang('messages.add')</a>
-                    <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list')</a>
-                </div>
-            </div>
-        </li>
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-cogs"></i>
-                <span>@lang('messages.doc_settings')</span>
-            </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="set_documents.html"><i class="fas fa-fw fa-wrench mr-2"></i>@lang('messages.customize')</a>
-                    <a class="collapse-item" href="{{route('all')}}"><i class="fas fa-list mr-2"></i>!!!Все документы</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-            @endif
-        @endif
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -115,19 +63,36 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
-                <i class="fas fa-file-alt"></i>
-                <span>@lang('messages.my_documents')</span>
-            </a>
-            <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="DOCUMENT TYPE???"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
-                    <a class="collapse-item" href="LIST OF DOCUMENT TYPES???"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+        @if(auth()->check())
+            @if(auth()->user()->isAdmin())
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statusesPage" aria-expanded="true" aria-controls="statusesPage">
+                    <i class="fa fa-object-group"></i>
+                    <span>@lang('messages.doc_templates')</span>
+                </a>
+                <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('doctype_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_template')</a>
+                        <a class="collapse-item" href="{{route('see_doctypes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
+                    <i class="fas fa-file-alt"></i>
+                    <span>@lang('messages.documents_samples')</span>
+                </a>
+                <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
+                        <a class="collapse-item" href="List of documents"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+                    </div>
+                </div>
+            </li>
+        @endif
+    @endif
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#proccessesPage" aria-expanded="true" aria-controls="proccessesPage">
@@ -136,12 +101,66 @@
             </a>
             <div id="proccessesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
-                    <a class="collapse-item" href="ALL PROCESSES (ONLY FOR ADMIN)"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
+                    @if (auth()->check())
+                        @if (!auth()->user()->isAdmin())
+                            <a class="collapse-item" href="Create process"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                        @endif
+                    @endif
+                    @if (auth()->check())
+                        @if (auth()->user()->isAdmin())
+                        <a class="collapse-item" href="{{route('all_processes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
+                        @endif
+                    @endif
+                    @if (auth()->check())
+                        @if (!auth()->user()->isAdmin())
+                            <a class="collapse-item" href="{{route('processes')}}"><i class="fas fa-tasks mr-2"></i>@lang('messages.my_processes')</a>
+                            <a class="collapse-item" href="{{route('ongoing')}}"><i class="fas fa-inbox mr-2"></i>@lang('messages.incoming_processes')</a>
+                            <a class="collapse-item" href="{{route('signed')}}"><i class="fas fa-check mr-2"></i>@lang('messages.signed_processes')</a>
+                        @endif
+                    @endif
                 </div>
             </div>
         </li>
+        <hr class="sidebar-divider">
+        @if(auth()->check())
+            @if(auth()->user()->isAdmin())
+                <!-- Heading -->
+                    <div class="sidebar-heading">
+                        @lang('messages.parameters')
+                    </div>
 
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                            <i class="fas fa-users"></i>
+                            <span>@lang('messages.users')</span>
+                        </a>
+                        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="Create user"><i class="fas fa-plus mr-2"></i>@lang('messages.add_user')</a>
+                                <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_users')</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
+                            <i class="fas fa-users-cog"></i>
+                            <span>@lang('messages.roles')</span>
+                        </a>
+                        <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="Create role"><i class="fas fa-plus mr-2"></i>@lang('messages.add_role')</a>
+                                <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_roles')</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+            @endif
+        @endif
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="#">
@@ -241,7 +260,7 @@
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">
-                                Уведомления
+                                @lang('messages.notifications')
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="mr-3">
@@ -274,10 +293,10 @@
                                 </div>
                                 <div>
                                     <div class="small text-gray-500">08.12.2020</div>
-                                    Долумент "Изменения оценки в DL" подписан
+                                    Документ "Изменения оценки в DL" подписан
                                 </div>
                             </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Все уведомления</a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">@lang('messages.all_notifications')</a>
                         </div>
                     </li>
 
@@ -290,22 +309,22 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{route('profile')}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Профиль
+                                @lang('messages.profile')
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Настройки
+                                @lang('messages.options')
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                История действии
+                                @lang('messages.action_history')
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Выход
+                                @lang('messages.exit')
                             </a>
                         </div>
                     </li>
@@ -352,18 +371,18 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите выйти?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@lang('messages.logout_message1')</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Нажмите на "Выход" чтобы выйти</div>
+            <div class="modal-body">@lang('messages.logout_message2')</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Отмена</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">@lang('messages.cancel')</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    {{ __('messages.exit') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
@@ -389,6 +408,31 @@
 
 <!-- Page level custom scripts -->
 <script src="{{ asset('design/js/demo/datatables-demo.js') }}"></script>
+
+<script type="text/javascript">
+    $('#dataTable').DataTable({
+        "language": {
+            "sProcessing": "@lang('messages.processing')",
+            "sLengthMenu": "@lang('messages.show_entries')",
+            "sZeroRecords": "@lang('messages.zero_records')",
+            "sEmptyTable": "@lang('messages.empty_table')",
+            "sInfo": "",
+            "sInfoEmpty": "@lang('messages.info_empty')",
+            "sInfoFiltered": "@lang('messages.info_filtered')",
+            "sInfoPostFix": "",
+            "sSearch": "@lang('messages.search')",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "@lang('messages.loading')",
+            "oPaginate": {
+                "sFirst": "@lang('messages.first')", "sLast": "@lang('messages.last')", "sNext": "@lang('messages.next')", "sPrevious": "@lang('messages.previous')"
+            },
+            "oAria": {
+                "sSortAscending": "@lang('messages.sort_ascending')", "sSortDescending": "@lang('messages.sort_descending')"
+            }
+        }
+    });
+</script>
 
 </body>
 

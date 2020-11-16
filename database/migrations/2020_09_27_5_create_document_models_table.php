@@ -14,30 +14,16 @@ class CreateDocumentModelsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->bigIncrements('document_id');
+            $table->string('document_name', 100)->primary();
             $table->string('document_type', 100);
-//            $table->string('status', 25)->default('Waiting for sign');
-            $table->smallInteger('current_stage')->default(1);
-            $table->foreignId('executor_role_id');
-            $table->foreignId('created_by');
-            $table->boolean('is_rejected')->default(false);
-            $table->dateTime('created_date', 0)->useCurrent();
-            $table->dateTime('signed_date', 0)->nullable();
-            $table->dateTime('last_change_date', 0)->useCurrent();
-            $table->boolean('is_closed')->default(false);
+            $table->unsignedSmallInteger('stageCount');
 
-
+            # foreign keys
             $table->foreign('document_type')->references('document_type')->on('document_types');
-            $table->foreign('executor_role_id')->references('executor_role')->on('document_types');
-            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('documents');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document_stages;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,136 +14,74 @@ class UserController extends Controller
     {
         if ($request->user()) {
             if ($request->user()->authorizeRoles(['admin'])) {
-                $users = DB::table('users')->get()->all();
+                $users = DB::table('users')
+                    ->join('role_user', 'role_user.user_id', '=', 'users.id')
+                    ->join('roles', 'role_id', '=', 'roles.id')
+                    ->groupBy('users.id')
+                    ->groupBy('dl_id')
+                    ->groupBy('dl_mail')
+                    ->groupBy('email')
+                    ->groupBy('user_id')
+                    ->groupBy('name')
+                    ->groupBy('users.created_at')
+                    ->groupBy('users.updated_at')
+                    ->select('users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'users.created_at', 'users.updated_at')
+                    ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
+                    ->get()
+                    ->all();
+                //return $users;
                 return view('users_list', compact('users'));
             }
         }
-    }
-
-    public function all_roles(Request $request)
-    {
-        if ($request->user()) {
-            if ($request->user()->authorizeRoles(['admin'])) {
-                $roles = DB::table('roles')->get()->all();
-                return view('roles_list', compact('roles'));
-            }
-        }
-    }
-
-    // Displays all documents that user have rejected
-    public function rejected_by(Request $request)
-    {
-        $role =  $request->user()->role_id;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user wait for signing from other
-    public function ongoing_by(Request $request)
-    {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', False],
-            ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
-    }
-
-    // Displays all documents that user have signed
-    public function signed_by(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
-
-        return view('document_list', compact('documents'));
+        return abort(401, 'Unauthorized request');
     }
 
 
-
-    // Displays all documents where user got reject
-    public function rejected_from(Request $request)
+    public function toSign(Request $request)
     {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role], ['is_rejected', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+        $validator_role = DB::table('processes')
+            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+            ->whereColumn('current_stage', '=', 'sign_order')
+            ->where('current_stage', '=', $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->get('role_id')->take(1)[0]->role_id;
 
-        return view('document_list', compact('documents'));
-    }
 
-    // Displays all documents that user need to sign
-    public function ongoing_from(Request $request)
-    {
-        $role = $request->user()->user_role;
-        $documents = DB::table('documents')->where([['executor_role_id', $role],
-            ['is_closed', False], ['is_rejected', False]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+        $last_stage = DB::table('processes as p')
+            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
+            ->where('p.process_id', '=', $request->process_id)
+            ->get('stageCount')->take(1)[0]->stageCount;
 
-        return view('ongoing', compact('documents'));
-    }
+//        DB::table('process_stages as ps')
+//            ->where('stage_number', '=', $request->stage)
+//            ->;
+        return $last_stage;
 
-    // Documents that were signed by other
-    public function signed_from(Request $request)
-    {
-        $user_id =  $request->user()->id;
-        $documents = DB::table('documents')->where([['created_by', $user_id], ['is_closed', True]])
-            ->join('roles', 'roles.id', '=', 'documents.executor_role_id')
-            ->join('users AS creator', 'documents.created_by', '=', 'creator.id')
-            ->get(['document_id', 'document_type', 'current_stage', 'executor_role_id',
-                'roles.role_name as executor_role',
-                'created_by', 'creator.name as name', 'is_rejected', 'created_date',
-                'signed_date', 'last_change_date','is_closed']);
+//        if ($request->user()->authorizeRoles([$validator_role]) ){
+//
+//
+//        }
 
-        return view('document_list', compact('documents'));
-    }
 
-    public function toSign(Request $request, $doc_id)
-    {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
-        $max_stage = DB::table('document_types')
-            ->where('document_type', $doc_type)
-            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-
-        //ВРЕМЕННО ОФНУТО
-//        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
-
-        // check was it last stage?
-        if ($max_stage == $current_stage){
-            // if yes, close document
-            $document->update(['is_closed' => True]);
-            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
-        }
+//        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
+//        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
+//        $max_stage = DB::table('document_types')
+//            ->where('document_type', $doc_type)
+//            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
+//        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
+//        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
+//        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
+//
+//        //ВРЕМЕННО ОФНУТО
+////        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
+//
+//        // check was it last stage?
+//        if ($max_stage == $current_stage){
+//            // if yes, close document
+//            $document->update(['is_closed' => True]);
+//            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
+//        }
 
         // Затравочка на будущее
 //        $stages = new Document_stages();
@@ -228,9 +167,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        if ($request->user()) {
+
+                $user = DB::table('users')
+                    ->join('roles', 'roles.id', '=', 'user_role')
+                    ->where('users.id', '=', $request->user()->id)
+                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
+                        'email', 'role_name', 'users.created_at'])
+                    ->all();
+
+                return view('profile', compact('user'));
+        }
+
+        return abort(401, 'Unauthorized request');
+
+
     }
 
     /**
