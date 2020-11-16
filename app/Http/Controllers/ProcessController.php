@@ -37,9 +37,9 @@ class ProcessController extends Controller
                 'created_date', 'closed_date', 'last_change_date','is_rejected', 'is_closed'])
             ->all();
 
-        return $processes;
+        //return $processes;
 
-        # return view('document_list', compact('processes'));
+        return view('my_processes', compact('processes'));
     }
 
     // Displays all INCOMING requests to sign
@@ -75,9 +75,9 @@ class ProcessController extends Controller
             ->get()
             ->all();
 
-        return $signed_processes;
+        //return $signed_processes;
 
-        # return view('document_list', compact('documents'));
+        return view('signed', compact('signed_processes'));
     }
 
 
