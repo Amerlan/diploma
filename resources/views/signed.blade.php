@@ -29,7 +29,7 @@
                     <td>{{$process->process_id}}</td>
                     <td>{{$process->document_name}}</td>
                     <td>{{$process->comment}}</td>
-                    <td>{{$process->edit_date}}</td>
+                    <td>{{$process->last_change_date}}</td>
                 </tr>
             @endforeach
             </tbody>
