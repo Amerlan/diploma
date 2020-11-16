@@ -27,7 +27,7 @@ class UserController extends Controller
                     ->groupBy('users.updated_at')
                     ->select('users.id', 'name', 'dl_id', 'dl_mail',
                         'email', 'users.created_at', 'users.updated_at')
-                    ->selectRaw('GROUP_CONCAT(role_name) as roles')
+                    ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
                     ->get()
                     ->all();
                 //return $users;

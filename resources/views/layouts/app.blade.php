@@ -101,15 +101,23 @@
             </a>
             <div id="proccessesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="Create process"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
-                    @if(auth()->check())
-                        @if(auth()->user()->isAdmin())
+                    @if (auth()->check())
+                        @if (!auth()->user()->isAdmin())
+                            <a class="collapse-item" href="Create process"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                        @endif
+                    @endif
+                    @if (auth()->check())
+                        @if (auth()->user()->isAdmin())
                         <a class="collapse-item" href="{{route('all_processes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.processes_list')</a>
                         @endif
                     @endif
-                    <a class="collapse-item" href="{{route('processes')}}"><i class="fas fa-tasks mr-2"></i>@lang('messages.my_processes')</a>
-                    <a class="collapse-item" href="{{route('ongoing')}}"><i class="fas fa-inbox mr-2"></i>@lang('messages.incoming_processes')</a>
-                    <a class="collapse-item" href="{{route('signed')}}"><i class="fas fa-check mr-2"></i>@lang('messages.signed_processes')</a>
+                    @if (auth()->check())
+                        @if (!auth()->user()->isAdmin())
+                            <a class="collapse-item" href="{{route('processes')}}"><i class="fas fa-tasks mr-2"></i>@lang('messages.my_processes')</a>
+                            <a class="collapse-item" href="{{route('ongoing')}}"><i class="fas fa-inbox mr-2"></i>@lang('messages.incoming_processes')</a>
+                            <a class="collapse-item" href="{{route('signed')}}"><i class="fas fa-check mr-2"></i>@lang('messages.signed_processes')</a>
+                        @endif
+                    @endif
                 </div>
             </div>
         </li>
