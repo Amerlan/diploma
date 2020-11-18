@@ -26,6 +26,7 @@ class UserTableSeeder extends Seeder
         $admin->secret_password = bcrypt('secret');
         $admin->dl_id = 23001;
         $admin->dl_mail = '23001@iitu.kz';
+        $admin->url = 'https://vignette.wikia.nocookie.net/skillnaruto/images/3/36/Naruto_Uzumaki.png/revision/latest/scale-to-width-down/340?cb=20140504001218&path-prefix=ru';
         //$admin->department = 1;
 //        $admin->user_role = 1;
         $admin->save();
@@ -38,6 +39,7 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->secret_password = bcrypt('secret');
         $zafKafedroi->dl_id = 23002;
         $zafKafedroi->dl_mail = '23002@iitu.kz';
+        $zafKafedroi->url = 'https://www.meme-arsenal.com/memes/72b8c58dbdd57f999edb73bc6d9085d0.jpg';
         //$zafKafedroi->department = 2;
 //        $zafKafedroi->user_role = 2;
         $zafKafedroi->save();
@@ -50,6 +52,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->secret_password = bcrypt('secret');
         $adminKafedri->dl_id = 23003;
         $adminKafedri->dl_mail = '23003@iitu.kz';
+        $adminKafedri->url = 'https://www.meme-arsenal.com/memes/72b8c58dbdd57f999edb73bc6d9085d0.jpg';
         //$adminKafedri->department = 3;
 //        $adminKafedri->user_role = 3;
         $adminKafedri->save();
@@ -62,6 +65,7 @@ class UserTableSeeder extends Seeder
         $teacher->secret_password = bcrypt('secret');
         $teacher->dl_id = 23004;
         $teacher->dl_mail = '23004@iitu.kz';
+        $teacher->url = 'https://static.wikia.nocookie.net/disneythehunchbackofnotredame/images/1/19/Naruto_Shippuuden_176-341.jpg/revision/latest/scale-to-width-down/340?cb=20140614002251';
         //$teacher->department = 4;
 //        $teacher->user_role = 4;
         $teacher->save();
@@ -75,6 +79,7 @@ class UserTableSeeder extends Seeder
         $student->secret_password = bcrypt('secret');
         $student->dl_id = 23005;
         $student->dl_mail = '23005@iitu.kz';
+        $student->url = 'https://static.wikia.nocookie.net/naruto/images/2/26/Konohamaru_Part_III.png/revision/latest?cb=20201016123236&path-prefix=ru';
         //$student->department = 5;
 //        $student->user_role = 5;
         $student->save();
@@ -87,6 +92,7 @@ class UserTableSeeder extends Seeder
         $teacher->secret_password = bcrypt('secret');
         $teacher->dl_id = 23006;
         $teacher->dl_mail = '23006@iitu.kz';
+        $teacher->url = 'https://static.wikia.nocookie.net/naruto/images/2/27/Kakashi_Hatake.png/revision/latest?cb=20170507214017&path-prefix=ru';
         //$teacher->department = 4;
 //        $teacher->user_role = 4;
         $teacher->save();

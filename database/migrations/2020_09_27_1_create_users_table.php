@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('dl_id')->unique();
             $table->string('dl_mail')->unique();
+            $table->string('url');
             //$table->unsignedTinyInteger('department');
 //            $table->foreignId('user_role');
             $table->timestamps();
