@@ -171,7 +171,7 @@ class UserController extends Controller
     {
         if ($request->user()) {
 
-            $users = DB::table('users')
+            $user = DB::table('users')
                 ->join('role_user', 'role_user.user_id', '=', 'users.id')
                 ->join('roles', 'role_id', '=', 'roles.id')
                 ->groupBy('dl_id')

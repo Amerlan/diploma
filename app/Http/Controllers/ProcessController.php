@@ -18,9 +18,9 @@ class ProcessController extends Controller
                         'is_rejected', 'is_closed', 'created_date',
                         'closed_date', 'last_change_date']);
 
-                return $processes;
+                //return $processes;
 
-                # return view('', compact('processes'));
+                return view('all_processes', compact('processes'));
             }
         }
     }
