@@ -24,9 +24,6 @@
                 <th>@lang('messages.is_rejected')</th>
                 <th>@lang('messages.is_closed')</th>
                 <th>@lang('messages.details')</th>
-                <th>@lang('messages.sign')</th>
-                <th>@lang('messages.reject')</th>
-                <th>@lang('messages.return')</th>
             </tr>
             </thead>
             <tbody>
@@ -39,11 +36,8 @@
                     @if($process->is_rejected == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                     @if($process->is_closed == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                     <td>
-                        <a href="process_details.html" class="btn btn-primary btn-sm">@lang('messages.more_details')</a>
+                        <a href={{ route('process_details',['id' => $process ->process_id] )}} class="btn btn-primary btn-sm">@lang('messages.more_details')</a>
                     </td>
-                    <td><a href=""><p>@lang('messages.sign')</p></a></td>
-                    <td><a href=""><p>@lang('messages.reject')</p></a></td>
-                    <td><a href=""><p>@lang('messages.return')</p></a></td>
                 </tr>
             @endforeach
             </tbody>

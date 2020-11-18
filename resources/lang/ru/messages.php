@@ -21,6 +21,8 @@ return [
     'processes' => 'Процессы',
     'process_create' => 'Создать процесс',
     'processes_list' => 'Список процессов',
+    'choose_process_type' => 'Выбрать вид процесса',
+    'fill_process' => 'Заполнение процесса',
     'statistics' => 'Статистика',
     'notifications'=> 'Уведомления',
     'all_notifications'=> 'Все уведомления',
@@ -86,6 +88,7 @@ return [
     'sign'=> 'Подписать',
     'reject'=> 'Отклонить',
     'return'=> 'Возвратить',
+    'export_document' => 'Экспортировать документ',
     'details'=> 'Детали',
     'more_details'=> 'Подробнее',
 
