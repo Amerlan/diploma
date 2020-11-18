@@ -40,6 +40,7 @@ class UserController extends Controller
 
     public function toSign(Request $request)
     {
+
         $validator_role = DB::table('processes')
             ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
             ->whereColumn('current_stage', '=', 'sign_order')
@@ -47,11 +48,52 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('role_id')->take(1)[0]->role_id;
 
+
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
             ->get('stageCount')->take(1)[0]->stageCount;
 
+//        if ($request->user()->authorizeRoles([$validator_role]) ){
+//
+//            return $request;
+//        }
+//        $last_stage = DB::table('processes as p')
+//            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
+//            ->where('p.process_id', '=', $request->process_id)
+//            ->get('stageCount')->take(1)[0]->stageCount;
+//
+//        $current_stage = DB::table('processes')
+//            ->where('process_id', '=', $request->process_id)
+//            ->get('current_stage')->take(1)[0]->current_stage;
+//
+//        DB::table('process_stages as ps')
+//            ->where('stage_number', '=',  $request->stage)
+//            ->where('process_id', '=', $request->process_id)
+//            ->update([
+//                'status' => 'Подписано',
+//                'done_by' => $request->user()->id,
+//                'comment' => $request->comment,
+//                'last_edited_date' => date("Y-m-d H:i:s")
+//            ]);
+//
+//        if ($request->stage < $last_stage){
+//
+//            DB::table('processes')
+//                ->where('process_id', '=', $request->process_id)
+//                ->update([
+//                    'last_change_date' => date("Y-m-d H:i:s"),
+//                    'current_stage' => intval($current_stage) + 1
+//                ]);
+//        }
+//        if ($request->stage === $last_stage){
+//            DB::table('processes')
+//                ->where('process_id', '=', $request->process_id)
+//                ->update([
+//                    'is_closed' => 1,
+//                    'closed_date' => date("Y-m-d H:i:s")
+//                    ]);
+//        }
 
 
 
@@ -68,17 +110,7 @@ class UserController extends Controller
         $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
         $document->update(['is_rejected' => True]);
 
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = null;
-//        $stages->rejected_by = $request->user()->id;
-//        $stages->comment = $request->comment;
-//        $stages.save();
-
-        return redirect()->back();
+       return redirect()->back();
     }
 
     public function toReturn(Request $request, $doc_id)
@@ -88,17 +120,6 @@ class UserController extends Controller
         if ($current_stage != 1) {
             $document->update(['current_stage' => ($current_stage - 1)]);
         }
-//        $document->update('executor_id', $previous); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ИЗМЕНЕНИЯ НАЗАД.
-
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = $request->user()->id;
-//        $stages->rejected_by = null;
-//        $stages->comment = $request->comment;
-//        $stages.save();
 
         return redirect()->back();
     }
