@@ -40,10 +40,12 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/my_processes', [Controllers\ProcessController::class, 'user_processes'])->name('processes');
     Route::get('/ongoing', [Controllers\ProcessController::class, 'ongoing'])->name('ongoing');
     Route::get('/signed', [Controllers\ProcessController::class, 'signed'])->name('signed');
-    Route::get('/create_process', [Controllers\ProcessController::class, 'create_process'])->name('create_process');
-    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
-    Route::get('/create_process_post', [Controllers\ProcessController::class, 'zachtotakiepodskazki'])->name('create_process_post');
-    Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
+
+    Route::get('/create_process_list', [Controllers\ProcessController::class, 'create_process_list'])->name('create_process_list');
+    Route::get('create_process/{document_id}', [Controllers\ProcessController::class, 'create'])->name('create_proc');
+
+//    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
+//    Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
 
     Route::get('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
     Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
