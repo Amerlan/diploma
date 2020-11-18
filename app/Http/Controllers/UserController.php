@@ -47,54 +47,17 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('role_id')->take(1)[0]->role_id;
 
-
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
             ->get('stageCount')->take(1)[0]->stageCount;
 
-//        DB::table('process_stages as ps')
-//            ->where('stage_number', '=', $request->stage)
-//            ->;
-        return $last_stage;
-
-//        if ($request->user()->authorizeRoles([$validator_role]) ){
-//
-//
-//        }
 
 
-//        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-//        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
-//        $max_stage = DB::table('document_types')
-//            ->where('document_type', $doc_type)
-//            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
-//        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-//        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
-//        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-//
-//        //ВРЕМЕННО ОФНУТО
-////        $document->update('executor_id', $next); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ПОДПИСЬ ПОТОМ.
-//
-//        // check was it last stage?
-//        if ($max_stage == $current_stage){
-//            // if yes, close document
-//            $document->update(['is_closed' => True]);
-//            $document->update(['signed_date' => date("Y-m-d H:i:s")]);
-//        }
 
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = $request->user()->id;
-//        $stages->returned_by = null;
-//        $stages->rejected_by = null;
-//        $stages->comment = $request->comment;
-//        $stages->save();
-
-
-        return redirect()->back();
+        $comment = $request->comment;
+        return $request;
+        //return redirect()->back();
     }
 
     public function toReject(Request $request, $doc_id)

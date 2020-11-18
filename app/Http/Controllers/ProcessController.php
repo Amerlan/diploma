@@ -47,7 +47,7 @@ class ProcessController extends Controller
     {
         // distinct , done_by
         $query = 'SELECT
-                    p.process_id, p.document_name, created_date, last_change_date, is_rejected, is_closed
+                    p.process_id, p.document_name, created_date, last_change_date, is_rejected, is_closed, current_stage
                     FROM processes AS p
                     LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
                      LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
@@ -100,7 +100,7 @@ class ProcessController extends Controller
     {
         $process = DB::table('processes')->where('process_id', '=', $id)
             ->get();
-        //return $process;
+//        return $process;
         return view('process_details', compact('process'));
     }
 

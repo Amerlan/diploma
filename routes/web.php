@@ -45,12 +45,12 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/create_process_post', [Controllers\ProcessController::class, 'zachtotakiepodskazki'])->name('create_process_post');
     Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
 
-    Route::get('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
-    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
-    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
+//    Route::post('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
+//    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
+//    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
 //    TEST
-    Route::get('/sign', [Controllers\UserController::class, 'toSign'])->name('sign');
+    Route::post('/sign', [Controllers\UserController::class, 'toSign'])->name('sign');
 //    TEST
 
     // For ADMIN only
