@@ -20,18 +20,18 @@
                     <div class="text-center">
                         <img class="img-profile rounded-circle" src="{{ asset('design/img/ilyas.png') }}">
                         <h3>{{$user->name}}</h3>
-                        <p class="text-muted">Role - {{$user->roles}}</p>
+                        <p class="text-muted">@lang('messages.role') - {{$user->roles}}</p>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <b class="float-left">Your dl ID:</b>
+                                <b class="float-left">DL ID:</b>
                                 <a class="float-right">{{$user->dl_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b class="float-left">Your dl mail:</b>
+                                <b class="float-left">Dl mail:</b>
                                 <a class="float-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$user->dl_mail}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b class="float-left">Your email:</b>
+                                <b class="float-left">Email:</b>
                                 <a class="float-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$user->email}}</a>
                             </li>
                         </ul>

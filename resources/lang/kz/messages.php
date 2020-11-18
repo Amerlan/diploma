@@ -8,6 +8,7 @@ return [
     'add' => 'Қосу',
     'list' => 'Тізім',
     'roles' => 'Рөлдері',
+    'role'=> 'Рөл',
     'doc_settings' => 'Құжат параметрлері',
     'customize' => 'Реттеу',
     'parameters' => 'Параметрлері',
@@ -85,6 +86,8 @@ return [
     'sign'=> 'Қол қою',
     'reject'=> 'Қабылдамау',
     'return'=> 'Қайту',
+    'details'=> 'Егжей',
+    'more_details'=> 'Толығырақ',
 
 ];
 
