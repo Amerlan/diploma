@@ -14,20 +14,11 @@
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
     </div>
 
-    <div hidden="true">
-        <form id="create_proc" method="POST" action="{{route('create_process_post')}}">
-            @csrf
-            <input id="doc_name" name="document_name" value="">
-        </form>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="list-group">
                 @foreach($documents as $document)
-                    <a href="{{route('create_process_post')}}" class="list-group-item list-group-item-action" onclick="
-                                               document.getElementById('doc_name').value = {{$document->document_name}};
-                                              document.getElementById('create_proc').submit();">
-
+                    <a href={{route('create_proc', ['document_id' => $document->id])}}>
                         {{$document->document_name}}
                     </a>
                 @endforeach

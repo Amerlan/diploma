@@ -14,7 +14,8 @@ class CreateDocumentModelsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->string('document_name', 100)->primary();
+            $table->integer('id')->unsigned()->autoIncrement();
+            $table->string('document_name', 100)->unique();
             $table->string('document_type', 100);
             $table->unsignedSmallInteger('stageCount');
 

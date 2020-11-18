@@ -80,20 +80,20 @@ class ProcessController extends Controller
         return view('signed', compact('signed_processes'));
     }
 
-    public function create_process(Request $request)
+    public function create_process_list()
     {
         $documents = DB::table('documents')->get()->all();
         return view('create_process', compact('documents'));
     }
 
-    public function create_process_post(Request $request)
+    public function create(Request $request, $document_id)
     {
-        return $request;
-    }
-
-    public function zachtotakiepodskazki(Request $request)
-    {
-        return view('fill_process');
+        $document = DB::table('documents')
+            ->where('id', '=', $document_id)
+            ->get()
+            ->all();
+//        return $document;
+        return view('fill_process', compact('document'));
     }
 
     public function process_details($id)

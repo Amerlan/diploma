@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-            <li class="breadcrumb-item"><a href="{{route('create_process')}}">@lang('messages.process_create')</a></li>
+            <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
             <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
         </ol>
     </nav>
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">Заявление на продление РК</h5>
+                    <h5 class="card-header">{{$document[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
