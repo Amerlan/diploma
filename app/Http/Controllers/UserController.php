@@ -40,13 +40,14 @@ class UserController extends Controller
 
     public function toSign(Request $request)
     {
+        return $request;
 
-        $validator_role = DB::table('processes')
-            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
-            ->whereColumn('current_stage', '=', 'sign_order')
-            ->where('current_stage', '=', $request->stage)
-            ->where('process_id', '=', $request->process_id)
-            ->get('role_id')->take(1)[0]->role_id;
+//        $validator_role = DB::table('processes')
+//            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+//            ->whereColumn('current_stage', '=', 'sign_order')
+//            ->where('current_stage', '=', $request->stage)
+//            ->where('process_id', '=', $request->process_id)
+//            ->get('role_id')->take(1)[0]->role_id;
 
 
         $last_stage = DB::table('processes as p')
@@ -58,15 +59,12 @@ class UserController extends Controller
 //
 //            return $request;
 //        }
-//        $last_stage = DB::table('processes as p')
-//            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
-//            ->where('p.process_id', '=', $request->process_id)
-//            ->get('stageCount')->take(1)[0]->stageCount;
-//
+
+
         $current_stage = DB::table('processes')
             ->where('process_id', '=', $request->process_id)
             ->get('current_stage')->take(1)[0]->current_stage;
-//
+
         DB::table('process_stages as ps')
             ->where('stage_number', '=',  $request->stage)
             ->where('process_id', '=', $request->process_id)
@@ -100,55 +98,104 @@ class UserController extends Controller
         return redirect('/ongoing');
     }
 
-    public function toReject(Request $request, $doc_id)
+    public function toReject(Request $request)
     {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
 
-        $document->update(['current_stage' => -1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-        $document->update(['is_rejected' => True]);
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Отказано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
 
-       return redirect()->back();
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_rejected' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                ]);
+
+        return redirect('/ongoing');
     }
 
-    public function toReturn(Request $request, $doc_id)
+    public function toReturn(Request $request)
     {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        if ($current_stage != 1) {
-            $document->update(['current_stage' => ($current_stage - 1)]);
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
+
+        if ($current_stage===1){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Подписано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
+
+        if (intval($request->stage) < intval($last_stage)){
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) + 1
+                ]);
+        }
+        if (intval($request->stage) === intval($last_stage)){
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                ]);
         }
 
-        return redirect()->back();
+
+        return redirect('/ongoing');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function sign_return_reject(Request $request){
+//        return $request->action === 'sign';
+        if ($request->action === 'sign'){
+            return $this->toSign($request);
+        }
+        if ($request->action === 'return'){
+            $this->toReturn($request);
+        }
+        if ($request->action === 'reject'){
+            $this->toReject($request);
+        }
+    }
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         if ($request->user()) {

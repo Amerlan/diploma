@@ -69,20 +69,21 @@
                 </div>
 
                 <div class="form-group">
-                    <form name="comment_form" action="{{route('sign')}}" method="POST">
+                    <form name="comment_form" action="{{route('action')}}" method="POST">
                         @csrf
                         <input hidden="true" name="process_id" value="{{$process[0]->process_id}}">
                         <input hidden="true" name="stage" value="{{$process[0]->current_stage}}">
+                        <input id="act" hidden="true" name="action" value="">
                         <label>Comment</label>
                         <textarea class="form-control" name="comment" rows="7" placeholder="Enter..."></textarea>
                         <div class="form-group">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <button class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
+                                    <button onclick="document.getElementById('act').value='sign'" class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
                                     <br><br>
-                                    <button class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
+                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
                                     <br><br>
-                                    <button class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
+                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
                                 </div>
                             </div>
                         </div>
