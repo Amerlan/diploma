@@ -100,8 +100,8 @@ class ProcessController extends Controller
     {
         $process = DB::table('processes')->where('process_id', '=', $id)
             ->get();
-        return $process;
-        //return view('process_details', compact('process'));
+        //return $process;
+        return view('process_details', compact('process'));
     }
 
     public function index()
