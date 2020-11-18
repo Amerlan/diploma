@@ -181,9 +181,11 @@ class UserController extends Controller
                 ->select('name', 'dl_id', 'dl_mail',
                     'email')
                 ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
+                ->where('users.id', '=', $request->user()->id)
                 ->get()
                 ->all();
 
+            return $users;
                 return view('profile', compact('user'));
         }
 
