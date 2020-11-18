@@ -55,7 +55,7 @@ class ProcessController extends Controller
                      WHERE
                      ru.user_id='.$request->user()->id.' AND (done_by IS NULL
                       OR
-                    done_by='.$request->user()->id.')';
+                    done_by='.$request->user()->id.') AND is_closed=0 AND is_rejected=0';
 
         $ongoing_processes = DB::select($query);
 
