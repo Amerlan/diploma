@@ -171,12 +171,18 @@ class UserController extends Controller
     {
         if ($request->user()) {
 
-                $user = DB::table('users')
-                    ->join('roles', 'roles.id', '=', 'user_role')
-                    ->where('users.id', '=', $request->user()->id)
-                    ->get(['users.id', 'name', 'dl_id', 'dl_mail',
-                        'email', 'role_name', 'users.created_at'])
-                    ->all();
+            $users = DB::table('users')
+                ->join('role_user', 'role_user.user_id', '=', 'users.id')
+                ->join('roles', 'role_id', '=', 'roles.id')
+                ->groupBy('dl_id')
+                ->groupBy('dl_mail')
+                ->groupBy('email')
+                ->groupBy('name')
+                ->select('name', 'dl_id', 'dl_mail',
+                    'email')
+                ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
+                ->get()
+                ->all();
 
                 return view('profile', compact('user'));
         }
