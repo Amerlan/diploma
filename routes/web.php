@@ -45,7 +45,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('create_process/{document_id}', [Controllers\ProcessController::class, 'create'])->name('create_proc');
 
 //    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
-//    Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
+    Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
 
 //    Route::post('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
 //    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');

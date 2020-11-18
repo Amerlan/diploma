@@ -63,43 +63,41 @@ class UserController extends Controller
 //            ->where('p.process_id', '=', $request->process_id)
 //            ->get('stageCount')->take(1)[0]->stageCount;
 //
-//        $current_stage = DB::table('processes')
-//            ->where('process_id', '=', $request->process_id)
-//            ->get('current_stage')->take(1)[0]->current_stage;
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
 //
-//        DB::table('process_stages as ps')
-//            ->where('stage_number', '=',  $request->stage)
-//            ->where('process_id', '=', $request->process_id)
-//            ->update([
-//                'status' => 'Подписано',
-//                'done_by' => $request->user()->id,
-//                'comment' => $request->comment,
-//                'last_edited_date' => date("Y-m-d H:i:s")
-//            ]);
-//
-//        if ($request->stage < $last_stage){
-//
-//            DB::table('processes')
-//                ->where('process_id', '=', $request->process_id)
-//                ->update([
-//                    'last_change_date' => date("Y-m-d H:i:s"),
-//                    'current_stage' => intval($current_stage) + 1
-//                ]);
-//        }
-//        if ($request->stage === $last_stage){
-//            DB::table('processes')
-//                ->where('process_id', '=', $request->process_id)
-//                ->update([
-//                    'is_closed' => 1,
-//                    'closed_date' => date("Y-m-d H:i:s")
-//                    ]);
-//        }
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Подписано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
+
+        if (intval($request->stage) < intval($last_stage)){
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) + 1
+                ]);
+        }
+        if (intval($request->stage) === intval($last_stage)){
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                    ]);
+        }
 
 
-
-        $comment = $request->comment;
-        return $request;
-        //return redirect()->back();
+        return redirect('/ongoing');
     }
 
     public function toReject(Request $request, $doc_id)
