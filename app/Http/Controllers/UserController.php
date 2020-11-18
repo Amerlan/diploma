@@ -178,8 +178,9 @@ class UserController extends Controller
                 ->groupBy('dl_mail')
                 ->groupBy('email')
                 ->groupBy('name')
+                ->groupBy('url')
                 ->select('name', 'dl_id', 'dl_mail',
-                    'email')
+                    'email', 'url')
                 ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
                 ->where('users.id', '=', $request->user()->id)
                 ->get()
