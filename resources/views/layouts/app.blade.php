@@ -103,7 +103,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if (auth()->check())
                         @if (!auth()->user()->isAdmin())
-                            <a class="collapse-item" href="{{route('create_process')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                            <a class="collapse-item" href="{{route('create_process_list')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
                         @endif
                     @endif
                     @if (auth()->check())
@@ -305,7 +305,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            <img class="img-profile rounded-circle" src="{{ asset('design/img/ilyas.png') }}">
+                            <img class="img-profile rounded-circle" src={{ Auth::user()->url}}>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

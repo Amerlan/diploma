@@ -29,7 +29,7 @@ class DocumentController extends Controller
         $document->stageCount = $request->stageCount;
 
         $document->save();
-        return redirect('ongoing_by');
+        return redirect('ongoing');
     }
 
 

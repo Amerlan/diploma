@@ -48,6 +48,12 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('role_id')->take(1)[0]->role_id;
 
+
+        $last_stage = DB::table('processes as p')
+            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
+            ->where('p.process_id', '=', $request->process_id)
+            ->get('stageCount')->take(1)[0]->stageCount;
+
 //        if ($request->user()->authorizeRoles([$validator_role]) ){
 //
 //            return $request;
@@ -57,56 +63,41 @@ class UserController extends Controller
 //            ->where('p.process_id', '=', $request->process_id)
 //            ->get('stageCount')->take(1)[0]->stageCount;
 //
-//        $current_stage = DB::table('processes')
-//            ->where('process_id', '=', $request->process_id)
-//            ->get('current_stage')->take(1)[0]->current_stage;
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
 //
-//        DB::table('process_stages as ps')
-//            ->where('stage_number', '=',  $request->stage)
-//            ->where('process_id', '=', $request->process_id)
-//            ->update([
-//                'status' => 'Подписано',
-//                'done_by' => $request->user()->id,
-//                'comment' => $request->comment,
-//                'last_edited_date' => date("Y-m-d H:i:s")
-//            ]);
-//
-//        if ($request->stage < $last_stage){
-//
-//            DB::table('processes')
-//                ->where('process_id', '=', $request->process_id)
-//                ->update([
-//                    'last_change_date' => date("Y-m-d H:i:s"),
-//                    'current_stage' => intval($current_stage) + 1
-//                ]);
-//        }
-//        if ($request->stage === $last_stage){
-//            DB::table('processes')
-//                ->where('process_id', '=', $request->process_id)
-//                ->update([
-//                    'is_closed' => 1,
-//                    'closed_date' => date("Y-m-d H:i:s")
-//                    ]);
-//        }
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Подписано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
+
+        if (intval($request->stage) < intval($last_stage)){
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) + 1
+                ]);
+        }
+        if (intval($request->stage) === intval($last_stage)){
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                    ]);
+        }
 
 
-
-
-
-//        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-//        $doc_type = $document->get('document_type')->take(1)[0]->document_type;
-//        $max_stage = DB::table('document_types')
-//            ->where('document_type', $doc_type)
-//            ->get('stageCount')->take(1)[0]->stageCount; // get Total amount of stages
-//        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-//        $document->update(['current_stage' => intval($current_stage)+1]); // increment our stage because of signing
-//        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-//
-//
-
-
-
-        return redirect()->back();
+        return redirect('/ongoing');
     }
 
     public function toReject(Request $request, $doc_id)
@@ -117,17 +108,7 @@ class UserController extends Controller
         $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
         $document->update(['is_rejected' => True]);
 
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = null;
-//        $stages->rejected_by = $request->user()->id;
-//        $stages->comment = $request->comment;
-//        $stages.save();
-
-        return redirect()->back();
+       return redirect()->back();
     }
 
     public function toReturn(Request $request, $doc_id)
@@ -137,17 +118,6 @@ class UserController extends Controller
         if ($current_stage != 1) {
             $document->update(['current_stage' => ($current_stage - 1)]);
         }
-//        $document->update('executor_id', $previous); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ИЗМЕНЕНИЯ НАЗАД.
-
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = $request->user()->id;
-//        $stages->rejected_by = null;
-//        $stages->comment = $request->comment;
-//        $stages.save();
 
         return redirect()->back();
     }
@@ -183,21 +153,22 @@ class UserController extends Controller
     {
         if ($request->user()) {
 
-            $users = DB::table('users')
+            $user = DB::table('users')
                 ->join('role_user', 'role_user.user_id', '=', 'users.id')
                 ->join('roles', 'role_id', '=', 'roles.id')
                 ->groupBy('dl_id')
                 ->groupBy('dl_mail')
                 ->groupBy('email')
                 ->groupBy('name')
+                ->groupBy('url')
                 ->select('name', 'dl_id', 'dl_mail',
-                    'email')
+                    'email', 'url')
                 ->selectRaw('GROUP_CONCAT(role_name SEPARATOR ", ") as roles')
                 ->where('users.id', '=', $request->user()->id)
                 ->get()
                 ->all();
 
-            return $users;
+                //return $user;
                 return view('profile', compact('user'));
         }
 

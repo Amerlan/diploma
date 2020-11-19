@@ -8,6 +8,7 @@ return [
     'add' => 'Добавить',
     'list' => 'Список',
     'roles' => 'Роли',
+    'role'=> 'Роль',
     'doc_settings' => 'Настройки документов',
     'customize' => 'Настроить',
     'parameters' => 'Параметры',
@@ -88,6 +89,8 @@ return [
     'reject'=> 'Отклонить',
     'return'=> 'Возвратить',
     'export_document' => 'Экспортировать документ',
+    'details'=> 'Детали',
+    'more_details'=> 'Подробнее',
 
 ];
 

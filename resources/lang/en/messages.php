@@ -8,6 +8,7 @@ return [
     'add' => 'Add',
     'list' => 'List',
     'roles' => 'Roles',
+    'role'=> 'Role',
     'doc_settings' => 'Documents settings',
     'customize' => 'Customize',
     'parameters' => 'Parameters',
@@ -85,6 +86,8 @@ return [
     'sign'=> 'Sign',
     'reject'=> 'Reject',
     'return'=> 'Return',
+    'details'=> 'Details',
+    'more_details'=> 'More details',
 
 ];
 

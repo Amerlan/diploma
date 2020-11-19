@@ -2,24 +2,28 @@
 
 @section('content')
     <div class="container-fluid">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-            <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
-        </ol>
-    </nav>
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">@lang('messages.fill_process')</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
-    </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
+                <li class="breadcrumb-item"><a href="{{route('ongoing')}}">@lang('messages.ongoing')</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{$process[0]->document_name}}
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">{{$process[0]->document_name}}</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Экспортировать документ</a>
+        </div>
 
         <!-- Content Row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">{{$document[0]->document_name}}</h5>
+                    <h5 class="card-header">{{$process[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
@@ -60,13 +64,29 @@
                                     <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <form name="comment_form" action="{{route('sign')}}" method="POST">
+                        @csrf
+                        <input hidden="true" name="process_id" value="{{$process[0]->process_id}}">
+                        <input hidden="true" name="stage" value="{{$process[0]->current_stage}}">
+                        <label>Comment</label>
+                        <textarea class="form-control" name="comment" rows="7" placeholder="Enter..."></textarea>
+                        <div class="form-group">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>Запустить процесс</button>
+                                    <button class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
+                                    <br><br>
+                                    <button class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
+                                    <br><br>
+                                    <button class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- Cause Modal -->
@@ -273,5 +293,5 @@
         </div>
 
     </div>
-
+    <!-- /.container-fluid -->
 @endsection
