@@ -81,9 +81,9 @@
                                 <div class="col-12">
                                     <button onclick="document.getElementById('act').value='sign'" class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
                                     <br><br>
-                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
+                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
                                     <br><br>
-                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
+                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
                                 </div>
                             </div>
                         </div>

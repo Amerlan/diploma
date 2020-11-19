@@ -38,9 +38,8 @@ class UserController extends Controller
     }
 
 
-    public function toSign(Request $request)
+    public function toSign($request)
     {
-        return $request;
 
 //        $validator_role = DB::table('processes')
 //            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
@@ -54,11 +53,6 @@ class UserController extends Controller
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
             ->get('stageCount')->take(1)[0]->stageCount;
-
-//        if ($request->user()->authorizeRoles([$validator_role]) ){
-//
-//            return $request;
-//        }
 
 
         $current_stage = DB::table('processes')
@@ -98,12 +92,8 @@ class UserController extends Controller
         return redirect('/ongoing');
     }
 
-    public function toReject(Request $request)
+    public function toReject($request)
     {
-        $current_stage = DB::table('processes')
-            ->where('process_id', '=', $request->process_id)
-            ->get('current_stage')->take(1)[0]->current_stage;
-
         DB::table('process_stages as ps')
             ->where('stage_number', '=',  $request->stage)
             ->where('process_id', '=', $request->process_id)
@@ -119,6 +109,7 @@ class UserController extends Controller
                 ->where('process_id', '=', $request->process_id)
                 ->update([
                     'is_rejected' => 1,
+                    'is_closed' => 1,
                     'last_change_date' => date("Y-m-d H:i:s"),
                     'closed_date' => date("Y-m-d H:i:s")
                 ]);
@@ -126,61 +117,46 @@ class UserController extends Controller
         return redirect('/ongoing');
     }
 
-    public function toReturn(Request $request)
+    public function toReturn($request)
     {
         $current_stage = DB::table('processes')
             ->where('process_id', '=', $request->process_id)
             ->get('current_stage')->take(1)[0]->current_stage;
 
-        if ($current_stage===1){
+        if (intval($current_stage)===1){
             return 0;
         }
         else{
-            return 1;
-        }
-        DB::table('process_stages as ps')
-            ->where('stage_number', '=',  $request->stage)
-            ->where('process_id', '=', $request->process_id)
-            ->update([
-                'status' => 'Подписано',
-                'done_by' => $request->user()->id,
-                'comment' => $request->comment,
-                'last_edited_date' => date("Y-m-d H:i:s")
-            ]);
-
-        if (intval($request->stage) < intval($last_stage)){
+            DB::table('process_stages as ps')
+                ->where('stage_number', '=',  $request->stage)
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'status' => 'Возвращено на доработку',
+                    'done_by' => $request->user()->id,
+                    'comment' => $request->comment,
+                    'last_edited_date' => date("Y-m-d H:i:s")
+                ]);
 
             DB::table('processes')
                 ->where('process_id', '=', $request->process_id)
                 ->update([
                     'last_change_date' => date("Y-m-d H:i:s"),
-                    'current_stage' => intval($current_stage) + 1
+                    'current_stage' => intval($current_stage) - 1
                 ]);
-        }
-        if (intval($request->stage) === intval($last_stage)){
-            DB::table('processes')
-                ->where('process_id', '=', $request->process_id)
-                ->update([
-                    'is_closed' => 1,
-                    'last_change_date' => date("Y-m-d H:i:s"),
-                    'closed_date' => date("Y-m-d H:i:s")
-                ]);
+            return redirect('/ongoing');
         }
 
-
-        return redirect('/ongoing');
     }
 
     public function sign_return_reject(Request $request){
-//        return $request->action === 'sign';
         if ($request->action === 'sign'){
             return $this->toSign($request);
         }
         if ($request->action === 'return'){
-            $this->toReturn($request);
+            return $this->toReturn($request);
         }
         if ($request->action === 'reject'){
-            $this->toReject($request);
+            return $this->toReject($request);
         }
     }
 
