@@ -38,14 +38,16 @@ class UserController extends Controller
     }
 
 
-    public function toSign(Request $request)
+    public function toSign($request)
     {
-        $validator_role = DB::table('processes')
-            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
-            ->whereColumn('current_stage', '=', 'sign_order')
-            ->where('current_stage', '=', $request->stage)
-            ->where('process_id', '=', $request->process_id)
-            ->get('role_id')->take(1)[0]->role_id;
+
+//        $validator_role = DB::table('processes')
+//            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
+//            ->whereColumn('current_stage', '=', 'sign_order')
+//            ->where('current_stage', '=', $request->stage)
+//            ->where('process_id', '=', $request->process_id)
+//            ->get('role_id')->take(1)[0]->role_id;
+
 
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
@@ -53,83 +55,123 @@ class UserController extends Controller
             ->get('stageCount')->take(1)[0]->stageCount;
 
 
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
 
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Подписано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
 
-        $comment = $request->comment;
-        return $request;
-        //return redirect()->back();
-    }
+        if (intval($request->stage) < intval($last_stage)){
 
-    public function toReject(Request $request, $doc_id)
-    {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-
-        $document->update(['current_stage' => -1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-        $document->update(['is_rejected' => True]);
-
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = null;
-//        $stages->rejected_by = $request->user()->id;
-//        $stages->comment = $request->comment;
-//        $stages.save();
-
-        return redirect()->back();
-    }
-
-    public function toReturn(Request $request, $doc_id)
-    {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        if ($current_stage != 1) {
-            $document->update(['current_stage' => ($current_stage - 1)]);
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) + 1
+                ]);
         }
-//        $document->update('executor_id', $previous); ВОТ ТУТ НАДО ПОДУМАТЬ КОМУ ПЕРЕДАВАТЬ НА ИЗМЕНЕНИЯ НАЗАД.
+        if (intval($request->stage) === intval($last_stage)){
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                    ]);
+        }
 
-        // Затравочка на будущее
-//        $stages = new Document_stages();
-//        $stages->document_id = $doc_id;
-//        $stages->current_role_id = $request->user()->user_role - 1;
-//        $stages->signed_by = null;
-//        $stages->returned_by = $request->user()->id;
-//        $stages->rejected_by = null;
-//        $stages->comment = $request->comment;
-//        $stages.save();
 
-        return redirect()->back();
+        return redirect('/ongoing');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function toReject($request)
+    {
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => 'Отказано',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
+
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_rejected' => 1,
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                ]);
+
+        return redirect('/ongoing');
+    }
+
+    public function toReturn($request)
+    {
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
+
+        if (intval($current_stage)===1){
+            return 0;
+        }
+        else{
+            DB::table('process_stages as ps')
+                ->where('stage_number', '=',  $request->stage)
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'status' => 'Возвращено на доработку',
+                    'done_by' => $request->user()->id,
+                    'comment' => $request->comment,
+                    'last_edited_date' => date("Y-m-d H:i:s")
+                ]);
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) - 1
+                ]);
+            return redirect('/ongoing');
+        }
+
+    }
+
+    public function sign_return_reject(Request $request){
+        if ($request->action === 'sign'){
+            return $this->toSign($request);
+        }
+        if ($request->action === 'return'){
+            return $this->toReturn($request);
+        }
+        if ($request->action === 'reject'){
+            return $this->toReject($request);
+        }
+    }
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         if ($request->user()) {

@@ -52,7 +52,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 //    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
 //    TEST
-    Route::post('/sign', [Controllers\UserController::class, 'toSign'])->name('sign');
+    Route::post('/sign_return_reject', [Controllers\UserController::class, 'sign_return_reject'])->name('action');
+
 //    TEST
 
     // For ADMIN only
