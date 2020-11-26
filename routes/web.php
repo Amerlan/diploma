@@ -63,6 +63,10 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
+    Route::get('/templates', function () {
+        return view('document_templates/application');
+    });
+
 });
 
 Route::get('setlocale/{lang}', function ($lang) {

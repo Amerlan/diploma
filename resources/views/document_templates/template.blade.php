@@ -19,6 +19,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <h5 class="card-header">{{$document[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">

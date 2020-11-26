@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
+                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">Шаблоны документов</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Заявление</li>
             </ol>
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">@lang('messages.fill_process')</h1>
+            <h1 class="h3 mb-0 text-gray-800">Заявление</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
-        <!-- Content Row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -25,8 +25,10 @@
                                 <div class="col-4 offset-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            Декану факультета "Компьютерные технологии и кибербезопасность" <u>Уатбаеву М.М.</u>
-                                            от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1901 - <u>Жуанышева Ильяса Оразгалиевича</u>
+                                            @if( $str->a == '')
+                                            Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
+                                            от студента {{$users[1]->cource_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -35,13 +37,21 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <h2 class="text-center">Заявление</h2>
+                                    @if(auth()->check())
+                                        @if(auth()->user()->isAdmin())
+                                            <h2 class="text-center">{{$document[0]->document_name}}</h2>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-8 offset-2">
-                                    Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                    <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                    @if(auth()->check())
+                                        @if(auth()->user()->isAdmin())
+                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
+                                         <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$users[1]->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -57,11 +67,6 @@
                             <div class="row mt-3 pb-5">
                                 <div class="col-2 offset-8">
                                     <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-12">
-                                    <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>Запустить процесс</button>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +275,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 @endsection
