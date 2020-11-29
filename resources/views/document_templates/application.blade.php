@@ -25,9 +25,12 @@
                                 <div class="col-4 offset-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            @if( $str->a == '')
+                                            @if( $users != null)
                                             Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
                                             от студента {{$users[1]->cource_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
+                                            @else
+                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Уатбаеву М.М.</u>
+                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1901 - <u>Жуанышева Ильяса Оразгалиевича</u>
                                             @endif
                                         </div>
                                     </div>
@@ -46,17 +49,18 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-8 offset-2">
-                                    @if(auth()->check())
-                                        @if(auth()->user()->isAdmin())
+                                    @if($users != null)
                                         Прошу Вас продлить мне срок возможности сдачи РК в связи с
                                          <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$users[1]->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
-                                        @endif
+                                    @else
+                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
+                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
                                     @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-4 offset-8">
-                                    Дата: <b>13/12/2020</b>
+                                    Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
                             <div class="row mt-3">

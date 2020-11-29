@@ -46,7 +46,7 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-4 offset-8">
-                                    Дата: <b>13/12/2020</b>
+                                    Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
                             <div class="row mt-3">

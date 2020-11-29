@@ -64,8 +64,9 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
     Route::get('/templates', function () {
-        return view('document_templates/application');
-    });
+        $users = null;
+        return view('document_templates/application', compact('users'));
+    })->name('templates');
 
 });
 

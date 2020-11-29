@@ -18,10 +18,13 @@
         <div class="col-12">
             <div class="list-group">
                 @foreach($documents as $document)
-                    <a href={{route('create_proc', ['document_id' => $document->id])}}>
+                    <a class="list-group-item list-group-item-action" href={{route('create_proc', ['document_id' => $document->id])}}>
                         {{$document->document_name}}
                     </a>
                 @endforeach
+                <a class="list-group-item list-group-item-action" href={{route('templates')}}>
+                    Заявление(шаблон)
+                </a>
             </div>
         </div>
     </div>
