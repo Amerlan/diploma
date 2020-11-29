@@ -22,9 +22,6 @@
                         {{$document->document_name}}
                     </a>
                 @endforeach
-                <a class="list-group-item list-group-item-action" href={{route('templates')}}>
-                    Заявление(шаблон)
-                </a>
             </div>
         </div>
     </div>

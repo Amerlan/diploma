@@ -65,7 +65,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/templates', function () {
         $users = null;
-        return view('document_templates/application', compact('users'));
+        $documents = null;
+        return view('document_templates/application', compact('users', 'documents'));
     })->name('templates');
 
 });

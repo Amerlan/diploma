@@ -29,8 +29,8 @@
                                             Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
                                             от студента {{$users[1]->cource_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
                                             @else
-                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Уатбаеву М.М.</u>
-                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1901 - <u>Жуанышева Ильяса Оразгалиевича</u>
+                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Аубакирову Б.А.</u>
+                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1701 - <u>Тохтарова Амерлана Аркатовича</u>
                                             @endif
                                         </div>
                                     </div>
@@ -40,10 +40,10 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    @if(auth()->check())
-                                        @if(auth()->user()->isAdmin())
-                                            <h2 class="text-center">{{$document[0]->document_name}}</h2>
-                                        @endif
+                                    @if($documents != null)
+                                    <h2 class="text-center">{{$document[0]->document_name}}</h2>
+                                    @else
+                                    <h2 class="text-center">Заявление</h2>
                                     @endif
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                                          <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$users[1]->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
                                     @else
                                         Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием короной и невозможности сдачи рубежного сосания по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы не является подлинными и достоверными.
                                     @endif
                                 </div>
                             </div>
