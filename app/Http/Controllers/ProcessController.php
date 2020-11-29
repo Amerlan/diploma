@@ -123,8 +123,10 @@ class ProcessController extends Controller
 
             $process = DB::table('processes')->where('process_id', '=', $id)
                 ->get();
-
-            return view('process_details', compact('process'));
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->get();
+            return compact('process', 'process_stages');
+            return view('process_details', compact('process', 'process_stages'));
         }
     }
 
