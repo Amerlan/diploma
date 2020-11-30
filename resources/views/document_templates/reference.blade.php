@@ -7,12 +7,12 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
                 <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">Шаблоны документов</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Заявление</li>
+                <li class="breadcrumb-item active" aria-current="page">Справка</li>
             </ol>
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Заявление</h1>
+            <h1 class="h3 mb-0 text-gray-800">Справка</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
@@ -22,16 +22,13 @@
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
-                                <div class="col-4 offset-8">
+                                <div class="col-4 offset-3">
                                     <div class="row">
                                         <div class="col-12">
-                                            @if( $users != null)
-                                            Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
-                                            от студента {{$users[1]->course_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
-                                            @else
-                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Аубакирову Б.А.</u>
-                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1701 - <u>Тохтарова Амерлана Аркатовича</u>
-                                            @endif
+                                            <p class="western" align=center style="margin-bottom: 0in">
+                                            <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="{{ asset('design/img/university_logo_with_name.png')}}" NAME="Рисунок 1" ALIGN=BOTTOM BORDER=0></P>
+                                            <P CLASS="western" STYLE="margin-left: -0.5in; margin-bottom: 0in"><BR></BR>
+                                            </P>
                                         </div>
                                     </div>
                                 </div>
@@ -41,20 +38,38 @@
                             <div class="row mt-5">
                                 <div class="col-12">
                                     @if($documents != null)
-                                    <h2 class="text-center">{{$document[0]->document_name}}</h2>
+                                        <h2 class="text-center">{{$document[0]->document_name}}</h2>
                                     @else
-                                    <h2 class="text-center">Заявление</h2>
+                                        <h2 class="text-center">Справка</h2>
                                     @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-8 offset-2">
                                     @if($users != null)
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                         <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$users[1]->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                        &nbsp;&nbsp;&nbsp; Дана {{$users[1]->name}} {{$users[1]->dateOfBirth}}
+                                        &nbsp;&nbsp;&nbsp; В том, что он(а) действительно является студентом {{$users[1]->course_number}} очного отделения в АО «Международный университет информационных технологий»  по специальности
+                                        {{$users[1]->speciality_name}}<br>
+                                        Гос.лицензия Серия АБ  №   0064060 от  29.05.2009 год
+                                        без ограничения срока
+                                        <br><br>
+                                        Справка действительна на {{date('Y')}} - {{$trialExpires = \Carbon\Carbon::now()->addYear(1)->year}} учебный год<br>
+                                        Справка выдана для предъявления по месту требования<br>
+                                        Срок обучения в учебном заведении 4 (четыре) года.<br>
+                                        Период обучения с {{$users[1]->date_of_enrollment}} по {{$users[1]->expiration_date}}
                                     @else
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием короной и невозможности сдачи рубежного сосания по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы не является подлинными и достоверными.
+                                        &nbsp;&nbsp;&nbsp; Дана  Әкімбек Дархан Асхатұлы 26.10.1999г.р.<br><br>
+                                        &nbsp;&nbsp;&nbsp; В том, что он(а) действительно является студентом 4-курса очного отделения в АО «Международный университет информационных технологий»  по специальности
+                                        5B070400 - Вычислительная техника и программное обеспечение<br>
+                                        Гос.лицензия Серия АБ  №   0064060 от  29.05.2009 год
+                                        без ограничения срока
+                                        <br><br>
+
+
+                                        Справка действительна на {{date('Y')}} - {{$trialExpires = \Carbon\Carbon::now()->addYear(1)->year}} учебный год<br>
+                                        Справка выдана для предъявления по месту требования<br>
+                                        Срок обучения в учебном заведении 4 (четыре) года.<br>
+                                        Период обучения с 01.09.2017г. по 30.06.2021г.
                                     @endif
                                 </div>
                             </div>

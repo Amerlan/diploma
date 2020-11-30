@@ -63,10 +63,22 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
-    Route::get('/templates', function () {
+    Route::get('/templates/application', function () {
         $users = null;
         $documents = null;
         return view('document_templates/application', compact('users', 'documents'));
+    })->name('templates');
+
+    Route::get('/templates/reference', function () {
+        $users = null;
+        $documents = null;
+        return view('document_templates/reference', compact('users', 'documents'));
+    })->name('templates');
+
+    Route::get('/templates/bypass_sheet', function () {
+        $users = null;
+        $documents = null;
+        return view('document_templates/bypass_sheet', compact('users', 'documents'));
     })->name('templates');
 
 });

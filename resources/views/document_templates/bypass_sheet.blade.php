@@ -5,13 +5,13 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
+                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">Шаблоны документов</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Обходной лист</li>
             </ol>
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">@lang('messages.fill_process')</h1>
+            <h1 class="h3 mb-0 text-gray-800">Обходной лист</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
@@ -19,13 +19,35 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">{{$document[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
                                 <div class="col-4 offset-4">
                                     <div class="row">
                                         <div class="col-12">
+                                            @if( $users != null)
+                                                <p class="western" align=center style="margin-bottom: 0in">
+                                                    <font SIZE=2 style="font-size: 11pt"><b>МЕЖДУНАРОДНЫЙ УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ</b></font></p>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="{{ asset('design/img/university_logo.png')}}" NAME="Рисунок 1" ALIGN=BOTTOM WIDTH=97 HEIGHT=34 BORDER=0></P>
+                                                <P CLASS="western" STYLE="margin-left: -0.5in; margin-bottom: 0in"><BR></BR>
+                                                </P>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=2 STYLE="font-size: 11pt"><B>ОБХОДНОЙ
+                                                            ЛИСТ</B></FONT><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="kk-KZ"><B>
+                                            </B></SPAN></FONT><FONT SIZE=2 STYLE="font-size: 11pt"><B>№ _____</B></FONT></P>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=2 STYLE="font-size: 11pt">об
+                                                        отсутствии задолженности у студента
+                                                        при отчислении</FONT></P>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=2 STYLE="font-size: 11pt">Ф.И.О.
+                                                        студента
+                                                        {{$users[1]->name}}</FONT></P>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=2 STYLE="font-size: 11pt">Специальность
+                                                        {{$users[1]->speciality_name}} Группа {{$users[1]->group}}</FONT></P>
+                                                <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=2 STYLE="font-size: 11pt">Номер
+                                                        и дата приказа отчисления
+                                                        ________________________________________</FONT></P>
+                                                <P CLASS="western" ALIGN=JUSTIFY STYLE="margin-bottom: 0in"><BR>
+                                                </P>
+                                            @else
                                             <p class="western" align=center style="margin-bottom: 0in">
                                                 <font SIZE=2 style="font-size: 11pt"><b>МЕЖДУНАРОДНЫЙ УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ</b></font></p>
                                             <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="{{ asset('design/img/university_logo.png')}}" NAME="Рисунок 1" ALIGN=BOTTOM WIDTH=97 HEIGHT=34 BORDER=0></P>
@@ -47,6 +69,7 @@
                                                     ________________________________________</FONT></P>
                                             <P CLASS="western" ALIGN=JUSTIFY STYLE="margin-bottom: 0in"><BR>
                                             </P>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
