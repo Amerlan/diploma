@@ -25,6 +25,7 @@
                 <th>@lang('messages.last_change_date')</th>
                 <th>@lang('messages.is_rejected')</th>
                 <th>@lang('messages.is_closed')</th>
+                <th>@lang('messages.details')</th>
             </tr>
             </thead>
             <tbody>
@@ -38,6 +39,9 @@
                     <td>{{$process->last_change_date}}</td>
                     @if($process->is_rejected == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
                     @if($process->is_closed == 1) <td>@lang('messages.yes') <i class="fas fa-circle" style="color:firebrick"></i> </td>  @else  <td>@lang('messages.no') <i class="fas fa-circle" style="color:green"></i></td> @endif
+                    <td>
+                        <a href={{ route('my_process_details',['id' => $process ->process_id] )}} class="btn btn-primary btn-sm">@lang('messages.more_details')</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
