@@ -18,7 +18,7 @@
                 <div class="card-body box-profile">
                     <div class="text-center">
                         <img class="img-profile rounded-circle" src={{$user->url}}>
-                        <h3 id="hui"></h3>
+                        <h3 id="name"></h3>
                         <p class="text-muted">@lang('messages.role') - {{$user->roles}}</p>
                         <ul class="list-group">
                             <li class="list-group-item">
@@ -42,8 +42,7 @@
     <script>
     const user = <?php  echo json_encode($user);?>;
     const str = `{{$user->show_name}}`;
-    console.log(str);
-    var element = document.getElementById("hui");
+    var element = document.getElementById("name");
     element.innerHTML = str;
 </script>
 @endsection

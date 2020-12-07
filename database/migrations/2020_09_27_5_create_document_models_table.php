@@ -18,6 +18,7 @@ class CreateDocumentModelsTable extends Migration
             $table->string('document_name', 100)->unique();
             $table->string('document_type', 100);
             $table->unsignedSmallInteger('stageCount');
+            $table->string('reason')->nullable();
 
             # foreign keys
             $table->foreign('document_type')->references('document_type')->on('document_types');
