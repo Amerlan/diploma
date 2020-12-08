@@ -24,13 +24,14 @@ class CreateUsersTable extends Migration
             $table->string('dl_mail')->unique();
             $table->string('url');
             $table->string('show_name')->default('Дана ${user.name} В том, что он(а) действительно является студентом ${user.email}');
-//            $table->date('dateOfBirth');
-//            $table->unsignedSmallInteger('course_number');
-//            $table->string('speciality_name');
-//            $table->date('enrollment_date');
-//            $table->date('graduation_date');
-            //$table->unsignedTinyInteger('department');
-//            $table->foreignId('user_role');
+            $table->date('dateOfBirth');
+            $table->unsignedSmallInteger('course_number');
+            $table->string('speciality_name');
+            $table->string('speciality_code');
+            $table->string('faculty_name'); // add facultets FK table
+            $table->date('enrollment_date');
+            $table->date('graduation_date');
+//            $table->unsignedTinyInteger('department');
             $table->timestamps();
 
             # Foreign keys
