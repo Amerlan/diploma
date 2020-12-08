@@ -35,7 +35,6 @@ class CreateUsersTable extends Migration
 
             # Foreign keys
             //$table->foreign('department')->references('dep_id')->on('departments');
-//            $table->foreign('user_role')->references('id')->on('roles');
         });
     }
 
