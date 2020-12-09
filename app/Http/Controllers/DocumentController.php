@@ -27,9 +27,16 @@ class DocumentController extends Controller
             ->where('roles.role_name', '=', 'dean')
             ->get()
             ->all();
+        $dav = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'DAV')
+            ->get()
+            ->all();
+
 //        return $document;
         $user = $request->user();
-        return view('/document_templates/application', compact('document', 'deans', 'user'));
+        return view('/document_templates/application', compact('document', 'deans', 'user', 'dav'));
     }
 
 
