@@ -12,7 +12,7 @@
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Заявление</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{$document[0]->document_name}}</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
@@ -24,14 +24,7 @@
                             <div class="row">
                                 <div class="col-4 offset-8">
                                     <div class="row">
-                                        <div class="col-12">
-                                            @if( $users != null)
-                                            Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
-                                            от студента {{$users[1]->course_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
-                                            @else
-                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Аубакирову Б.А.</u>
-                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1701 - <u>Тохтарова Амерлана Аркатовича</u>
-                                            @endif
+                                        <div class="col-12" id="header">
                                         </div>
                                     </div>
                                 </div>
@@ -40,22 +33,11 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    @if($documents != null)
-                                    <h2 class="text-center">{{$document[0]->document_name}}</h2>
-                                    @else
-                                    <h2 class="text-center">Заявление</h2>
-                                    @endif
+                                    {{$document[0]->title}}
                                 </div>
                             </div>
                             <div class="row mt-5">
-                                <div class="col-8 offset-2">
-                                    @if($users != null)
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                         <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$document->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
-                                    @else
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием короной и невозможности сдачи рубежного сосания по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы не является подлинными и достоверными.
-                                    @endif
+                                <div class="col-8 offset-2" id="body">
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -280,5 +262,14 @@
             </div>
         </div>
     </div>
-
+    <script>
+        const user = <?php  echo json_encode($user);?>;
+        const document = <?php  echo json_encode($document);?>;
+        const header = `{{$document->header}}`;
+        const body = `{{$document->body}}`;
+        var elementHeader = document.getElementById("header");
+        elementHeader.innerHTML = header;
+        var elementBody = document.getElementById("body");
+        elementBody.innerHTML = body;
+    </script>
 @endsection

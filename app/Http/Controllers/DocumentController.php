@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 class DocumentController extends Controller
 {
 
+    public function show_document(Request $request, $document_name)
+    {
+
+    }
+
 
     // Shows page with creating new document form
     public function create()
