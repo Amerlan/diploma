@@ -191,7 +191,7 @@ class UserController extends Controller
                 ->get()
                 ->all();
 
-                //return $user;
+//                return $user;
                 return view('profile', compact('user'));
         }
 

@@ -23,13 +23,18 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('dl_id')->unique();
             $table->string('dl_mail')->unique();
             $table->string('url');
-            //$table->unsignedTinyInteger('department');
-//            $table->foreignId('user_role');
+            $table->date('dateOfBirth');
+            $table->unsignedSmallInteger('course_number');
+            $table->string('speciality_name');
+            $table->string('speciality_code');
+            $table->string('faculty_name'); // add facultets FK table
+            $table->date('enrollment_date');
+            $table->date('graduation_date');
+//            $table->unsignedTinyInteger('department');
             $table->timestamps();
 
             # Foreign keys
             //$table->foreign('department')->references('dep_id')->on('departments');
-//            $table->foreign('user_role')->references('id')->on('roles');
         });
     }
 

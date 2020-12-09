@@ -18,9 +18,27 @@ class CreateDocumentModelsTable extends Migration
             $table->string('document_name', 100)->unique();
             $table->string('document_type', 100);
             $table->unsignedSmallInteger('stageCount');
+            $table->Longtext
+            $table->string('reason')->nullable();
+            $table->string('new_fio')->nullable();
+            $table->string('new_speciality')->nullable();
+            $table->string('new_speciality_code')->nullable();
+            $table->unsignedSmallInteger('sum_of_return');
+            $table->string('new_university')->nullable();
+            $table->date('academic_year')->nullable();
+            $table->string('subject')->nullable();
+            $table->unsignedFloat('midterm_grade')->nullable();
+            $table->unsignedFloat('endterm_grade')->nullable();
+            $table->unsignedFloat('exam_grade')->nullable();
+            $table->foreignId('teacher')->nullable();
+//            $table->string('new_university_speciality')->nullable();
+//            $table->string('new_university_speciality_code')->nullable();
+
+            $table->unsignedTinyInteger('semester')->nullable();
 
             # foreign keys
             $table->foreign('document_type')->references('document_type')->on('document_types');
+            $table->foreign('teacher')->references('id')->on('users');
         });
     }
 
