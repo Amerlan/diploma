@@ -15,7 +15,6 @@ class DocumentController extends Controller
         $document = DB::table('documents')
             ->where('document_name', '=', $document_name)
             ->get()->all();
-//        return $document;
         $deans = DB::table('users')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')

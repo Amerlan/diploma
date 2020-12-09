@@ -14,26 +14,22 @@ class CreateDocumentDetailsTable extends Migration
     public function up()
     {
         Schema::create('document_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id')->unique();
-            $table->Longtext('header');
-            $table->string('title');
-            $table->Longtext('body');
-            $table->string('reason')->nullable();
-            $table->string('new_fio')->nullable();
-            $table->string('new_speciality')->nullable();
-            $table->string('new_speciality_code')->nullable();
-            $table->unsignedSmallInteger('sum_of_return')->nullable();
-            $table->string('new_university')->nullable();
-            $table->date('academic_year')->nullable();
-            $table->string('subject')->nullable();
-            $table->unsignedFloat('midterm_grade')->nullable();
-            $table->unsignedFloat('endterm_grade')->nullable();
-            $table->unsignedFloat('exam_grade')->nullable();
-            $table->foreignId('teacher')->nullable();
+            $table->integer('id')->unsigned()->unique();
+            $table->boolean('reason')->default(False);
+            $table->boolean('new_fio')->default(False);
+            $table->boolean('new_speciality')->default(False);
+            $table->boolean('new_speciality_code')->default(False);
+            $table->boolean('sum_of_return')->default(False);
+            $table->boolean('new_university')->default(False);
+            $table->boolean('academic_year')->default(False);
+            $table->boolean('subject')->default(False);
+            $table->boolean('midterm_grade')->default(False);
+            $table->boolean('endterm_grade')->default(False);
+            $table->boolean('exam_grade')->default(False);
+            $table->boolean('teacher')->default(False);
 
             // FK
-            $table->foreign('document_name')->references('document_name')->on('documents');
+            $table->foreign('id')->references('id')->on('documents');
         });
     }
 
