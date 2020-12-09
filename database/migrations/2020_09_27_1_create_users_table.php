@@ -20,16 +20,16 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('secret_password');
             $table->rememberToken();
-            $table->unsignedBigInteger('dl_id')->unique();
+            $table->unsignedBigInteger('dl_id')->unique()->nullable();
             $table->string('dl_mail')->unique();
-            $table->string('url');
-            $table->date('dateOfBirth');
-            $table->unsignedSmallInteger('course_number');
-            $table->string('speciality_name');
-            $table->string('speciality_code');
-            $table->string('faculty_name'); // add facultets FK table
-            $table->date('enrollment_date');
-            $table->date('graduation_date');
+            $table->string('url')->nullable();
+            $table->date('dateOfBirth')->nullable();
+            $table->unsignedSmallInteger('course_number')->nullable();
+            $table->string('speciality_name')->nullable();
+            $table->string('speciality_code')->nullable();
+            $table->string('faculty_name')->nullable(); // add facultets FK table
+            $table->date('enrollment_date')->nullable();
+            $table->date('graduation_date')->nullable();
 //            $table->unsignedTinyInteger('department');
             $table->timestamps();
 
