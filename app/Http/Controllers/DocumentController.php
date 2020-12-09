@@ -30,7 +30,7 @@ class DocumentController extends Controller
         $dav = DB::table('users')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
-            ->where('roles.role_name', '=', 'DAV')
+            ->where('roles.role_name', '=', 'admin')
             ->get()
             ->all();
 
