@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
         $role_zafKafedroi = Role::where('role_name', 'zafKafedroi')->first();
         $role_adminKafedri = Role::where('role_name', 'adminKafedri')->first();
         $role_techer_zamena = Role::where('role_name', 'teacher_zamena')->first();
+        $role_dean = Role::where('role_name', 'dean')->first();
 
         $admin = new User();
         $admin->name = 'Admin Name';
@@ -30,6 +31,18 @@ class UserTableSeeder extends Seeder
         //$admin->department = 1;
         $admin->save();
         $admin->roles()->attach($role_admin);
+
+        $dean = new User();
+        $dean->name = 'Муса Исагали Мукатович';
+        $dean->email = 'dean@email.com';
+        $dean->password = bcrypt('secret');
+        $dean->secret_password = bcrypt('secret');
+        $dean->dl_id = 777;
+        $dean->dl_mail = '777@iitu.kz';
+        $dean->url = 'https://tmssl.akamaized.net/images/portrait/originals/168337-1471947753.jpg';
+        $dean->faculty_name = 'ДИТ';
+        $dean->save();
+        $dean->roles()->attach($role_dean);
 
         $zafKafedroi = new User();
         $zafKafedroi->name = 'zafKafedroi Name';
