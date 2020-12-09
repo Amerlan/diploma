@@ -11,15 +11,18 @@ class DocumentController extends Controller
 
     public function show_document(Request $request, $document_name)
     {
+//        return $document_name;
         $document = DB::table('documents')
             ->where('document_name', '=', $document_name)
             ->get()->all();
+//        return $document;
         $deans = DB::table('users')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->where('roles.role_name', '=', 'dean')
             ->get()
             ->all();
+//        return $deans;
         $user = $request->user();
         return view('/document_templates/application', compact('document', 'deans', 'user'));
     }

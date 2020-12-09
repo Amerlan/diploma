@@ -15,12 +15,22 @@ class CreateDocumentDetailsTable extends Migration
     {
         Schema::create('document_details', function (Blueprint $table) {
             $table->id();
-            $table->string('document_name');
-            $table->boolean('from_date');
-            $table->boolean('to_date');
-            $table->boolean('reason');
-            $table->boolean('subject');
-            $table->boolean('attachments');
+            $table->foreignId('id')->unique();
+            $table->Longtext('header');
+            $table->string('title');
+            $table->Longtext('body');
+            $table->string('reason')->nullable();
+            $table->string('new_fio')->nullable();
+            $table->string('new_speciality')->nullable();
+            $table->string('new_speciality_code')->nullable();
+            $table->unsignedSmallInteger('sum_of_return')->nullable();
+            $table->string('new_university')->nullable();
+            $table->date('academic_year')->nullable();
+            $table->string('subject')->nullable();
+            $table->unsignedFloat('midterm_grade')->nullable();
+            $table->unsignedFloat('endterm_grade')->nullable();
+            $table->unsignedFloat('exam_grade')->nullable();
+            $table->foreignId('teacher')->nullable();
 
             // FK
             $table->foreign('document_name')->references('document_name')->on('documents');

@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="list-group">
                 {{--@foreach($templates as $template)--}}
-                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_name' => 'Заявление'])}}">
+                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_name' => 'Заявление на допуск к учебе'])}}">
                         {{--{{$template->name}}--}} Заявление
                     </a>
                 {{--@endforeach--}}

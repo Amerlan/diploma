@@ -12,7 +12,7 @@
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{$document->document_name}}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{$document[0]->document_name}}</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
@@ -33,7 +33,7 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    {{$document->title}}
+                                    {{$document[0]->title}}
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -264,9 +264,12 @@
     </div>
     <script>
         const user = <?php  echo json_encode($user);?>;
-        const document = <?php  echo json_encode($document);?>;
-        const header = `{{$document->header}}`;
-        const body = `{{$document->body}}`;
+        const deans = <?php  echo json_encode($deans[0]);?>;
+        console.log(user);
+{{--        const doc = <?php  echo json_encode($document[0]);?>;--}}
+        const header = `{{$document[0]->header}}`;
+        console.log(header);
+        const body = `{{$document[0]->body}}`;
         var elementHeader = document.getElementById("header");
         elementHeader.innerHTML = header;
         var elementBody = document.getElementById("body");

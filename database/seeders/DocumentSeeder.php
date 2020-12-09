@@ -19,8 +19,8 @@ class DocumentSeeder extends Seeder
         $document->document_name = 'Заявление на допуск к учебе';
         $document->document_type = 'Заявление';
         $document->stageCount = 4;
-        $document->header = 'Декану факультета "${deans.faculty_name}}" ${deans.name}
-                             от студента ${user.course_number} курса специальности "${user.speciality_name}", группы ${user.group} - ${user.name}
+        $document->header = 'Декану факультета ${deans.faculty_name} ${deans.name}
+                             от студента ${user.course_number} курса специальности ${user.speciality_name}, группы ${user.group} - ${user.name}
                              ID студента: ${user.dl_id}';
         $document->title = 'Заявление';
         $document->body = 'Прошу Вас дать допуск к учебным занятиям и сдаче академической разницы по специальности ${user.speciality_name} ${user.course_number} курса дневного отделения.';
