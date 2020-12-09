@@ -18,7 +18,9 @@ class CreateDocumentModelsTable extends Migration
             $table->string('document_name', 100)->unique();
             $table->string('document_type', 100);
             $table->unsignedSmallInteger('stageCount');
-            $table->Longtext
+            $table->Longtext('header');
+            $table->string('title');
+            $table->Longtext('body');
             $table->string('reason')->nullable();
             $table->string('new_fio')->nullable();
             $table->string('new_speciality')->nullable();
