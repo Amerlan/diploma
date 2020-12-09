@@ -27,6 +27,8 @@ class CreateDocumentDetailsTable extends Migration
             $table->boolean('endterm_grade')->default(False);
             $table->boolean('exam_grade')->default(False);
             $table->boolean('teacher')->default(False);
+            $table->boolean('semester')->default(False);
+            $table->boolean('phone_number')->default(True);
 
             // FK
             $table->foreign('id')->references('id')->on('documents');

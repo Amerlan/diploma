@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('faculty_name')->nullable(); // add facultets FK table
             $table->date('enrollment_date')->nullable();
             $table->date('graduation_date')->nullable();
+            $table->string('phone_number')->nullable()->unique();
 //            $table->unsignedTinyInteger('department');
             $table->timestamps();
 
