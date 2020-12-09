@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('url')->nullable();
             $table->date('dateOfBirth')->nullable();
             $table->unsignedSmallInteger('course_number')->nullable();
+            $table->string('group')->nullable();
             $table->string('speciality_name')->nullable();
             $table->string('speciality_code')->nullable();
             $table->string('faculty_name')->nullable(); // add facultets FK table

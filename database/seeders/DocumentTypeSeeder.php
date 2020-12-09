@@ -16,15 +16,15 @@ class DocumentTypeSeeder extends Seeder
     {
         // Test different types of documents
         $doctype = new DocumentTypes();
-        $doctype->document_type = 'Тип 1';
+        $doctype->document_type = 'Заявление';
         $doctype->save();
 
         $doctype = new DocumentTypes();
-        $doctype->document_type = 'Тип 2';
+        $doctype->document_type = 'Справка';
         $doctype->save();
 
         $doctype = new DocumentTypes();
-        $doctype->document_type = 'Тип 3';
+        $doctype->document_type = 'Объяснительная';
         $doctype->save();
     }
 }
