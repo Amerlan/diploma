@@ -37,7 +37,8 @@
                                 </div>
                             </div>
                             <div class="row mt-5">
-                                <div class="col-8 offset-2" id="body">
+                                <div class="col-8 offset-2">
+                                    <a id="body" href="JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;"></a>
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -62,176 +63,137 @@
                 <!-- Cause Modal -->
                 <div class="modal fade" id="causeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Детали заявления</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label>
-                                            Период даты:
-                                        </label>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <input type="date" class="form-control" value="2020-12-10">
-                                                </div>
-                                                <div class="col-6">
-                                                    <input type="date" class="form-control" value="2020-12-15">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <form method="post" action="">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Детали заявления</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-12">
                                             <label>
-                                                Причина:
+                                                Период даты:
                                             </label>
-                                            <textarea class="form-control">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>
-                                                Предмет:
-                                            </label>
-                                            <select class="form-control">
-                                                <option>SWD 1 - PHP Programming Language</option>
-                                                <option>SWD 2 - C# ASP.NET</option>
-                                                <option selected>SWD 3 - Java Enterprise Edition</option>
-                                                <option>SWD 4 - Neural Network</option>
-                                                <option>SWD 5 - Angular Front End</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>
-                                                Преподаватель:
-                                            </label>
-                                            <select class="form-control">
-                                                <option>Zhuanyshev I.O. - senior lecuter</option>
-                                                <option>Uatbayev M.M. - senior lecuter</option>
-                                                <option selected>Tolegenov A.M. - senior lecuter</option>
-                                                <option>Duzbayev N.T. - associate professor</option>
-                                                <option>Mukhanov S.B. - senior lecturer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>
-                                                Прикрепления (Справки, докуемнты, сертификаты и.т.д.):
-                                            </label>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="customFile">
-                                                        <label class="custom-file-label" for="customFile">Выбрать файл</label>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <input type="date" class="form-control" value="2020-12-10">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="date" class="form-control" value="2020-12-15">
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
-                                                    <button class="btn btn-success btn-block">
-                                                        <i class="fas fa-plus mr-2"></i>
-                                                        Прикрепить
-                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    @if($document_details->reason)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Причина:
+                                                </label>
+                                                <textarea name="reason" class="form-control">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    @elseif($document_details->new_fio)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Новое ФИО:
+                                                    </label>
+                                                    <input name="new_fio" type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>
-                                                        Файл
-                                                    </th>
-                                                    <th>
-                                                        Скачать
-                                                    </th>
-                                                    <th>
-                                                        Удалить
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        Справка_04.pdf
-                                                    </td>
-                                                    <td width="20%">
-                                                        <button class="btn btn-info btn-sm btn-block">
-                                                            <i class="fas fa-download mr-1"></i>
-                                                            Скачать
-                                                        </button>
-                                                    </td>
-                                                    <td width="20%">
-                                                        <button class="btn btn-danger btn-sm btn-block">
-                                                            <i class="fas fa-trash-alt mr-1"></i>
-                                                            Удалить
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Согласие_01.pdf
-                                                    </td>
-                                                    <td width="17%">
-                                                        <button class="btn btn-info btn-sm btn-block">
-                                                            <i class="fas fa-download mr-1"></i>
-                                                            Скачать
-                                                        </button>
-                                                    </td>
-                                                    <td width="17%">
-                                                        <button class="btn btn-danger btn-sm btn-block">
-                                                            <i class="fas fa-trash-alt mr-1"></i>
-                                                            Удалить
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Сертификат_02.pdf
-                                                    </td>
-                                                    <td width="20%">
-                                                        <button class="btn btn-info btn-sm btn-block">
-                                                            <i class="fas fa-download mr-1"></i>
-                                                            Скачать
-                                                        </button>
-                                                    </td>
-                                                    <td width="20%">
-                                                        <button class="btn btn-danger btn-sm btn-block">
-                                                            <i class="fas fa-trash-alt mr-1"></i>
-                                                            Удалить
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                        <hr>
+                                    @elseif($document_details->new_speciality)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Новая специальность:
+                                                    </label>
+                                                    <textarea class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @elseif($document_details->subject)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Предмет:
+                                                </label>
+                                                <select class="form-control">
+                                                    <option>SWD 1 - PHP Programming Language</option>
+                                                    <option>SWD 2 - C# ASP.NET</option>
+                                                    <option selected>SWD 3 - Java Enterprise Edition</option>
+                                                    <option>SWD 4 - Neural Network</option>
+                                                    <option>SWD 5 - Angular Front End</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
+                                    <hr>
+                                    @elseif($document_details->teacher)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Преподаватель:
+                                                </label>
+                                                <select class="form-control">
+                                                    <option>Zhuanyshev I.O. - senior lecuter</option>
+                                                    <option>Uatbayev M.M. - senior lecuter</option>
+                                                    <option selected>Tolegenov A.M. - senior lecuter</option>
+                                                    <option>Duzbayev N.T. - associate professor</option>
+                                                    <option>Mukhanov S.B. - senior lecturer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    @elseif($document_details->attachments)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Прикрепления (Справки, докуемнты, сертификаты и.т.д.):
+                                                </label>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="customFile">
+                                                            <label class="custom-file-label" for="customFile">Выбрать файл</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button class="btn btn-success btn-block">
+                                                            <i class="fas fa-plus mr-2"></i>
+                                                            Прикрепить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    <button type="button" class="btn btn-primary">Сохранить</button>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                <button type="button" class="btn btn-primary">Сохранить</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <!-- Sign Modal -->
@@ -266,7 +228,8 @@
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
         console.log(user);
-{{--        const doc = <?php  echo json_encode($document[0]);?>;--}}
+        const doc = <?php  echo json_encode($document[0]);?>;
+        const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document[0]->header}}`;
         console.log(header);
         const body = `{{$document[0]->body}}`;
