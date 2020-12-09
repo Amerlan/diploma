@@ -12,6 +12,19 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">@lang('messages.list_templates')</h1>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="list-group">
+                {{--@foreach($templates as $template)--}}
+                    <a class="list-group-item list-group-item-action" href="{{route('templates')}}">
+                        {{--{{$template->name}}--}} Заявление
+                    </a>
+                {{--@endforeach--}}
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Document types</h3>

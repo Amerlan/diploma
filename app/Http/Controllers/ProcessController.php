@@ -130,6 +130,40 @@ class ProcessController extends Controller
         }
     }
 
+    public function my_process_details(Request $request, $id)
+    {
+        $query = 'SELECT
+                    role_name
+                    FROM processes AS p
+                    LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
+                     LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
+                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
+                     LEFT JOIN roles on roles.id=ru.role_id
+                     WHERE
+                     ru.user_id='.$request->user()->id.'
+                      AND (done_by IS NULL OR done_by='.$request->user()->id.')
+                    AND is_closed=0
+                    AND is_rejected=0
+                    AND p.process_id='.$id;
+
+        if (DB::select($query)){
+            $validator_role = DB::select($query)[0]->role_name;
+        }
+        else{
+            abort(401, 'This action is unauthorized.');
+        }
+
+        if ($request->user()->authorizeRoles($validator_role)){
+
+            $process = DB::table('processes')->where('process_id', '=', $id)
+                ->get();
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->get();
+            //return compact('process', 'process_stages');
+            return view('my_process_details', compact('process', 'process_stages'));
+        }
+    }
+
     public function index()
     {
         //

@@ -21,6 +21,8 @@ return [
     'processes' => 'Процестер',
     'process_create' => 'Процесті құру',
     'processes_list' => 'Процесс тізімі',
+    'choose_process_type' => 'Процесс түрін таңдаңыз',
+    'fill_process' => 'Толтыру процесі',
     'statistics' => 'Статистика',
     'notifications'=> 'Хабарландырулар',
     'all_notifications'=> 'Барлық хабарландырулар',
@@ -86,6 +88,7 @@ return [
     'sign'=> 'Қол қою',
     'reject'=> 'Қабылдамау',
     'return'=> 'Қайту',
+    'export_document' => 'Құжатты экспорттау',
     'details'=> 'Егжей',
     'more_details'=> 'Толығырақ',
 

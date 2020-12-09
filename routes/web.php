@@ -46,7 +46,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
 //    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
     Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
-
+    Route::get('/my_process_details/{id}', [Controllers\ProcessController::class, 'my_process_details'])->name('my_process_details');
 //    Route::post('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
 //    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
 //    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
@@ -62,6 +62,24 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/roles_list', [Controllers\RoleController::class, 'all_roles'])->name('roles_list');
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
+
+    Route::get('/templates/application', function () {
+        $users = null;
+        $documents = null;
+        return view('document_templates/application', compact('users', 'documents'));
+    })->name('templates');
+
+    Route::get('/templates/reference', function () {
+        $users = null;
+        $documents = null;
+        return view('document_templates/reference', compact('users', 'documents'));
+    })->name('templates');
+
+    Route::get('/templates/bypass_sheet', function () {
+        $users = null;
+        $documents = null;
+        return view('document_templates/bypass_sheet', compact('users', 'documents'));
+    })->name('templates');
 
 });
 

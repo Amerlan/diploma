@@ -9,6 +9,7 @@
     <meta name="author" content="">
 
     <title>@lang('messages.page_title')</title>
+    <link rel="icon" href="{{asset('design/img/university_logo.png')}}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('design/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">

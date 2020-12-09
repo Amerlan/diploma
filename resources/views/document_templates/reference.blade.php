@@ -1,37 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
 
+    <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-                <li class="breadcrumb-item"><a href="{{route('ongoing')}}">@lang('messages.incoming_processes')</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{$process[0]->document_name}}
-                </li>
+                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">Шаблоны документов</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Справка</li>
             </ol>
         </nav>
 
-        <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{$process[0]->document_name}}</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Экспортировать документ</a>
+            <h1 class="h3 mb-0 text-gray-800">Справка</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
-        <!-- Content Row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">{{$process[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
-                                <div class="col-4 offset-8">
+                                <div class="col-4 offset-3">
                                     <div class="row">
                                         <div class="col-12">
-                                            Декану факультета "Компьютерные технологии и кибербезопасность" <u>Уатбаеву М.М.</u>
-                                            от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1901 - <u>Жуанышева Ильяса Оразгалиевича</u>
+                                            <p class="western" align=center style="margin-bottom: 0in">
+                                            <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="{{ asset('design/img/university_logo_with_name.png')}}" NAME="Рисунок 1" ALIGN=BOTTOM BORDER=0></P>
+                                            <P CLASS="western" STYLE="margin-left: -0.5in; margin-bottom: 0in"><BR></BR>
+                                            </P>
                                         </div>
                                     </div>
                                 </div>
@@ -40,18 +37,43 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <h2 class="text-center">Заявление</h2>
+                                    @if($documents != null)
+                                        <h2 class="text-center">{{$document[0]->document_name}}</h2>
+                                    @else
+                                        <h2 class="text-center">Справка</h2>
+                                    @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-8 offset-2">
-                                    Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                    <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                    @if($users != null)
+                                        &nbsp;&nbsp;&nbsp; Дана {{$users[1]->name}} {{$users[1]->dateOfBirth}}
+                                        &nbsp;&nbsp;&nbsp; В том, что он(а) действительно является студентом {{$users[1]->course_number}} очного отделения в АО «Международный университет информационных технологий»  по специальности
+                                        {{$users[1]->speciality_name}}<br>
+                                        Гос.лицензия Серия АБ  №   0064060 от  29.05.2009 год
+                                        без ограничения срока
+                                        <br><br>
+                                        Справка действительна на {{date('Y')}} - {{$trialExpires = \Carbon\Carbon::now()->addYear(1)->year}} учебный год<br>
+                                        Справка выдана для предъявления по месту требования<br>
+                                        Срок обучения в учебном заведении 4 (четыре) года.<br>
+                                        Период обучения с {{$users[1]->date_of_enrollment}} по {{$users[1]->expiration_date}}
+                                    @else
+                                        &nbsp;&nbsp;&nbsp; Дана  Әкімбек Дархан Асхатұлы 26.10.1999г.р.<br><br>
+                                        &nbsp;&nbsp;&nbsp; В том, что он(а) действительно является студентом 4-курса очного отделения в АО «Международный университет информационных технологий»  по специальности
+                                        5B070400 - Вычислительная техника и программное обеспечение<br>
+                                        Гос.лицензия Серия АБ  №   0064060 от  29.05.2009 год
+                                        без ограничения срока
+                                        <br><br>
+                                        Справка действительна на {{date('Y')}} - {{date('Y', strtotime('+1 year'))}} учебный год<br>
+                                        Справка выдана для предъявления по месту требования<br>
+                                        Срок обучения в учебном заведении 4 (четыре) года.<br>
+                                        Период обучения с 01.09.2017г. по 30.06.2021г.
+                                    @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-4 offset-8">
-                                    Дата: <b>13/12/2020</b>
+                                    Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -66,28 +88,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <form name="comment_form" action="{{route('action')}}" method="POST">
-                        @csrf
-                        <input hidden="true" name="process_id" value="{{$process[0]->process_id}}">
-                        <input hidden="true" name="stage" value="{{$process[0]->current_stage}}">
-                        <input id="act" hidden="true" name="action" value="">
-                        <label>Comment</label>
-                        <textarea class="form-control" name="comment" rows="7" placeholder="Enter..."></textarea>
-                        <div class="form-group">
-                            <div class="row mt-5">
-                                <div class="col-12">
-                                    <button onclick="document.getElementById('act').value='sign'" class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
-                                    <br><br>
-                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
-                                    <br><br>
-                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
 
                 <!-- Cause Modal -->
@@ -292,7 +292,6 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- /.container-fluid -->
+
 @endsection
