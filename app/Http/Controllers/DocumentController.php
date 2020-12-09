@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 class DocumentController extends Controller
 {
 
+    public function see_templates()
+    {
+        $documents = Documents::all();
+        return view('doctypes', compact('documents'));
+    }
+
     public function show_document(Request $request, $document_name)
     {
 //        return $document_name;
@@ -21,7 +27,7 @@ class DocumentController extends Controller
             ->where('roles.role_name', '=', 'dean')
             ->get()
             ->all();
-//        return $deans;
+//        return $document;
         $user = $request->user();
         return view('/document_templates/application', compact('document', 'deans', 'user'));
     }

@@ -74,7 +74,7 @@
                     <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{route('doctype_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_template')</a>
-                            <a class="collapse-item" href="{{route('see_doctypes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
+                            <a class="collapse-item" href="{{route('see_templates')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
                         </div>
                     </div>
                 </li>

@@ -16,19 +16,19 @@
     <div class="row">
         <div class="col-12">
             <div class="list-group">
-                {{--@foreach($templates as $template)--}}
-                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_name' => 'Заявление на допуск к учебе'])}}">
-                        {{--{{$template->name}}--}} Заявление
+                @foreach($documents as $doc)
+                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_name' => $doc->document_name])}}">
+                        {{$doc->document_name}}
                     </a>
-                {{--@endforeach--}}
+                @endforeach
             </div>
         </div>
     </div>
 
-    <div class="card">
+<!--    <div class="card">
         <div class="card-header">
             <h3 class="card-title">Document types</h3>
-            <a href="{{route('doctype_form')}}" style="float: right;">+ Create new doc type</a>
+            <a href="{{--{{route('doctype_form')}}--}}" style="float: right;">+ Create new doc type</a>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
@@ -40,13 +40,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($docs as $doc)
+                {{--@foreach($docs as $doc)
                     <tr>
                         <td>{{$doc->document_type}}</td>
                         <td>{{$doc->stageCount}}</td>
                         <td>{{$doc->document_priority}}</td>
                     </tr>
-                @endforeach
+                @endforeach--}}
                 </tbody>
                 <tfoot>
                 <tr>
@@ -57,5 +57,5 @@
                 </tfoot>
             </table>
         </div>
-    </div>
+    </div>-->
 @endsection

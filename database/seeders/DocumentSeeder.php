@@ -31,11 +31,11 @@ class DocumentSeeder extends Seeder
         $document->document_name = 'Заявление на перекурс';
         $document->document_type = 'Заявление';
         $document->stageCount = 4;
-        $document->header = 'Декану факультета "${deans.faculty_name}}" ${deans.name}
+        $document->header = 'Декану факультета ${deans.faculty_name}} ${deans.name}
                              от студента ${user.course_number} курса специальности "${user.speciality_name}", группы ${user.group} - ${user.name}
                              ID студента: ${user.dl_id}';
         $document->title = 'Заявление';
-        $document->body = 'Прошу Вас оставить меня на повторный год обучения по специальности ${user.speciality_code} ${user.speciality_name} дневного отделения в ${} учебном году, в связи с ${document.reason}';
+        $document->body = 'Прошу Вас оставить меня на повторный год обучения по специальности ${user.speciality_code} ${user.speciality_name} дневного отделения в ${} учебном году, в связи с ${doc.reason}';
         $document->reason = ' причина ';
         $document->save();
 
@@ -52,11 +52,11 @@ class DocumentSeeder extends Seeder
                                             ID студента: ${user.dl_id}
                                             Контактные тел.: 87776665544';
         $document->title = 'Заявление на пересдачу';
-        $document->body = 'Прошу Вас разрешить пересдать экзамен на платной основе по дисциплине ${subject} в связи с тем, что ${document.reason}
-                            РК-1: ${document.midterm}
-                            РК-2: ${document.endterm}
-                            Экзамен: ${document.exam}
-                            Преподаватель: ${document.teacher}';
+        $document->body = 'Прошу Вас разрешить пересдать экзамен на платной основе по дисциплине ${subject} в связи с тем, что ${doc.reason}
+                            РК-1: ${doc.midterm}
+                            РК-2: ${doc.endterm}
+                            Экзамен: ${doc.exam}
+                            Преподаватель: ${doc.teacher}';
         $document->save();
 
 

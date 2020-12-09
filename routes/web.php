@@ -28,6 +28,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     # Get all document types (for admin only)
     Route::get('/doc_types', [Controllers\DocumentTypeController::class, 'index'])->name('see_doctypes');
 
+    Route::get('/templates', [Controllers\DocumentController::class, 'see_templates'])->name('see_templates');
+
     # Create and insert Document Types
     Route::get('/doc_types/create_form', [Controllers\DocumentTypeController::class, 'create'])->name('doctype_form');
     Route::post('/create_document_type', [Controllers\DocumentTypeController::class, 'store'])->name('create_doctype');
@@ -63,11 +65,6 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
-    /*Route::get('/templates/application', function () {
-        $user = null;
-        $document = null;
-        return view('document_templates/application', compact('user', 'document'));
-    })->name('templates_application');*/
     Route::get('/templates/{document_name}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
 
     Route::get('/templates/bypass_sheet', function () {
