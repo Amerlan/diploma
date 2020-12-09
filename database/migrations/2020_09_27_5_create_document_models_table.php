@@ -25,7 +25,7 @@ class CreateDocumentModelsTable extends Migration
             $table->string('new_fio')->nullable();
             $table->string('new_speciality')->nullable();
             $table->string('new_speciality_code')->nullable();
-            $table->unsignedSmallInteger('sum_of_return');
+            $table->unsignedSmallInteger('sum_of_return')->nullable();
             $table->string('new_university')->nullable();
             $table->date('academic_year')->nullable();
             $table->string('subject')->nullable();

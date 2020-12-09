@@ -28,7 +28,6 @@ class UserTableSeeder extends Seeder
         $admin->dl_mail = '23001@iitu.kz';
         $admin->url = 'https://vignette.wikia.nocookie.net/skillnaruto/images/3/36/Naruto_Uzumaki.png/revision/latest/scale-to-width-down/340?cb=20140504001218&path-prefix=ru';
         //$admin->department = 1;
-//        $admin->user_role = 1;
         $admin->save();
         $admin->roles()->attach($role_admin);
 
@@ -41,7 +40,6 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->dl_mail = '23002@iitu.kz';
         $zafKafedroi->url = 'https://www.meme-arsenal.com/memes/72b8c58dbdd57f999edb73bc6d9085d0.jpg';
         //$zafKafedroi->department = 2;
-//        $zafKafedroi->user_role = 2;
         $zafKafedroi->save();
         $zafKafedroi->roles()->attach($role_zafKafedroi);
 
@@ -54,7 +52,6 @@ class UserTableSeeder extends Seeder
         $adminKafedri->dl_mail = '23003@iitu.kz';
         $adminKafedri->url = 'https://www.meme-arsenal.com/memes/72b8c58dbdd57f999edb73bc6d9085d0.jpg';
         //$adminKafedri->department = 3;
-//        $adminKafedri->user_role = 3;
         $adminKafedri->save();
         $adminKafedri->roles()->attach($role_adminKafedri);
 
@@ -67,7 +64,6 @@ class UserTableSeeder extends Seeder
         $teacher->dl_mail = '23004@iitu.kz';
         $teacher->url = 'https://static.wikia.nocookie.net/disneythehunchbackofnotredame/images/1/19/Naruto_Shippuuden_176-341.jpg/revision/latest/scale-to-width-down/340?cb=20140614002251';
         //$teacher->department = 4;
-//        $teacher->user_role = 4;
         $teacher->save();
         $teacher->roles()->attach($role_teacher);
         $teacher->roles()->attach($role_techer_zamena);
@@ -81,7 +77,14 @@ class UserTableSeeder extends Seeder
         $student->dl_mail = '23005@iitu.kz';
         $student->url = 'https://static.wikia.nocookie.net/naruto/images/2/26/Konohamaru_Part_III.png/revision/latest?cb=20201016123236&path-prefix=ru';
         //$student->department = 5;
-//        $student->user_role = 5;
+        $student->dateOfBirth = '2000-04-10';
+        $student->course_number=4;
+        $student->group = 'CSSE-1706 DA';
+        $student->speciality_name = 'CSSE';
+        $student->speciality_code = '5В070400';
+        $student->faculty_name = 'Information technologies';
+        $student->enrollment_date = '2017-09-01';
+        $student->graduation_date = '2021-06-30';
         $student->save();
         $student->roles()->attach($role_student);
 
@@ -94,7 +97,6 @@ class UserTableSeeder extends Seeder
         $teacher->dl_mail = '23006@iitu.kz';
         $teacher->url = 'https://static.wikia.nocookie.net/naruto/images/2/27/Kakashi_Hatake.png/revision/latest?cb=20170507214017&path-prefix=ru';
         //$teacher->department = 4;
-//        $teacher->user_role = 4;
         $teacher->save();
         $teacher->roles()->attach($role_teacher);
     }

@@ -39,12 +39,37 @@ class DocumentSeeder extends Seeder
         $document->reason = ' причина ';
         $document->save();
 
-        # Разкоментить когда в сидах Юзеров появятся Бухгалтерия, Главный Бухглатер, Декан, Учебная часть
-//        $document = new Documents();
-//        $document->document_name = 'Возврат средств';
-//        $document->document_type = 'Тип 3';
-//        $document->stageCount = 5;
 
+
+
+        // Amerlan's part
+        $document = new Documents();
+        $document->document_name = 'Заявление на пересдачу';
+        $document->document_type = 'Заявление';
+        $document->stageCount = 1;
+        $document->header = 'Директору ДАВ ${dav.name}}
+                                            от студента ${user.course_number} курса, дневного отделения специальности ${user.speciality_code} "${user.speciality_name}", группы ${user.group} - ${user.name}
+                                            ID студента: ${user.dl_id}
+                                            Контактные тел.: 87776665544';
+        $document->title = 'Заявление на пересдачу';
+        $document->body = 'Прошу Вас разрешить пересдать экзамен на платной основе по дисциплине ${subject} в связи с тем, что ${document.reason}
+                            РК-1: ${document.midterm}
+                            РК-2: ${document.endterm}
+                            Экзамен: ${document.exam}
+                            Преподаватель: ${document.teacher}';
+        $document->save();
+
+
+        $document = new Documents();
+        $document->document_name = 'Объяснительная';
+        $document->document_type = 'Объяснительная';
+        $document->stageCount = 1;
+        $document->header = 'Декану факультета "${deans.faculty_name}}" ${deans.name}
+                                            от студента ${user.course_number} курса, дневного отделения специальности ${user.speciality_code} "${user.speciality_name}", группы ${user.group} - ${user.name}
+                                            ID студента: ${user.dl_id}
+                                            Контактные тел.: 87776665544';
+        $document->title = 'Заявление';
+        $document->body = '';
         $document->save();
 
     }
