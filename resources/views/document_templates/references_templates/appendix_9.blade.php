@@ -7,12 +7,12 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
                 <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">Шаблоны документов</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Заявление</li>
+                <li class="breadcrumb-item active" aria-current="page">Справка - Приложение 9</li>
             </ol>
         </nav>
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Заявление</h1>
+            <h1 class="h3 mb-0 text-gray-800">Справка - Приложение 9</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
@@ -22,16 +22,33 @@
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
+                                <div class="col-4 offset-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="western" align=center style="margin-bottom: 0in">
+                                            <P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="{{ asset('design/img/university_logo_with_name.png')}}" NAME="Рисунок 1" ALIGN=BOTTOM BORDER=0></P>
+                                            <P CLASS="western" STYLE="margin-left: -0.5in; margin-bottom: 0in"><BR></BR>
+                                            </P>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-4 offset-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            @if( $users != null)
-                                            Декану факультета "{{$users[0]->faculty_name}}" <u>{{$users[0]->name}}</u>
-                                            от студента {{$users[1]->course_number}} курса специальности "{{$users[1]->speciality_name}}", группы {{$users[1]->group}} - <u>{{$users[1]->name}}</u>
-                                            @else
-                                                Декану факультета "Компьютерные технологии и кибербезопасность" <u>Аубакирову Б.А.</u>
-                                                от студента 2 курса специальности "Вычислительная Техника и Программное Обеспечение", группы CSSE 1701 - <u>Тохтарова Амерлана Аркатовича</u>
-                                            @endif
+                                            Приложение 9
+                                            <br>
+                                            к приказу Министра здравоохранения и
+                                            социального развития Республики Казахстан,
+                                            в которые вносят изменения и дополнения
+                                            <br>
+                                            Приложение 2-1
+                                            <br>
+                                            к стандарту  государственной услуги
+                                            «Назначение государственных  социальных
+                                            пособий по инвалидности, по случаю
+                                            потери кормильца и по возрасту»
+                                            <br>
+                                            Форма
                                         </div>
                                     </div>
                                 </div>
@@ -41,20 +58,42 @@
                             <div class="row mt-5">
                                 <div class="col-12">
                                     @if($documents != null)
-                                    <h2 class="text-center">{{$document[0]->document_name}}</h2>
+                                        <h2 class="text-center">{{$document[0]->document_name}}</h2>
                                     @else
-                                    <h2 class="text-center">Заявление</h2>
+                                        <h2 class="text-center">Справка</h2>
                                     @endif
                                 </div>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-8 offset-2">
                                     @if($users != null)
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                         <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">{{$document->reason}}}<!--заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3--></a>. Все введенные данные и прикрепленные документы является подлинными и достоверными.
+                                        &nbsp;&nbsp;&nbsp;Дана  гражданину  {{$users[1]->name}} {{$users[1]->dateOfBirth}}<br>
+                                        В том, что он(а) действительно является обучающимся <br>
+                                        АО Международного университета информационных технологий {{$users[1]->speciality_name}}.<br>
+                                        Госуд.лицензия Серия АБ  № 0064060 от 29.05.2009 год без ограничения срока,<br>
+                                        {{$users[1]->course_number}}, форма обучения-очная.<br>
+                                        Справка действительна на {{date('Y')}} - {{date('Y', strtotime('+1 year'))}} учебный год.<br>
+                                        Справка выдана для предъявления в отделение<br>
+                                        Государственной корпораций<br>
+                                        Срок обучения в учебном заведении  4 (четыре) года<br>
+                                        Период обучения с {{$users[1]->enrollment_date}} по {{$users[1]->graduation_date}}.<br><br>
+
+                                        <b>Примечание:</b> справка действительна 1 год.<br>
+                                        В случае отчисления обучающегося из учебного заведения или перевода на заочную форму обучения, руководитель учебного заведения извещает отделение Государственной корпораций  по выплате пенсий по месту жительства получателя пособия.
                                     @else
-                                        Прошу Вас продлить мне срок возможности сдачи РК в связи с
-                                        <a href = "JavaScript:void(0)" data-toggle="modal" data-target="#causeModal" style="text-decoration: none;">заболеванием короной и невозможности сдачи рубежного сосания по предмету Java EE SWD-3</a>. Все введенные данные и прикрепленные документы не является подлинными и достоверными.
+                                        &nbsp;&nbsp;&nbsp;Дана  гражданину  Аманжол Азат Ғабитұлы 11.03.1999 г.р.<br><br>
+                                        &nbsp;&nbsp;&nbsp;В том, что он(а) действительно является обучающимся <br>
+                                        АО Международного университета информационных технологий 5B070400 - Вычислительная техника и программное обеспечение.<br>
+                                        Госуд.лицензия Серия АБ  № 0064060 от 29.05.2009 год без ограничения срока,<br>
+                                        3 курса, форма обучения-дневное.<br>
+                                        Справка действительна на {{date('Y')}} - {{date('Y', strtotime('+1 year'))}} учебный год.<br>
+                                        Справка выдана для предъявления в отделение<br>
+                                        Государственной корпораций<br>
+                                        Срок обучения в учебном заведении  4 (четыре) года<br>
+                                        Период обучения с 01.09.2018г  г по 30.06.2022г.<br><br>
+
+                                        <b>Примечание:</b> справка действительна 1 год.<br>
+                                        В случае отчисления обучающегося из учебного заведения или перевода на заочную форму обучения, руководитель учебного заведения извещает отделение Государственной корпораций  по выплате пенсий по месту жительства получателя пособия.
                                     @endif
                                 </div>
                             </div>

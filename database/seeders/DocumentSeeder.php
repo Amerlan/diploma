@@ -16,15 +16,19 @@ class DocumentSeeder extends Seeder
     {
 
         $document = new Documents();
-        $document->document_name = 'Продление РК 1';
-        $document->document_type = 'Тип 1';
+        $document->document_name = 'Заявление на допуск к учебе';
+        $document->document_type = 'Заявление';
         $document->stageCount = 1;
+        $document->header = 'Декану факультета "${deans.faculty_name}}" ${deans.name}
+                                            от студента ${user.course_number} курса специальности "${user.speciality_name}", группы ${user.group} - ${user.name}';
+        $document->title = 'Заявление';
+        $document->body = 'Прошу Вас дать допуск к учебным занятиям и сдаче академической разницы по специальности ${user.speciality_name} ${user.course_number} курса дневного отделения.';
         $document->save();
 
 
         $document = new Documents();
-        $document->document_name = 'Обходной лист';
-        $document->document_type = 'Тип 2';
+        $document->document_name = 'Заявление на перекурс';
+        $document->document_type = '';
         $document->stageCount = 4;
         $document->save();
 
