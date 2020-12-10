@@ -34,9 +34,6 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/doc_types/create_form', [Controllers\DocumentTypeController::class, 'create'])->name('doctype_form');
     Route::post('/create_document_type', [Controllers\DocumentTypeController::class, 'store'])->name('create_doctype');
 
-    # Create and insert Documents
-    Route::get('documents/create_form', [Controllers\DocumentController::class, 'create'])->name('document_form');
-    Route::post('/create_document', [Controllers\DocumentController::class, 'store'])->name('create_doc');
 
     # Get User's Processes
     Route::get('/my_processes', [Controllers\ProcessController::class, 'user_processes'])->name('processes');
@@ -65,7 +62,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
-    Route::get('/templates/{document_name}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
+    Route::get('/templates/{document_id}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
 
     Route::get('/templates/bypass_sheet', function () {
         $users = null;

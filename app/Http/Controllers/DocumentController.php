@@ -15,11 +15,11 @@ class DocumentController extends Controller
         return view('doctypes', compact('documents'));
     }
 
-    public function show_document(Request $request, $document_name)
+    public function show_document(Request $request, $document_id)
     {
 //        return $document_name;
         $document = DB::table('documents')
-            ->where('document_name', '=', $document_name)
+            ->where('id', '=', $document_id)
             ->get()->all();
         $deans = DB::table('users')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -34,9 +34,13 @@ class DocumentController extends Controller
             ->get()
             ->all();
 
+        $document_details = DB::table('document_details')
+            ->where('id', '=', $document_id)
+            ->get()->all();
+
 //        return $document;
         $user = $request->user();
-        return view('/document_templates/application', compact('document', 'deans', 'user', 'dav'));
+        return view('/document_templates/application', compact('document', 'deans', 'user', 'dav', 'document_details'));
     }
 
 

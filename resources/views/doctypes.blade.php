@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="list-group">
                 @foreach($documents as $doc)
-                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_name' => $doc->document_name])}}">
+                    <a class="list-group-item list-group-item-action" href="{{route('templates_application', ['document_id' => $doc->id])}}">
                         {{$doc->document_name}}
                     </a>
                 @endforeach

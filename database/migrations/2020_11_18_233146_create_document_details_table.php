@@ -29,6 +29,7 @@ class CreateDocumentDetailsTable extends Migration
             $table->boolean('teacher')->default(False);
             $table->boolean('semester')->default(False);
             $table->boolean('phone_number')->default(True);
+            $table->boolean('attachments')->default(False);
 
             // FK
             $table->foreign('id')->references('id')->on('documents');

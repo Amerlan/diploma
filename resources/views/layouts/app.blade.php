@@ -78,20 +78,6 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
-                        <i class="fas fa-file-alt"></i>
-                        <span>@lang('messages.documents_samples')</span>
-                    </a>
-                    <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
-                            <a class="collapse-item" href="List of documents"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
-                        </div>
-                    </div>
-                </li>
         @endif
     @endif
     <!-- Nav Item - Pages Collapse Menu -->

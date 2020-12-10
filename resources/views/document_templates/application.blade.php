@@ -63,7 +63,6 @@
                 <!-- Cause Modal -->
                 <div class="modal fade" id="causeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <form method="post" action="">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Детали заявления</h5>
@@ -90,50 +89,183 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @if($document_details->reason)
+                                    @if($document_details[0]->reason)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>
                                                     Причина:
                                                 </label>
-                                                <textarea name="reason" class="form-control">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</textarea>
+                                                <textarea id="reason" class="form-control">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
-                                    @elseif($document_details->new_fio)
+                                    @endif
+                                    @if($document_details[0]->new_fio)
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label>
                                                         Новое ФИО:
                                                     </label>
-                                                    <input name="new_fio" type="text" class="form-control">
+                                                    <input id="new_fio" type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <hr>
-                                    @elseif($document_details->new_speciality)
+                                    @endif
+                                    @if($document_details[0]->new_speciality)
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label>
                                                         Новая специальность:
                                                     </label>
-                                                    <textarea class="form-control"></textarea>
+                                                    <input id="new_speciality" type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <hr>
-                                    @elseif($document_details->subject)
+                                    @endif
+                                    @if($document_details[0]->new_speciality_code)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Код новой специальности:
+                                                    </label>
+                                                    <input id="new_speciality_code" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->sum_of_return)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Код новой специальности:
+                                                    </label>
+                                                    <input id="sum_of_return" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->new_university)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Название университета:
+                                                    </label>
+                                                    <input id="new_university" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->academic_year)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Учебный год:
+                                                    </label>
+                                                    <input id="academic_year" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->midterm_grade)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Оценка за РК1:
+                                                    </label>
+                                                    <input id="midterm_grade" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->endterm_grade)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Оценка за РК2:
+                                                    </label>
+                                                    <input id="endterm_grade" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->endterm_grade)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Оценка за РК2:
+                                                    </label>
+                                                    <input id="endterm_grade" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->exam_grade)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Итоговая оценка:
+                                                    </label>
+                                                    <input id="exam_grade" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->semester)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Укажите семестр:
+                                                    </label>
+                                                    <input id="semester" min="1" max="2" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->phone_number)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Укажите контактный телефон:
+                                                    </label>
+                                                    <input id="phone_number" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($document_details[0]->subject)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>
                                                     Предмет:
                                                 </label>
-                                                <select class="form-control">
+                                                <select id="subject" class="form-control">
                                                     <option>SWD 1 - PHP Programming Language</option>
                                                     <option>SWD 2 - C# ASP.NET</option>
                                                     <option selected>SWD 3 - Java Enterprise Edition</option>
@@ -144,14 +276,15 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @elseif($document_details->teacher)
+                                    @endif
+                                    @if($document_details[0]->teacher)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>
                                                     Преподаватель:
                                                 </label>
-                                                <select class="form-control">
+                                                <select id="teacher" class="form-control">
                                                     <option>Zhuanyshev I.O. - senior lecuter</option>
                                                     <option>Uatbayev M.M. - senior lecuter</option>
                                                     <option selected>Tolegenov A.M. - senior lecuter</option>
@@ -162,7 +295,8 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @elseif($document_details->attachments)
+                                    @endif
+                                    @if($document_details[0]->attachments)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -190,12 +324,68 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                    <button type="button" class="btn btn-primary">Сохранить</button>
+                                    <button id="submit" type="button" class="btn btn-primary">Сохранить</button>
+{{--                                    <button type="button" onclick=""></button>--}}
                                 </div>
                             </div>
-                        </form>
                     </div>
                 </div>
+                <script>
+                    var submitButton = document.getElementById('submit');
+                    submitButton.addEventListener('click', function () {
+                        SubmitData();
+                    });
+                    //all modal data
+                    console.log(document.getElementById('reason'));
+                    var reason = document.getElementById('reason') != null ? document.getElementById('reason').value : null;
+                    var new_fio = document.getElementById('new_fio') != null ? document.getElementById('new_fio').value : null;
+                    var new_speciality = document.getElementById('new_speciality') != null ? document.getElementById('new_speciality').value : null;
+                    var new_speciality_code = document.getElementById('new_speciality_code') != null ? document.getElementById('new_speciality_code').value : null;
+                    var sum_of_return = document.getElementById('sum_of_return') != null ? document.getElementById('sum_of_return').value : null;
+                    var new_university = document.getElementById('new_university') != null ? document.getElementById('new_university').value : null;
+                    var academic_year = document.getElementById('academic_year') != null ? document.getElementById('academic_year').value : null;
+                    var subject = document.getElementById('subject') != null ? document.getElementById('subject').value : null;
+                    var midterm_grade = document.getElementById('midterm_grade') != null ? document.getElementById('midterm_grade').value : null;
+                    var endterm_grade = document.getElementById('endterm_grade') != null ? document.getElementById('endterm_grade').value : null;
+                    var exam_grade = document.getElementById('exam_grade') != null ? document.getElementById('exam_grade').value : null;
+                    var teacher = document.getElementById('teacher') != null ? document.getElementById('teacher').value : null;
+                    var semester = document.getElementById('semester') != null ? document.getElementById('semester').value : null;
+                    var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
+                    var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
+
+
+                    function SubmitData() {
+                        var url = '';
+                        fetch(url, {
+                            method: 'POST',
+                            headers:{
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{csrf_token()}}'
+                            },
+                            body:JSON.stringify({
+                                'reason': reason,
+                                'new_fio': new_fio,
+                                'new_speciality': new_speciality,
+                                'new_speciality_code': new_speciality_code,
+                                'sum_of_return': sum_of_return,
+                                'new_university': new_university,
+                                'academic_year': academic_year,
+                                'subject': subject,
+                                'midterm_grade': midterm_grade,
+                                'endterm_grade': endterm_grade,
+                                'exam_grade': exam_grade,
+                                'teacher': teacher,
+                                'semester': semester,
+                                'phone_number': phone_number,
+                                'attachments': attachments
+                            })
+                        })
+                        .then((response) => {
+                            console.log(response);
+                        })
+                        window.location.replace('/')
+                    }
+                </script>
                 <!-- Sign Modal -->
                 <div class="modal fade" id="signModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
