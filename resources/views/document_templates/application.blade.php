@@ -356,7 +356,7 @@
 
 
                     function SubmitData() {
-                        var url = '{{ route ('testing') }}';
+                        var url = "{{ route ('create_process') }}";
                         fetch(url, {
                             method: 'POST',
                             headers:{

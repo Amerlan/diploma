@@ -90,7 +90,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if (auth()->check())
                         @if (!auth()->user()->isAdmin())
-                            <a class="collapse-item" href="{{route('create_process_list')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                            <a class="collapse-item" href="{{route('see_templates')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
                         @endif
                     @endif
                     @if (auth()->check())

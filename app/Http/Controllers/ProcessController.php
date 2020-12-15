@@ -170,8 +170,8 @@ class ProcessController extends Controller
         //
     }
 
-    public function testing(Request $request){
-        if (! $request->user()->authorizeRoles(['admin'])){
+    public function create_process(Request $request){
+        if (!($request->user()->isAdmin())){
             $process = new Process();
             $process->document_name = $request->document_name;
             $process->academic_year = $request->academic_year;
@@ -189,6 +189,7 @@ class ProcessController extends Controller
             $process->sum_of_return = $request->sum_of_return;
             $process->teacher = $request->teacher;
             $process->created_by = $request->user()->id;
+            $process->save();
         }
         return $request;
     }
