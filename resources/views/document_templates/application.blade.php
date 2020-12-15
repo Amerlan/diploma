@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-                <li class="breadcrumb-item"><a href="{{route('see_templates')}}">Шаблоны документов</a></li>
+                <li class="breadcrumb-item"><a href="{{route('see_templates')}}">@lang('messages.list_templates')</a></li>
                 <li id="doc_name" class="breadcrumb-item active" aria-current="page">{{ $document[0]->document_name}}</li>
             </ol>
         </nav>

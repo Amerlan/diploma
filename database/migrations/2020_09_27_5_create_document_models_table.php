@@ -17,7 +17,7 @@ class CreateDocumentModelsTable extends Migration
             $table->integer('id')->unsigned()->autoIncrement();
             $table->string('document_name', 100)->unique();
             $table->string('document_type', 100);
-            $table->unsignedSmallInteger('stageCount');
+            $table->unsignedSmallInteger('stageCount')->default(1);
             $table->Longtext('header');
             $table->string('title');
             $table->Longtext('body');
