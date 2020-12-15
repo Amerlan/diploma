@@ -45,25 +45,21 @@ class DocumentController extends Controller
 
 
     // Shows page with creating new document form
-    public function create()
+    public function create(Request $request)
     {
-        $types = DB::table('document_types')
-            ->get('document_type')->all();
+        if ($request->user()){
+            if ($request->user()->authorizeRoles(['admin'])) {
+                return view('templates_create');
+            }
+        }
 
-        return view('documents_create', compact('types'));
+        return abort(401, 'Unauthorized request');
     }
 
     // Stores a new document in DB.
     public function store(Request $request)
     {
-        $document = new Documents();
-
-        $document->document_name = $request->document_name;
-        $document->document_type = $request->document_type;
-        $document->stageCount = $request->stageCount;
-
-        $document->save();
-        return redirect('ongoing');
+        return $request;
     }
 
 

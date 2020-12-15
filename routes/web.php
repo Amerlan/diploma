@@ -36,8 +36,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/templates', [Controllers\DocumentController::class, 'see_templates'])->name('see_templates');
 
     # Create and insert Document Types
-    Route::get('/doc_types/create_form', [Controllers\DocumentTypeController::class, 'create'])->name('doctype_form');
-    Route::post('/create_document_type', [Controllers\DocumentTypeController::class, 'store'])->name('create_doctype');
+    Route::get('/templates/create_form', [Controllers\DocumentController::class, 'create'])->name('create_template_form');
+    Route::post('/create_document_template', [Controllers\DocumentController::class, 'store'])->name('create_document_template');
 
 
     # Get User's Processes

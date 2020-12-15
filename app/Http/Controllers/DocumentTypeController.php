@@ -24,14 +24,13 @@ class DocumentTypeController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->user()){
+        /*if ($request->user()){
             if ($request->user()->authorizeRoles(['admin'])) {
                 return view('doctypes_create');
             }
         }
 
-        return abort(401, 'Unauthorized request');
-
+        return abort(401, 'Unauthorized request');*/
     }
 
     public function store(Request $request)
