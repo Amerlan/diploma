@@ -21,6 +21,11 @@ use Auth;
 Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Auth::routes();
 
+
+    //TESTING
+    Route::post('testing', [Controllers\ProcessController::class, 'testing'])->name('testing');
+    //TESTING
+
     # HOME PAGE
     Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
     Route::redirect('/home', '/');
@@ -64,53 +69,53 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/templates/{document_id}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
 
-    Route::get('/templates/bypass_sheet', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/bypass_sheet', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/reference', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/reference', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_8', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_8', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_4', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_4', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_6', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_6', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_2-1', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_2-1', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_9', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_9', compact('users', 'documents'));
-    })->name('templates');
-
-    Route::get('/templates/appendix_2', function () {
-        $users = null;
-        $documents = null;
-        return view('document_templates/references_templates/appendix_2', compact('users', 'documents'));
-    })->name('templates');
+//    Route::get('/templates/bypass_sheet', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/bypass_sheet', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/reference', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/reference', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_8', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_8', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_4', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_4', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_6', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_6', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_2-1', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_2-1', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_9', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_9', compact('users', 'documents'));
+//    })->name('templates');
+//
+//    Route::get('/templates/appendix_2', function () {
+//        $users = null;
+//        $documents = null;
+//        return view('document_templates/references_templates/appendix_2', compact('users', 'documents'));
+//    })->name('templates');
 });
 
 Route::get('setlocale/{lang}', function ($lang) {

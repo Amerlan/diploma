@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
                 <li class="breadcrumb-item"><a href="{{route('see_templates')}}">Шаблоны документов</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Заявление</li>
+                <li id="doc_name" class="breadcrumb-item active" aria-current="page">{{ $document[0]->document_name}}</li>
             </ol>
         </nav>
 
@@ -352,15 +352,16 @@
                     var semester = document.getElementById('semester') != null ? document.getElementById('semester').value : null;
                     var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
                     var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
+                    var document_name = document.getElementById('doc_name').innerText;
 
 
                     function SubmitData() {
-                        var url = '';
+                        var url = '{{ route ('testing') }}';
                         fetch(url, {
                             method: 'POST',
                             headers:{
                                 'Content-Type': 'application/json',
-                                'X-CSRFToken': '{{csrf_token()}}'
+                                "X-CSRF-Token": $('input[name="_token"]').val()
                             },
                             body:JSON.stringify({
                                 'reason': reason,
@@ -377,13 +378,17 @@
                                 'teacher': teacher,
                                 'semester': semester,
                                 'phone_number': phone_number,
-                                'attachments': attachments
+                                'attachments': attachments,
+                                'document_name': document_name,
                             })
                         })
                         .then((response) => {
-                            console.log(response);
+                            console.log(response.json);
                         })
-                        window.location.replace('/')
+                        .then((data) =>{
+                            alert(data);
+                        })
+{{--                        window.location.replace('/')--}}
                     }
                 </script>
                 <!-- Sign Modal -->

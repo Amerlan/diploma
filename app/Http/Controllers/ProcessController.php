@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -167,6 +168,29 @@ class ProcessController extends Controller
     public function index()
     {
         //
+    }
+
+    public function testing(Request $request){
+        if (! $request->user()->authorizeRoles(['admin'])){
+            $process = new Process();
+            $process->document_name = $request->document_name;
+            $process->academic_year = $request->academic_year;
+            $process->endterm_grade = $request->endterm_grade;
+            $process->exam_grade = $request->exam_grade;
+            $process->midterm_grade = $request->midterm_grade;
+            $process->new_fio = $request->new_fio;
+            $process->new_speciality = $request->new_speciality;
+            $process->new_speciality_code = $request->new_speciality_code;
+            $process->new_university = $request->new_university;
+            $process->phone_number = $request->phone_number;
+            $process->reason = $request->reason;
+            $process->semester = $request->semester;
+            $process->subject = $request->subject;
+            $process->sum_of_return = $request->sum_of_return;
+            $process->teacher = $request->teacher;
+            $process->created_by = $request->user()->id;
+        }
+        return $request;
     }
 
     /**
