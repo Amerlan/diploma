@@ -23,7 +23,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
 
     //TESTING
-    Route::post('testing', [Controllers\ProcessController::class, 'testing'])->name('testing');
+    Route::post('create_process', [Controllers\ProcessController::class, 'create_process'])->name('create_process');
     //TESTING
 
     # HOME PAGE
@@ -45,7 +45,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/ongoing', [Controllers\ProcessController::class, 'ongoing'])->name('ongoing');
     Route::get('/signed', [Controllers\ProcessController::class, 'signed'])->name('signed');
 
-    Route::get('/create_process_list', [Controllers\ProcessController::class, 'create_process_list'])->name('create_process_list');
+//    Route::get('/create_process', [Controllers\ProcessController::class, 'see_templates'])->name('create_process_list');
     Route::get('create_process/{document_id}', [Controllers\ProcessController::class, 'create'])->name('create_proc');
 
 //    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
