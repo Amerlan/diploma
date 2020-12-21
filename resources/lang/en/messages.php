@@ -114,6 +114,8 @@ return [
     'enter_doc_body_displayed'=> 'Enter body that will be displayed',
     'submit'=> 'Submit',
     'start_process'=> 'Start process',
+    'valid_feedback'=> 'Good!',
+    'invalid_feedback'=> 'Please fill the field',
 
 ];
 

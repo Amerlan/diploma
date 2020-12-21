@@ -114,6 +114,8 @@ return [
     'enter_doc_body_displayed'=> 'Көрсетілетін мазмұнды енгізіңіз',
     'submit'=> 'Жіберу',
     'start_process'=> 'Процесті бастау',
+    'valid_feedback'=> 'Жақсы!',
+    'invalid_feedback'=> 'Өрісті толтырыңыз',
 
 ];
 
