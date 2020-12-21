@@ -56,6 +56,12 @@
                                     <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">
                                 </div>
                             </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12">
+                                    <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>Запустить процесс</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -113,6 +113,7 @@ return [
     'enter_doc_header_displayed'=> 'Көрсетілетін тақырыпты енгізіңіз',
     'enter_doc_body_displayed'=> 'Көрсетілетін мазмұнды енгізіңіз',
     'submit'=> 'Жіберу',
+    'start_process'=> 'Процесті бастау',
 
 ];
 

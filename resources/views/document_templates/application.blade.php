@@ -56,6 +56,15 @@
                                     <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">
                                 </div>
                             </div>
+                            @if(auth()->check())
+                                @if(!auth()->user()->isAdmin())
+                                    <div class="row mt-5">
+                                        <div class="col-12">
+                                            <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>@lang('messages.start_process')</button>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>

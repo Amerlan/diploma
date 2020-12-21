@@ -113,6 +113,7 @@ return [
     'enter_doc_header_displayed'=> 'Enter header that will be displayed',
     'enter_doc_body_displayed'=> 'Enter body that will be displayed',
     'submit'=> 'Submit',
+    'start_process'=> 'Start process',
 
 ];
 
