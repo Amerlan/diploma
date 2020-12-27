@@ -89,7 +89,7 @@ class UserTableSeeder extends Seeder
         $student->secret_password = bcrypt('secret');
         $student->dl_id = 23005;
         $student->dl_mail = '23005@iitu.kz';
-        $student->url = 'https://static.wikia.nocookie.net/naruto/images/2/26/Konohamaru_Part_III.png/revision/latest?cb=20201016123236&path-prefix=ru';
+        $student->url = 'https://vgtimes.ru/uploads/posts/2014-05/1401275138_konohamaru.jpg';
         //$student->department = 5;
         $student->dateOfBirth = '2000-04-10';
         $student->course_number=4;

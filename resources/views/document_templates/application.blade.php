@@ -80,24 +80,26 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <label>
-                                                Период даты:
-                                            </label>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <input type="date" class="form-control" value="2020-12-10">
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <input type="date" class="form-control" value="2020-12-15">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
+                                    <!--СЮДА НАДО ДОПИСАТЬ условие на все поля. Если одно условие срабатывает, то открыть модалку для заполнения
+                                    Если нет, то не открывать модалку т.к. пустая будет-->
+{{--                                    <div class="row">--}}
+{{--                                        <div class="col-12">--}}
+{{--                                            <label>--}}
+{{--                                                Период даты:--}}
+{{--                                            </label>--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <div class="row">--}}
+{{--                                                    <div class="col-6">--}}
+{{--                                                        <input type="date" class="form-control" value="2020-12-10">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="col-6">--}}
+{{--                                                        <input type="date" class="form-control" value="2020-12-15">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <hr>--}}
                                     @if($document_details[0]->reason)
                                     <div class="row">
                                         <div class="col-12">
@@ -105,7 +107,7 @@
                                                 <label>
                                                     Причина:
                                                 </label>
-                                                <textarea id="reason" class="form-control">заболеванием простудой и невозможности сдачи рубежного экзамена по предмету Java EE SWD-3</textarea>
+                                                <textarea id="reason" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -215,25 +217,12 @@
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($document_details[0]->endterm_grade)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Оценка за РК2:
-                                                    </label>
-                                                    <input id="endterm_grade" type="number" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    @endif
                                     @if($document_details[0]->exam_grade)
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label>
-                                                        Итоговая оценка:
+                                                        Оценка за Экзамен:
                                                     </label>
                                                     <input id="exam_grade" type="number" class="form-control">
                                                 </div>
@@ -345,7 +334,7 @@
                         SubmitData();
                     });
                     //all modal data
-                    console.log(document.getElementById('reason'));
+
 
                     function SubmitData() {
                         var url = "{{ route ('create_process') }}";
@@ -365,6 +354,7 @@
                         var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
                         var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
                         var document_name = document.getElementById('doc_name').innerText;
+
                         fetch(url, {
                             method: 'POST',
                             headers:{
@@ -391,12 +381,13 @@
                             })
                         })
                         .then((response) => {
-                            console.log(response.json);
+                            console.log(response.status);
                         })
                         .then((data) =>{
-                            alert(data);
+                            console.log(data);
+                            window.location.href = '/my_processes'
                         })
-{{--                        window.location.replace('/')--}}
+
                     }
                 </script>
                 <!-- Sign Modal -->
@@ -430,11 +421,11 @@
     <script>
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
-        console.log(user);
+{{--        console.log(user);--}}
         const doc = <?php  echo json_encode($document[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document[0]->header}}`;
-        console.log(header);
+{{--        console.log(header);--}}
         const body = `{{$document[0]->body}}`;
         var elementHeader = document.getElementById("header");
         elementHeader.innerHTML = header;

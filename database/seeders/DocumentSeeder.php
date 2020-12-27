@@ -36,7 +36,7 @@ class DocumentSeeder extends Seeder
                              ID студента: ${user.dl_id}';
         $document->title = 'Заявление';
         $document->body = 'Прошу Вас оставить меня на повторный год обучения по специальности ${user.speciality_code} ${user.speciality_name} дневного отделения в ${new Date().getFullYear()} учебном году, в связи с ${doc.reason}';
-        $document->reason = ' причина ';
+//        $document->reason = ' причина ';
         $document->save();
 
 
@@ -229,7 +229,7 @@ class DocumentSeeder extends Seeder
         $document->header = ' ';
         $document->title = 'Справка';
         $document->body = 'Дана ${user.name} ${user.dateOfBirth}
-                                        В том, что он(а) действительно является студентом ${user.course_number} очного отделения в АО «Международный университет информационных технологий»  по специальности
+                                        В том, что он(а) действительно является студентом ${user.course_number} курса очного отделения в АО «Международный университет информационных технологий»  по специальности
                                         ${user.speciality_name}
                                         Гос.лицензия Серия АБ  №   0064060 от  29.05.2009 год
                                         без ограничения срока

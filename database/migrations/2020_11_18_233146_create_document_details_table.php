@@ -14,7 +14,7 @@ class CreateDocumentDetailsTable extends Migration
     public function up()
     {
         Schema::create('document_details', function (Blueprint $table) {
-            $table->integer('id')->unsigned()->unique();
+            $table->string('document_name')->unique();
             $table->boolean('reason')->default(False);
             $table->boolean('new_fio')->default(False);
             $table->boolean('new_speciality')->default(False);
@@ -28,11 +28,11 @@ class CreateDocumentDetailsTable extends Migration
             $table->boolean('exam_grade')->default(False);
             $table->boolean('teacher')->default(False);
             $table->boolean('semester')->default(False);
-            $table->boolean('phone_number')->default(True);
+            $table->boolean('phone_number')->default(False);
             $table->boolean('attachments')->default(False);
 
             // FK
-            $table->foreign('id')->references('id')->on('documents');
+            $table->foreign('document_name')->references('document_name')->on('documents');
         });
     }
 

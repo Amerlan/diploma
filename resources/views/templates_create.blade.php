@@ -36,6 +36,7 @@
                             <div class="invalid-feedback">
                                 @lang('messages.invalid_feedback')
                             </div>
+
                         </div>
                         <div class="form-group">
                             <label>@lang('messages.enter_doc_header')</label>

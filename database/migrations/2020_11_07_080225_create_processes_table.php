@@ -34,7 +34,7 @@ class CreateProcessesTable extends Migration
             $table->unsignedFloat('exam_grade')->nullable();
             $table->foreignId('teacher')->nullable();
             $table->unsignedTinyInteger('semester')->nullable();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
 
 
             $table->boolean('is_rejected')->default(false);

@@ -190,6 +190,7 @@ class ProcessController extends Controller
             $process->teacher = $request->teacher;
             $process->created_by = $request->user()->id;
             $process->save();
+            return $request;
         }
         return $request;
     }
