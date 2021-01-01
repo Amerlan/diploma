@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documents;
 use App\Models\Document_details;
+use App\Models\Document_roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +39,8 @@ class DocumentController extends Controller
             ->get()
             ->all();
         $user = $request->user();
-        return view('/document_templates/application', compact('document', 'deans', 'user', 'dav', 'document_details', 'roles'));
+        return view('/document_templates/application',
+            compact('document', 'deans', 'user', 'dav', 'document_details'));
     }
 
 
@@ -61,7 +63,7 @@ class DocumentController extends Controller
     // Stores a new document in DB.
     public function store(Request $request)
     {
-        return $request;
+        $stages = explode(',', $request->role_order);
         $document = new Documents();
         $document_details = new Document_details();
 
@@ -69,8 +71,19 @@ class DocumentController extends Controller
         $document->document_type = $request->document_type;
         $document->stageCount = $request->stageCount;
         $document->header = $request->header;
-        $document->title = $request->title;
+        $document->title = 'Title';#$request->title;
         $document->body = $request->body;
+        $document->save();
+
+        if (count($stages) === intval($request->stageCount)){
+            for ($i=0; $i<count($stages); $i++){
+                $document_roles = new Document_roles();
+                $document_roles->document_name = $request->document_name;
+                $document_roles->role_id = $stages[$i];
+                $document_roles->sign_order = $i + 1;
+                $document_roles->save();
+            };
+        }
 
         $document_details->document_name = $request->document_name;
         if ($request->reason){
@@ -113,7 +126,14 @@ class DocumentController extends Controller
         if ($request->semester){
             $document_details->semester = True;
         }
-
+        if ($request->phone_number){
+            $document_details->phone_number = True;
+        }
+        if ($request->attachments){
+            $document_details->attachments = True;
+        }
+        $document_details->save();
+        return redirect('/');
     }
 
 

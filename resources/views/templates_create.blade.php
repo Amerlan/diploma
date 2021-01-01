@@ -12,11 +12,25 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">@lang('messages.create_template')</h1>
     </div>
-    <form class="needs-validation" action="{{route('create_document_template')}}" method="POST" novalidate>
+    <form id="form" class="needs-validation" action="{{route('create_document_template')}}" method="POST" novalidate>
         @csrf
         <div class="col-sm-12" style="float:none;margin:auto;padding-top: 1%">
             <div class="card card-primary">
                     <div class="card-body">
+                        <div class="form-group">
+                            <label for="document_type">@lang('messages.document_type')</label>
+                            <select class="form-control" name="document_type" id="document_type" required>
+                                @foreach($document_types as $type)
+                                    <option value="{{$type->document_type}}">{{$type->document_type}}</option>
+                                @endforeach
+                            </select>
+                            <div class="valid-feedback">
+                                @lang('messages.valid_feedback')
+                            </div>
+                            <div class="invalid-feedback">
+                                @lang('messages.invalid_feedback')
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="document_name">@lang('messages.document_name')</label>
                             <input type="text" class="form-control" id="document_name" name="document_name" placeholder="@lang('messages.enter_document_name')" required>
@@ -29,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('messages.stage_count')</label>
-                            <input type="text" class="form-control" name="stageCount" placeholder="@lang('messages.enter_stage_count')" required>
+                            <input id="stage" type="text" class="form-control" name="stageCount" value=1 placeholder="@lang('messages.enter_stage_count')" required readonly>
                             <div class="valid-feedback">
                                 @lang('messages.valid_feedback')
                             </div>
@@ -38,6 +52,26 @@
                             </div>
 
                         </div>
+                        <!--Sign order block-->
+                        <div class="form-group">
+                            <label for="roles">@lang('messages.DOBAVIT')</label>
+                            <div class="role_selection mb-2">
+                                <select class="select form-control" id="roles" required>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <a id="add_role"><span class="iconify" data-icon="bx:bx-plus-medical" data-inline="false"></span></a>
+                            <a id="remove_role"><span class="iconify" data-icon="ant-design:minus-outlined" data-inline="false"></span></a>
+                            <div class="valid-feedback">
+                                @lang('messages.valid_feedback')
+                            </div>
+                            <div class="invalid-feedback">
+                                @lang('messages.invalid_feedback')
+                            </div>
+                        </div>
+                        <!--Sign order block end-->
                         <div class="form-group">
                             <label>@lang('messages.enter_doc_header')</label>
                             <input type="text" class="form-control" name="header" placeholder="@lang('messages.enter_doc_header_displayed')" required>
@@ -121,8 +155,10 @@
                         </div>
                         <!-- Checkboxes menu end -->
                     </div>
+                <input id='role_order' name="role_order" value=0 hidden="true">
                     <div class="card-footer">
-                        <input type="submit" value="@lang('messages.submit')" class="btn btn-primary">
+                        <a class="btn btn-primary" id="sbmt">@lang('messages.submit')</a>
+{{--                        <input type="submit" value="@lang('messages.submit')" class="btn btn-primary">--}}
                         <a class="btn btn-default float-right" href="{{URL::to('/')}}">@lang('messages.cancel')</a>
                     </div>
             </div>
@@ -147,5 +183,32 @@
                 });
             }, false);
         })();
+    </script>
+
+    <script>
+ {{-- Plus-Minus button script --}}
+        var element = document.getElementById('add_role');
+        var stage = document.getElementById('stage');
+        element.addEventListener('click', function(){
+            $('.role_selection:last').clone().insertAfter('.role_selection:last');
+            stage.value = $('.select').length;
+         });
+         var rm = document.getElementById("remove_role");
+         rm.addEventListener('click', function(){
+            $('.role_selection').not(':first').last().remove();
+            stage.value = $('.select').length;
+         });
+
+         var form = document.getElementById('form');
+         var send = document.getElementById('sbmt');
+         send.addEventListener('click', function(){
+            var order = [];
+            var sel = $('.select');
+            for (var i = 0; i < sel.length; i++){
+                order.push(sel[i].value);
+            }
+            document.getElementById('role_order').value = order.join(',');
+            form.submit();
+         })
     </script>
 @endsection
