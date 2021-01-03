@@ -23,7 +23,7 @@ class CreateProcessDetailsTable extends Migration
             $table->boolean('attachments')->nullable();
 
             // FK
-            $table->foreign('process_id')->references('process_id')->on('processes');
+            $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('cascade');
         });
     }
 
