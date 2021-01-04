@@ -158,7 +158,7 @@
                 <input id='role_order' name="role_order" value=0 hidden="true">
                     <div class="card-footer">
                         <a class="btn btn-primary" id="sbmt">@lang('messages.submit')</a>
-{{--                        <input type="submit" value="@lang('messages.submit')" class="btn btn-primary">--}}
+                        <input id="hidden_submit" hidden=true type="submit" value="@lang('messages.submit')" class="btn btn-primary">
                         <a class="btn btn-default float-right" href="{{URL::to('/')}}">@lang('messages.cancel')</a>
                     </div>
             </div>
@@ -199,7 +199,7 @@
             stage.value = $('.select').length;
          });
 
-         var form = document.getElementById('form');
+         var form = document.getElementById('hidden_submit');
          var send = document.getElementById('sbmt');
          send.addEventListener('click', function(){
             var order = [];
@@ -208,7 +208,7 @@
                 order.push(sel[i].value);
             }
             document.getElementById('role_order').value = order.join(',');
-            form.submit();
+            form.click();
          })
     </script>
 @endsection
