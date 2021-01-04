@@ -45,9 +45,9 @@ class CreateProcessesTable extends Migration
             $table->dateTime('closed_date', 0)->nullable();
 
             # foreign keys
-            $table->foreign('document_name')->references('document_name')->on('documents');
-            $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('teacher')->references('id')->on('users');
+            $table->foreign('document_name')->references('document_name')->on('documents')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('teacher')->references('id')->on('users')->onDelete('cascade');
            });
     }
 

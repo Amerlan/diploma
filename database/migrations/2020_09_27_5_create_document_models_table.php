@@ -40,7 +40,7 @@ class CreateDocumentModelsTable extends Migration
 
 
             # foreign keys
-            $table->foreign('document_type')->references('document_type')->on('document_types');
+            $table->foreign('document_type')->references('document_type')->on('document_types')->onDelete('cascade');
 //            $table->foreign('teacher')->references('id')->on('users');
         });
     }

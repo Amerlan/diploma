@@ -23,8 +23,8 @@ class CreateProcessStagesTable extends Migration
             $table->text('comment')->nullable();
 
             # foreign keys
-            $table->foreign('process_id')->references('process_id')->on('processes');
-            $table->foreign('done_by')->references('id')->on('users');
+            $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('cascade');
+            $table->foreign('done_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

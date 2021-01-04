@@ -32,7 +32,7 @@ class CreateDocumentDetailsTable extends Migration
             $table->boolean('attachments')->default(False);
 
             // FK
-            $table->foreign('document_name')->references('document_name')->on('documents');
+            $table->foreign('document_name')->references('document_name')->on('documents')->onDelete('cascade');
         });
     }
 
