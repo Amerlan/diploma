@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-                <li class="breadcrumb-item"><a href="{{route('ongoing')}}">@lang('messages.my_processes')</a></li>
+                <li class="breadcrumb-item"><a href="{{route('processes')}}">@lang('messages.my_processes')</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     {{$process[0]->document_name}}
                 </li>
