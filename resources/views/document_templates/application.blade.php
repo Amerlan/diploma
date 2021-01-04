@@ -380,9 +380,9 @@
                                 'document_name': document_name,
                             })
                         })
-                        .then((response) => {
-                            console.log(response.status);
-                        })
+                        .then((response) =>
+                            console.log(response.json())
+                        )
                         .then((data) =>{
                             console.log(data);
                             window.location.href = '/my_processes'

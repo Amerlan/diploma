@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Process;
+use App\Models\Process_stages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,22 +47,20 @@ class ProcessController extends Controller
     // Displays all INCOMING requests to sign
     public function ongoing(Request $request)
     {
-        // distinct , done_by
-        $query = 'SELECT
-                    p.process_id, p.document_name, created_date,
-                    last_change_date, is_rejected, is_closed, current_stage
+        $query = 'SELECT distinct
+                    p.process_id, p.document_name, created_date, last_change_date, is_rejected, is_closed
                     FROM processes AS p
-                    LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
-                     LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
-                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                     WHERE
-                     ru.user_id='.$request->user()->id.' AND (done_by IS NULL
-                      OR
-                    done_by='.$request->user()->id.') AND is_closed=0 AND is_rejected=0';
+                    LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
+                    dr.sign_order=p.current_stage
+                    LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
+                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage
+                    WHERE user_id='.$request->user()->id.'
+                    AND is_rejected=0
+                    AND is_closed=0
+                   ';
         $ongoing_processes = DB::select($query);
-        return $ongoing_processes;
+//        return $ongoing_processes;
 
-        //return $processes;
 
         return view('ongoing', compact('ongoing_processes'));
     }
@@ -101,35 +100,29 @@ class ProcessController extends Controller
     public function process_details(Request $request, $id)
     {
         $query = 'SELECT
-                    role_name
+                    dr.*, p.*, ru.*
                     FROM processes AS p
-                    LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
-                     LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
-                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                     LEFT JOIN roles on roles.id=ru.role_id
-                     WHERE
-                     ru.user_id='.$request->user()->id.'
-                      AND (done_by IS NULL OR done_by='.$request->user()->id.')
-                    AND is_closed=0
-                    AND is_rejected=0
-                    AND p.process_id='.$id;
+                    LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
+                    dr.sign_order=p.current_stage
+                    LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
+                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage
+                    WHERE user_id='.$request->user()->id.' AND p.process_id='.$id.' AND ru.user_id='.$request->user()->id;
 
         if (DB::select($query)){
-            $validator_role = DB::select($query)[0]->role_name;
+            $process = DB::table('processes')->where('process_id', '=', $id)
+                ->get();
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->get();
         }
         else{
             abort(401, 'This action is unauthorized.');
         }
 
-        if ($request->user()->authorizeRoles($validator_role)){
-
-            $process = DB::table('processes')->where('process_id', '=', $id)
-                ->get();
-            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
-                ->get();
+//        return $process;
+//        return $process_stages;
 //            return compact('process', 'process_stages');
             return view('process_details', compact('process', 'process_stages'));
-        }
+
     }
 
     public function my_process_details(Request $request, $id)
@@ -191,9 +184,26 @@ class ProcessController extends Controller
             $process->teacher = $request->teacher;
             $process->created_by = $request->user()->id;
             $process->save();
-            return $request;
+
+            $process_id = DB::table('processes')
+                ->latest('created_date')
+                ->first('process_id')->process_id;
+
+            $stages = DB::table('documents')
+            ->where('document_name', '=', $request->document_name)
+            ->get('stageCount')[0]->stageCount;
+
+            for ($i=1; $i < $stages + 1; $i++){
+                $process_stages = new Process_stages();
+                $process_stages->process_id = $process_id;
+                $process_stages->stage_number = $i;
+                $process_stages->status = 'Ожидание';
+                $process_stages->save();
+            }
+
+            return response()->json(1);
         }
-        return $request;
+        return response()->json(0);
     }
 
     /**

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentSeeder::class);
         $this->call(DocumentDetailsSeeder::class);
 //        $this->call(ProcessSeeder::class);
-//        $this->call(StatusSeeder::class);
+        $this->call(StatusSeeder::class);
 //        $this->call(DocumentRolesSeeder::class);
 //        $this->call(ProcessStagesSeeder::class);
 
