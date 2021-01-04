@@ -116,6 +116,7 @@ return [
     'start_process'=> 'Процесті бастау',
     'valid_feedback'=> 'Жақсы!',
     'invalid_feedback'=> 'Өрісті толтырыңыз',
+    'signing_document'=> 'Құжатқа қол қою кезегі',
 
 ];
 

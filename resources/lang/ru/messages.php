@@ -116,6 +116,7 @@ return [
     'start_process'=> 'Запустить процесс',
     'valid_feedback'=> 'Отлично!',
     'invalid_feedback'=> 'Пожалуйста заполните поле',
+    'signing_document'=> 'Порядок подписания документа',
 
 ];
 
