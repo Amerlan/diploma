@@ -140,12 +140,18 @@ class ProcessController extends Controller
                 ->get();
             $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
                 ->get();
-            return view('my_process_details', compact('process', 'process_stages'));
+            $document_data = DB::table('documents')
+                ->where('document_name', '=', $process[0]->document_name)
+                ->get();
+//            return compact(['process_stages', 'process']);
+            return view('my_process_details', compact('process', 'process_stages', 'document_data'));
 
         }
         else{
             abort(401, 'This action is unauthorized.');
         }
+
+
 
     }
 
