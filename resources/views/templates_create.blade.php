@@ -18,7 +18,7 @@
             <div class="card card-primary">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="document_type">@lang('messages.document_type')</label>
+                            <label for="document_type">@lang('messages.doc_type')</label>
                             <select class="form-control" name="document_type" id="document_type" required>
                                 @foreach($document_types as $type)
                                     <option value="{{$type->document_type}}">{{$type->document_type}}</option>
@@ -54,7 +54,7 @@
                         </div>
                         <!--Sign order block-->
                         <div class="form-group">
-                            <label for="roles">@lang('messages.DOBAVIT')</label>
+                            <label for="roles">@lang('messages.signing_document')</label>
                             <div class="role_selection mb-2">
                                 <select class="select form-control" id="roles" required>
                                     @foreach($roles as $role)
@@ -159,7 +159,6 @@
                     <div class="card-footer">
                         <a class="btn btn-success" id="sbmt">@lang('messages.create_template')</a>
 {{--                        <input type="submit" value="@lang('messages.submit')" class="btn btn-primary">--}}
-                        <a class="btn btn-primary" id="sbmt">@lang('messages.submit')</a>
                         <input id="hidden_submit" hidden=true type="submit" value="@lang('messages.submit')" class="btn btn-primary">
                         <a class="btn btn-default float-right" href="{{URL::to('/')}}">@lang('messages.cancel')</a>
                     </div>
