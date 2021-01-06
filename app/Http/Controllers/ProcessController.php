@@ -152,8 +152,6 @@ class ProcessController extends Controller
             abort(401, 'This action is unauthorized.');
         }
 
-
-
     }
 
     public function index()

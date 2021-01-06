@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Notifications\DocumentReceived;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
@@ -21,6 +23,16 @@ use Auth;
 Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Auth::routes();
 
+    //Notifications testing
+    Route::get('/x', function (){
+
+        $user = Auth::user();
+
+        $user->notify(new DocumentReceived);
+
+        return view('home');
+
+    });
 
     //TESTING
     Route::post('create_process', [Controllers\ProcessController::class, 'create_process'])->name('create_process');

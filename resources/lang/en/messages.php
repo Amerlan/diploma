@@ -116,6 +116,7 @@ return [
     'start_process'=> 'Start process',
     'valid_feedback'=> 'Good!',
     'invalid_feedback'=> 'Please fill the field',
+    'signing_document'=> 'Order for signing a document',
 
 ];
 

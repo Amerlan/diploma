@@ -17,7 +17,7 @@
             <div class="card card-primary align-items-center">
                 <div class="card-body box-profile">
                     <div class="text-center">
-                        <img class="img-profile rounded-circle" src={{$user->url}}>
+                        <img class="img-profile rounded-circle" style="width: 50%;" src={{$user->url}}>
                         <h3 id="name"></h3>
                         <p class="text-muted">@lang('messages.role') - {{$user->roles}}</p>
                         <ul class="list-group">
