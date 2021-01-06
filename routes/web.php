@@ -28,7 +28,9 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
         $user = Auth::user();
 
-        $user->notify(new DocumentReceived(User::findOrFail(1)));
+        $user->notify(new DocumentReceived);
+
+        return view('home');
 
     });
 

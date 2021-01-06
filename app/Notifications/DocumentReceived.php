@@ -11,15 +11,15 @@ class DocumentReceived extends Notification
 {
     use Queueable;
 
-    public $user;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user =$user;
+        //
     }
 
     /**
@@ -42,8 +42,6 @@ class DocumentReceived extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'user_id' => $this->user->id,
-            'user_name' => $this->user->name,
             'data' => 'Document signed'//example
         ];
     }
