@@ -143,7 +143,8 @@ class ProcessController extends Controller
             $document_data = DB::table('documents')
                 ->where('document_name', '=', $process[0]->document_name)
                 ->get();
-//            return compact(['process_stages', 'process']);
+
+            //            return compact(['process_stages', 'process']);
             return view('my_process_details', compact('process', 'process_stages', 'document_data'));
 
         }

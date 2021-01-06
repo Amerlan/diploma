@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container-fluid">
 
@@ -61,7 +60,7 @@
                             </div>
                             <div class="row mt-3 pb-5">
                                 <div class="col-2 offset-8">
-                                    <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">
+{{--                                    <img src="{{ asset('design/img/sign.png')}}" style="width: 100%;">--}}
                                 </div>
                             </div>
                         </div>
