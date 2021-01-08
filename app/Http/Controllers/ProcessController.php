@@ -102,6 +102,45 @@ class ProcessController extends Controller
     public function process_details(Request $request, $id)
     {
         $query = 'SELECT
+                    p.*, ps.*
+                    FROM processes AS p
+                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage AND
+                                                      p.process_id=ps.process_id
+                    ';
+
+        if (DB::select($query)){
+            $process = DB::table('processes')->where('process_id', '=', $id)
+                ->get();
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->get();
+            $document_data = DB::table('documents')
+                ->where('document_name', '=', $process[0]->document_name)
+                ->get();
+            $deans = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'dean')
+                ->get()
+                ->all();
+            $dav = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'admin')
+                ->get()
+                ->all();
+            $user = $request->user();
+
+            //            return compact(['process_stages', 'process']);
+            return view('process_details',
+                compact('process',
+                    'process_stages', 'document_data', 'deans', 'user', 'dav'));
+
+        }
+        else{
+            abort(401, 'This action is unauthorized.');
+        }
+
+        /*$query = 'SELECT
                     dr.*, p.*, ru.*
                     FROM processes AS p
                     LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
@@ -124,7 +163,7 @@ class ProcessController extends Controller
 //        return $process_stages;
 //            return compact('process', 'process_stages');
             return view('process_details',
-                compact('process', 'process_stages'));
+                compact('process', 'process_stages'));*/
 
     }
 
