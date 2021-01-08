@@ -252,7 +252,7 @@
                             <h6 class="dropdown-header">
                                 @lang('messages.notifications')
                             </h6>
-                            @foreach(auth()->user()->notifications as $notification)
+                            @foreach(auth()->user()->notifications->take(4) as $notification)
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-primary">
