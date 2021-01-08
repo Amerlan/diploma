@@ -6,6 +6,7 @@ use App\Models\Process;
 use App\Models\Process_stages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\DocumentReceived;
 
 class ProcessController extends Controller
 {
@@ -122,7 +123,8 @@ class ProcessController extends Controller
 //        return $process;
 //        return $process_stages;
 //            return compact('process', 'process_stages');
-            return view('process_details', compact('process', 'process_stages'));
+            return view('process_details',
+                compact('process', 'process_stages', 'qr'));
 
     }
 
@@ -143,7 +145,16 @@ class ProcessController extends Controller
             $document_data = DB::table('documents')
                 ->where('document_name', '=', $process[0]->document_name)
                 ->get();
-//            return compact(['process_stages', 'process']);
+            $qr = DB::table('processes')->where('process_id', '=', $id)
+                ->where('is_closed', '=', 1)
+                ->where('is_rejected', '=', 0)
+                ->exists();
+            if ($qr){
+                return $process;
+            }
+            return 0;
+
+            //            return compact(['process_stages', 'process']);
             return view('my_process_details', compact('process', 'process_stages', 'document_data'));
 
         }

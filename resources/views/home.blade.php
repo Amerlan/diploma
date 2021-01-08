@@ -16,7 +16,6 @@
 
     <!-- Content Row -->
     <div class="row">
-
         <div class="col-12">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                 <thead>
