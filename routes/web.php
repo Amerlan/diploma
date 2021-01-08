@@ -41,6 +41,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     # HOME PAGE
     Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
     Route::redirect('/home', '/');
+    Route::get('/qr/{process_token}', [Controllers\ProcessController::class, 'qr'])->name('qr');
 
     # Get all document types (for admin only)
     Route::get('/doc_types', [Controllers\DocumentTypeController::class, 'index'])->name('see_doctypes');

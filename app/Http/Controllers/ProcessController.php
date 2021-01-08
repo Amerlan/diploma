@@ -124,7 +124,7 @@ class ProcessController extends Controller
 //        return $process_stages;
 //            return compact('process', 'process_stages');
             return view('process_details',
-                compact('process', 'process_stages', 'qr'));
+                compact('process', 'process_stages'));
 
     }
 
@@ -145,17 +145,24 @@ class ProcessController extends Controller
             $document_data = DB::table('documents')
                 ->where('document_name', '=', $process[0]->document_name)
                 ->get();
-            $qr = DB::table('processes')->where('process_id', '=', $id)
-                ->where('is_closed', '=', 1)
-                ->where('is_rejected', '=', 0)
-                ->exists();
-            if ($qr){
-                return $process;
-            }
-            return 0;
+            $deans = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'dean')
+                ->get()
+                ->all();
+            $dav = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'admin')
+                ->get()
+                ->all();
+            $user = $request->user();
 
             //            return compact(['process_stages', 'process']);
-            return view('my_process_details', compact('process', 'process_stages', 'document_data'));
+            return view('my_process_details',
+                compact('process',
+                    'process_stages', 'document_data', 'deans', 'user', 'dav'));
 
         }
         else{
@@ -164,9 +171,10 @@ class ProcessController extends Controller
 
     }
 
-    public function index()
+    public function qr(Request $request, $process_token)
     {
-        //
+        return DB::table('processes')->where('process_token', '=', $process_token)
+            ->get();
     }
 
     public function create_process(Request $request){

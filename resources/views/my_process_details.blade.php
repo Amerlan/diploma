@@ -54,9 +54,11 @@
                                 </div>
                             </div>
                             <div class="row mt-3 pb-5">
+                                @if($process[0]->process_token)
                                 <div class="col-2 offset-8">
-                                    {!! QrCode::generate('Daite denyak'); !!}
+                                    {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$process[0]->process_token); !!}
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -66,12 +68,12 @@
             <script>
                 const user = <?php  echo json_encode($user);?>;
                 const deans = <?php  echo json_encode($deans[0]);?>;
-                {{--        console.log(user);--}}
+{{--                        console.log(user);--}}
                 const doc = <?php  echo json_encode($document_data[0]);?>;
                 const dav = <?php echo json_encode($dav[0]);?>;
-                const header = `{{$document[0]->header}}`;
+                const header = `{{$document_data[0]->header}}`;
                 {{--        console.log(header);--}}
-                const body = `{{$document[0]->body}}`;
+                const body = `{{$document_data[0]->body}}`;
                 var elementHeader = document.getElementById("header");
                 elementHeader.innerHTML = header;
                 var elementBody = document.getElementById("body");

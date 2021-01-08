@@ -261,7 +261,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">{{$notification->created_at}}</div>
-                                        <span class="font-weight-bold">{{$notification->data['data']}}</span>
+                                        <span class="font-weight-bold">{{$notification->data['status']}}</span>
                                     </div>
                                 </a>
                             @endforeach

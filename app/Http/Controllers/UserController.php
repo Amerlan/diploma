@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document_stages;
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\DocumentReceived;
+use Illuminate\Support\Str;
+
+
 
 class UserController extends Controller
 {
@@ -69,6 +73,15 @@ class UserController extends Controller
                 'last_edited_date' => date("Y-m-d H:i:s")
             ]);
 
+        $to_notify = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('created_by')[0]->created_by;
+
+        $dr = new DocumentReceived('status', '');
+//
+        User::findOrFail($to_notify)->notify($dr);
+//        Notification::send($user, new DocumentReceived());
+
         if (intval($request->stage) < intval($last_stage)){
 
             DB::table('processes')
@@ -84,7 +97,8 @@ class UserController extends Controller
                 ->update([
                     'is_closed' => 1,
                     'last_change_date' => date("Y-m-d H:i:s"),
-                    'closed_date' => date("Y-m-d H:i:s")
+                    'closed_date' => date("Y-m-d H:i:s"),
+                    'process_token' => Str::random(32),
                     ]);
         }
 

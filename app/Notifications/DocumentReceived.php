@@ -10,16 +10,12 @@ use Illuminate\Notifications\Notification;
 class DocumentReceived extends Notification
 {
     use Queueable;
-
-
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
+    var $status;
+    var $process_id;
     public function __construct()
     {
-        //
+        $this->status;
+        $this->process_id;
     }
 
     /**
@@ -42,7 +38,8 @@ class DocumentReceived extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'data' => 'Document signed'//example
+            'status' => $this->status,
+            'process_id' => $this->process_id
         ];
     }
 }

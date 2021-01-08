@@ -35,8 +35,10 @@ class CreateProcessesTable extends Migration
             $table->foreignId('teacher')->nullable();
             $table->unsignedTinyInteger('semester')->nullable();
             $table->string('phone_number')->nullable();
-            $table->boolean('draft')->default(true);
+            $table->string('process_token')->nullable()->unique();
 
+
+            $table->boolean('draft')->default(true);
 
             $table->boolean('is_rejected')->default(false);
             $table->boolean('is_closed')->default(false);
