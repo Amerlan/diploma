@@ -54,8 +54,8 @@ class ProcessController extends Controller
                     LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
                     dr.sign_order=p.current_stage
                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage AND
-                                                      ps.process_id=p.process_id
+                    LEFT JOIN process_stages AS ps ON ((ps.stage_number=p.current_stage) AND
+                                                      (ps.process_id=p.process_id))
                     WHERE user_id='.$request->user()->id.'
                     AND is_rejected=0
                     AND is_closed=0
@@ -139,31 +139,6 @@ class ProcessController extends Controller
         else{
             abort(401, 'This action is unauthorized.');
         }
-
-        /*$query = 'SELECT
-                    dr.*, p.*, ru.*
-                    FROM processes AS p
-                    LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
-                    dr.sign_order=p.current_stage
-                    LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage
-                    WHERE user_id='.$request->user()->id.' AND p.process_id='.$id.' AND ru.user_id='.$request->user()->id;
-
-        if (DB::select($query)){
-            $process = DB::table('processes')->where('process_id', '=', $id)
-                ->get();
-            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
-                ->get();
-        }
-        else{
-            abort(401, 'This action is unauthorized.');
-        }
-
-//        return $process;
-//        return $process_stages;
-//            return compact('process', 'process_stages');
-            return view('process_details',
-                compact('process', 'process_stages'));*/
 
     }
 

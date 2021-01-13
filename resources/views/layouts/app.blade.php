@@ -262,6 +262,8 @@
                                     <div>
                                         <div class="small text-gray-500">{{$notification->created_at}}</div>
                                         <span class="font-weight-bold">{{$notification->data['status']}}</span>
+                                        <h1>{{$notification->data['process_id']}}</h1>
+                                        <h2>{{$notification->data['document_name']}}</h2>
                                     </div>
                                 </a>
                             @endforeach

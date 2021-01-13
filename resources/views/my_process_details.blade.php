@@ -65,6 +65,23 @@
                 </div>
 
     </div>
+            <div class="card">
+                <div class="card-body">
+                    @foreach($process_stages as $stage)
+                        <div class="row mt-5">
+                            <div class="col-8 offset-2">
+                                {{$stage->stage_number}}
+                                {{$stage->status}}
+                            </div>
+                        </div>
+                    @endforeach
+                        <div class="row mt-5">
+                            <div class="col-8 offset-2">
+                                {{$process_stages}}
+                            </div>
+                        </div>
+                </div>
+            </div>
             <script>
                 const user = <?php  echo json_encode($user);?>;
                 const deans = <?php  echo json_encode($deans[0]);?>;

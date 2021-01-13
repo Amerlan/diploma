@@ -6,16 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
+
 
 class DocumentReceived extends Notification
 {
     use Queueable;
-    var $status;
-    var $process_id;
-    public function __construct()
+    private $process_id;
+    private  $status;
+    private $document_name;
+    public function __construct($status, $process_id)
     {
-        $this->status;
-        $this->process_id;
+        $this->status = $status;
+        $this->process_id = $process_id;
+        $this->document_name = DB::table('processes')
+            ->where('process_id', '=', $process_id)
+            ->get('document_name')[0]->document_name;
     }
 
     /**
@@ -39,7 +45,8 @@ class DocumentReceived extends Notification
     {
         return [
             'status' => $this->status,
-            'process_id' => $this->process_id
+            'process_id' => $this->process_id,
+            'document_name' => $this->document_name
         ];
     }
 }

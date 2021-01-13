@@ -77,7 +77,7 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('created_by')[0]->created_by;
 
-        $dr = new DocumentReceived('status', '');
+        $dr = new DocumentReceived('Подписано', $request->process_id);
 //
         User::findOrFail($to_notify)->notify($dr);
 //        Notification::send($user, new DocumentReceived());
@@ -100,6 +100,13 @@ class UserController extends Controller
                     'closed_date' => date("Y-m-d H:i:s"),
                     'process_token' => Str::random(32),
                     ]);
+            $to_notify = DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->get('created_by')[0]->created_by;
+
+            $dr = new DocumentReceived('Закончено', $request->process_id);
+//
+            User::findOrFail($to_notify)->notify($dr);
         }
 
 
@@ -127,6 +134,13 @@ class UserController extends Controller
                     'last_change_date' => date("Y-m-d H:i:s"),
                     'closed_date' => date("Y-m-d H:i:s")
                 ]);
+        $to_notify = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('created_by')[0]->created_by;
+
+        $dr = new DocumentReceived('Отказано', $request->process_id);
+//
+        User::findOrFail($to_notify)->notify($dr);
 
         return redirect('/ongoing');
     }
