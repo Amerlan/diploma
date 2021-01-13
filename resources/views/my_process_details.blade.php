@@ -60,28 +60,65 @@
                                 </div>
                                 @endif
                             </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="text-center">Статус</h2>
+                                </div>
+                            </div>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Номер стадии</th>
+                                        <th>Состояние</th>
+                                        <th>Комментарий</th>
+                                        <th>От кого</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($process_stages as $stage)
+                                        <tr>
+                                            <td>{{$stage->stage_number}}</td>
+                                            <td>{{$stage->status}}</td>
+                                            <td>{{$stage->comment}}</td>
+                                            <td>{{$stage->done_by}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </div>
-
-    </div>
-            <div class="card">
-                <div class="card-body">
-                    @foreach($process_stages as $stage)
-                        <div class="row mt-5">
-                            <div class="col-8 offset-2">
-                                {{$stage->stage_number}}
-                                {{$stage->status}}
-                            </div>
-                        </div>
-                    @endforeach
-                        <div class="row mt-5">
-                            <div class="col-8 offset-2">
-                                {{$process_stages}}
-                            </div>
-                        </div>
-                </div>
             </div>
+{{--            <div class="row">--}}
+{{--                <div class="col-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="card-title">--}}
+
+{{--                            </div>--}}
+{{--                            <div class="card-text">--}}
+{{--                                @foreach($process_stages as $stage)--}}
+{{--                                    <div class="row mt-5">--}}
+{{--                                        <div class="col-8 offset-2">--}}
+{{--                                            {{$stage->stage_number}}--}}
+{{--                                            {{$stage->status}}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                                <div class="row mt-5">--}}
+{{--                                    <div class="col-8 offset-2">--}}
+{{--                                        {{$process_stages}}--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+
             <script>
                 const user = <?php  echo json_encode($user);?>;
                 const deans = <?php  echo json_encode($deans[0]);?>;
