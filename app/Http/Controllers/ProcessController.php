@@ -155,7 +155,8 @@ class ProcessController extends Controller
             $process = DB::table('processes')->where('process_id', '=', $id)
                 ->get();
             $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
-                ->get();
+                ->join('users', 'users.id', '=', 'process_stages.done_by')
+                ->get(['stage_number', 'status', 'users.name', 'comment']);
             $document_data = DB::table('documents')
                 ->where('document_name', '=', $process[0]->document_name)
                 ->get();
@@ -192,40 +193,72 @@ class ProcessController extends Controller
     }
 
     public function create_process(Request $request){
-        if (!($request->user()->isAdmin())){
-            $process = new Process();
-            $process->document_name = $request->document_name;
-            $process->academic_year = $request->academic_year;
-            $process->endterm_grade = $request->endterm_grade;
-            $process->exam_grade = $request->exam_grade;
-            $process->midterm_grade = $request->midterm_grade;
-            $process->new_fio = $request->new_fio;
-            $process->new_speciality = $request->new_speciality;
-            $process->new_speciality_code = $request->new_speciality_code;
-            $process->new_university = $request->new_university;
-            $process->phone_number = $request->phone_number;
-            $process->reason = $request->reason;
-            $process->semester = $request->semester;
-            $process->subject = $request->subject;
-            $process->sum_of_return = $request->sum_of_return;
-            $process->teacher = $request->teacher;
-            $process->created_by = $request->user()->id;
-            $process->save();
+        $user = $request->user();
+        if (!($user->isAdmin())){
+            if (DB::table('processes')
+                ->where('document_name', '=', $request->document_name)
+                ->where('created_by', '=', $user->id)
+                ->where('draft', '=', 1)
+                ->exists()){
+                DB::table('processes')
+                    ->where('document_name', '=', $request->document_name)
+                    ->where('created_by', '=', $user->id)
+                    ->where('draft', '=', 1)
+                    ->update([
+                        'last_change_date' => date("Y-m-d H:i:s"),
+                        'created_date' => date("Y-m-d H:i:s"),
+                        'academic_year' => $request->academic_year,
+                        'endterm_grade' => $request->endterm_grade,
+                        'exam_grade' => $request->exam_grade,
+                        'midterm_grade' => $request->midterm_grade,
+                        'new_fio' => $request->new_fio,
+                        'new_speciality' => $request->new_speciality,
+                        'new_speciality_code' => $request->new_speciality_code,
+                        'new_university' => $request->new_university,
+                        'phone_number' => $request->phone_number,
+                        'reason' => $request->reason,
+                        'semester' => $request->semester,
+                        'subject' => $request->subject,
+                        'sum_of_return' => $request->sum_of_return,
+                        'teacher' => $request->teacher
+                    ]);
 
-            $process_id = DB::table('processes')
-                ->latest('created_date')
-                ->first('process_id')->process_id;
+            }
+            else{
+                $process = new Process();
+                $process->document_name = $request->document_name;
+                $process->academic_year = $request->academic_year;
+                $process->endterm_grade = $request->endterm_grade;
+                $process->exam_grade = $request->exam_grade;
+                $process->midterm_grade = $request->midterm_grade;
+                $process->new_fio = $request->new_fio;
+                $process->new_speciality = $request->new_speciality;
+                $process->new_speciality_code = $request->new_speciality_code;
+                $process->new_university = $request->new_university;
+                $process->phone_number = $request->phone_number;
+                $process->reason = $request->reason;
+                $process->semester = $request->semester;
+                $process->subject = $request->subject;
+                $process->sum_of_return = $request->sum_of_return;
+                $process->teacher = $request->teacher;
+                $process->created_by = $request->user()->id;
+                $process->save();
 
-            $stages = DB::table('documents')
-            ->where('document_name', '=', $request->document_name)
-            ->get('stageCount')[0]->stageCount;
+                $process_id = DB::table('processes')
+                    ->latest('created_date')
+                    ->first('process_id')->process_id;
 
-            for ($i=1; $i < $stages + 1; $i++){
-                $process_stages = new Process_stages();
-                $process_stages->process_id = $process_id;
-                $process_stages->stage_number = $i;
-                $process_stages->status = 'Ожидание';
-                $process_stages->save();
+                $stages = DB::table('documents')
+                    ->where('document_name', '=', $request->document_name)
+                    ->get('stageCount')[0]->stageCount;
+
+                for ($i=1; $i < $stages + 1; $i++){
+                    $process_stages = new Process_stages();
+                    $process_stages->process_id = $process_id;
+                    $process_stages->stage_number = $i;
+                    $process_stages->status = 'Ожидание';
+                    $process_stages->save();
+                }
             }
 
             return response()->json(1);

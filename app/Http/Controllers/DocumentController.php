@@ -19,10 +19,25 @@ class DocumentController extends Controller
 
     public function show_document(Request $request, $document_id)
     {
-//        return $document_name;
+        $user = $request->user();
         $document = DB::table('documents')
             ->where('id', '=', $document_id)
             ->get()->all();
+        $process = DB::table('processes')
+            ->where('document_name', '=', $document[0]->document_name)
+            ->where('created_by', '=', $user->id)
+            ->where('draft', '=', 1)
+            ->exists();
+        if ($process){
+            $process = DB::table('processes')
+                ->where('document_name', '=', $document[0]->document_name)
+                ->where('created_by', '=', $user->id)
+                ->where('draft', '=', 1)
+                ->get()->all();
+        }
+        else{
+            $process = null;
+        }
         $document_details = DB::table('document_details')
             ->where('document_name', '=', $document[0]->document_name)
             ->get()->all();
@@ -38,9 +53,10 @@ class DocumentController extends Controller
             ->where('roles.role_name', '=', 'admin')
             ->get()
             ->all();
-        $user = $request->user();
+
+
         return view('/document_templates/application',
-            compact('document', 'deans', 'user', 'dav', 'document_details'));
+            compact('document', 'process', 'deans', 'user', 'dav', 'document_details'));
     }
 
 

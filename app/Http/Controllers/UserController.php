@@ -45,14 +45,6 @@ class UserController extends Controller
     public function toSign($request)
     {
 
-//        $validator_role = DB::table('processes')
-//            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
-//            ->whereColumn('current_stage', '=', 'sign_order')
-//            ->where('current_stage', '=', $request->stage)
-//            ->where('process_id', '=', $request->process_id)
-//            ->get('role_id')->take(1)[0]->role_id;
-
-
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
@@ -78,9 +70,8 @@ class UserController extends Controller
             ->get('created_by')[0]->created_by;
 
         $dr = new DocumentReceived('Подписано', $request->process_id);
-//
+
         User::findOrFail($to_notify)->notify($dr);
-//        Notification::send($user, new DocumentReceived());
 
         if (intval($request->stage) < intval($last_stage)){
 
