@@ -156,7 +156,7 @@ class ProcessController extends Controller
                 ->get();
             $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
                 ->join('users', 'users.id', '=', 'process_stages.done_by')
-                ->get(['stage_number', 'status', 'users.name', 'comment']);
+                ->get(['stage_number', 'status', 'users.name as done_by', 'comment']);
             $document_data = DB::table('documents')
                 ->where('document_name', '=', $process[0]->document_name)
                 ->get();
