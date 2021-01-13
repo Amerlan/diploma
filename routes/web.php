@@ -51,20 +51,13 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/ongoing', [Controllers\ProcessController::class, 'ongoing'])->name('ongoing');
     Route::get('/signed', [Controllers\ProcessController::class, 'signed'])->name('signed');
 
-//    Route::get('/create_process', [Controllers\ProcessController::class, 'see_templates'])->name('create_process_list');
     Route::get('create_process/{document_id}', [Controllers\ProcessController::class, 'create'])->name('create_proc');
 
-//    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
     Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
     Route::get('/my_process_details/{id}', [Controllers\ProcessController::class, 'my_process_details'])->name('my_process_details');
-//    Route::post('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
-//    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
-//    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
 
-//    TEST
     Route::post('/sign_return_reject', [Controllers\UserController::class, 'sign_return_reject'])->name('action');
 
-//    TEST
 
     // For ADMIN only
     Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all_processes');;
@@ -75,11 +68,6 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::get('/templates/{document_id}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
 
-//    Route::get('/templates/bypass_sheet', function () {
-//        $users = null;
-//        $documents = null;
-//        return view('document_templates/bypass_sheet', compact('users', 'documents'));
-//    })->name('templates');
 });
 
 Route::get('setlocale/{lang}', function ($lang) {
