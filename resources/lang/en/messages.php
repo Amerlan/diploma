@@ -12,6 +12,7 @@ return [
     'doc_settings' => 'Documents settings',
     'customize' => 'Customize',
     'parameters' => 'Parameters',
+    'document' => 'Document',
     'documents' => 'Documents',
     'document_name'=> 'Document name',
     'documents_samples' => 'Documents samples',
@@ -117,6 +118,8 @@ return [
     'valid_feedback'=> 'Good!',
     'invalid_feedback'=> 'Please fill the field',
     'signing_document'=> 'Order for signing a document',
+    'signed'=> 'Signed',
+    'denied'=> 'Denied',
 
 ];
 

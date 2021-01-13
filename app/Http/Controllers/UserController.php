@@ -67,7 +67,7 @@ class UserController extends Controller
             ->where('stage_number', '=',  $request->stage)
             ->where('process_id', '=', $request->process_id)
             ->update([
-                'status' => 'Подписано',
+                'status' => '1',
                 'done_by' => $request->user()->id,
                 'comment' => $request->comment,
                 'last_edited_date' => date("Y-m-d H:i:s")
@@ -77,7 +77,7 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('created_by')[0]->created_by;
 
-        $dr = new DocumentReceived('Подписано', $request->process_id);
+        $dr = new DocumentReceived('1', $request->process_id);
 //
         User::findOrFail($to_notify)->notify($dr);
 //        Notification::send($user, new DocumentReceived());
@@ -104,7 +104,7 @@ class UserController extends Controller
                 ->where('process_id', '=', $request->process_id)
                 ->get('created_by')[0]->created_by;
 
-            $dr = new DocumentReceived('Закончено', $request->process_id);
+            $dr = new DocumentReceived('1', $request->process_id);
 //
             User::findOrFail($to_notify)->notify($dr);
         }
@@ -119,7 +119,7 @@ class UserController extends Controller
             ->where('stage_number', '=',  $request->stage)
             ->where('process_id', '=', $request->process_id)
             ->update([
-                'status' => 'Отказано',
+                'status' => '0',
                 'done_by' => $request->user()->id,
                 'comment' => $request->comment,
                 'last_edited_date' => date("Y-m-d H:i:s")
@@ -159,7 +159,7 @@ class UserController extends Controller
                 ->where('stage_number', '=',  $request->stage)
                 ->where('process_id', '=', $request->process_id)
                 ->update([
-                    'status' => 'Возвращено на доработку',
+                    'status' => '3',
                     'done_by' => $request->user()->id,
                     'comment' => $request->comment,
                     'last_edited_date' => date("Y-m-d H:i:s")
@@ -226,6 +226,25 @@ class UserController extends Controller
         return abort(401, 'Unauthorized request');
 
 
+    }
+
+    public function all_notifications()
+    {
+        $notifications = auth()->user()->notifications()->orderBy('created_at','desc')->get()->toArray();
+
+        return view('all_notifications' , compact("notifications"));
+
+    }
+
+    public function mark_as_read(Request $request, $notification_id, $process_id)
+    {
+        $notification = auth()->user()->notifications()->where('id', $notification_id)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        //app('App\Http\Controllers\ProcessController')->my_process_details($request, $process_id);
+        return \Redirect::route('my_process_details', ['id' => $process_id]);
     }
 
     /**

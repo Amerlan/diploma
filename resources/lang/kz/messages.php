@@ -13,6 +13,7 @@ return [
     'customize' => 'Реттеу',
     'parameters' => 'Параметрлері',
     'documents' => 'Құжаттар',
+    'document' => 'Құжат',
     'document_name'=> 'Құжаттың атауы',
     'documents_samples' => 'Құжаттардың үлгілері',
     'create_document' => 'Құжат құру',
@@ -117,6 +118,8 @@ return [
     'valid_feedback'=> 'Жақсы!',
     'invalid_feedback'=> 'Өрісті толтырыңыз',
     'signing_document'=> 'Құжатқа қол қою кезегі',
+    'signed'=> 'Қол қойылған',
+    'denied'=> 'Қабылданбады',
 
 ];
 

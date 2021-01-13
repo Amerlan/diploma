@@ -243,17 +243,17 @@
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            @foreach(auth()->user()->notifications as $notification)
-                                <span class="badge badge-danger badge-counter">{{auth()->user()->notifications->count()}}</span>
-                            @endforeach
+                                @if(auth()->user()->unreadNotifications->count())
+                                    <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span>
+                                @endif
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">
                                 @lang('messages.notifications')
                             </h6>
-                            @foreach(auth()->user()->notifications->take(4) as $notification)
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                            @foreach(auth()->user()->unreadNotifications->take(4) as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href={{ route('mark_as_read',['notification_id' => $notification->id, 'process_id' => $notification->data['process_id'] ])}}>
                                     <div class="mr-3">
                                         <div class="icon-circle bg-primary">
                                             <i class="fas fa-file-alt text-white"></i>
@@ -261,49 +261,11 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">{{$notification->created_at}}</div>
-                                        <span class="font-weight-bold">{{$notification->data['status']}}</span>
-                                        <h1>{{$notification->data['process_id']}}</h1>
-                                        <h2>{{$notification->data['document_name']}}</h2>
+                                        <span class="font-weight-bold">@lang('messages.document') "{{$notification->data['document_name']}}" {{$notification->data['status']}}</span>
                                     </div>
                                 </a>
                             @endforeach
-                            <!--
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">12.12.2020</div>
-                                    <span class="font-weight-bold">Документ "Заявление на продление" подписан</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-danger">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">10.12.2020</div>
-                                    Документ "Заявление на продление" отклонен
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">08.12.2020</div>
-                                    Документ "Изменения оценки в DL" подписан
-                                </div>
-                            </a>
-                            -->
-                            <a class="dropdown-item text-center small text-gray-500" href="#">@lang('messages.all_notifications')</a>
+                            <a class="dropdown-item text-center small text-gray-500" href="{{route('all_notifications')}}">@lang('messages.all_notifications')</a>
                         </div>
                     </li>
 

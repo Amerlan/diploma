@@ -142,7 +142,7 @@ class ProcessController extends Controller
 
     }
 
-    public function my_process_details(Request $request, $id)
+    public static function my_process_details(Request $request, $id)
     {
         $query = 'SELECT
                     p.*, ps.*
@@ -172,6 +172,8 @@ class ProcessController extends Controller
                 ->get()
                 ->all();
             $user = $request->user();
+
+
 
             //            return compact(['process_stages', 'process']);
             return view('my_process_details',

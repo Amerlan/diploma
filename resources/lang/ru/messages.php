@@ -12,6 +12,7 @@ return [
     'doc_settings' => 'Настройки документов',
     'customize' => 'Настроить',
     'parameters' => 'Параметры',
+    'document' => 'Документ',
     'documents' => 'Документы',
     'document_name'=> 'Название документа',
     'documents_samples' => 'Образцы документов',
@@ -117,6 +118,8 @@ return [
     'valid_feedback'=> 'Отлично!',
     'invalid_feedback'=> 'Пожалуйста заполните поле',
     'signing_document'=> 'Порядок подписания документа',
+    'signed'=> 'Подписано',
+    'denied'=> 'Отказано',
 
 ];
 

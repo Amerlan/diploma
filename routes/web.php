@@ -23,16 +23,9 @@ use Auth;
 Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Auth::routes();
 
-    //Notifications testing
-    Route::get('/x', function (){
-
-        $user = Auth::user();
-
-        $user->notify(new DocumentReceived);
-
-        return view('home');
-
-    });
+    //All notifications
+    Route::get('/all_notifications', [Controllers\UserController::class, 'all_notifications'])->name('all_notifications');
+    Route::get('/mark_as_read/{notification_id}/{process_id}', [Controllers\UserController::class, 'mark_as_read'])->name('mark_as_read');
 
     //TESTING
     Route::post('create_process', [Controllers\ProcessController::class, 'create_process'])->name('create_process');
