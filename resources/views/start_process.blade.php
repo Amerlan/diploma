@@ -46,16 +46,16 @@
                                     Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
-                            <div id="starter">
-                                @if(auth()->check())
-                                        <div class="row mt-5">
-                                            <div class="col-12">
-                                                <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>@lang('messages.start_process')</button>
-                                            </div>
-                                        </div>
-                                @endif
-                            </div>
 
+                            @if(auth()->check())
+                                @if(!auth()->user()->isAdmin())
+                                    <div class="row mt-5">
+                                        <div class="col-12">
+                                            <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>@lang('messages.start_process')</button>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -63,15 +63,35 @@
                 <!-- Cause Modal -->
                 <div class="modal fade" id="causeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Детали заявления</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    @if($document_details[0]->reason)
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Детали заявления</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!--СЮДА НАДО ДОПИСАТЬ условие на все поля. Если одно условие срабатывает, то открыть модалку для заполнения
+                                Если нет, то не открывать модалку т.к. пустая будет-->
+                                {{--                                    <div class="row">--}}
+                                {{--                                        <div class="col-12">--}}
+                                {{--                                            <label>--}}
+                                {{--                                                Период даты:--}}
+                                {{--                                            </label>--}}
+                                {{--                                            <div class="form-group">--}}
+                                {{--                                                <div class="row">--}}
+                                {{--                                                    <div class="col-6">--}}
+                                {{--                                                        <input type="date" class="form-control" value="2020-12-10">--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                    <div class="col-6">--}}
+                                {{--                                                        <input type="date" class="form-control" value="2020-12-15">--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <hr>--}}
+                                @if($document_details[0]->reason)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -83,151 +103,151 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @endif
-                                    @if($document_details[0]->new_fio)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Новое ФИО:
-                                                    </label>
-                                                    <input id="new_fio" type="text" class="form-control">
-                                                </div>
+                                @endif
+                                @if($document_details[0]->new_fio)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Новое ФИО:
+                                                </label>
+                                                <input id="new_fio" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->new_speciality)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Новая специальность:
-                                                    </label>
-                                                    <input id="new_speciality" type="text" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->new_speciality)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Новая специальность:
+                                                </label>
+                                                <input id="new_speciality" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->new_speciality_code)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Код новой специальности:
-                                                    </label>
-                                                    <input id="new_speciality_code" type="text" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->new_speciality_code)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Код новой специальности:
+                                                </label>
+                                                <input id="new_speciality_code" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->sum_of_return)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Код новой специальности:
-                                                    </label>
-                                                    <input id="sum_of_return" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->sum_of_return)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Код новой специальности:
+                                                </label>
+                                                <input id="sum_of_return" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->new_university)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Название университета:
-                                                    </label>
-                                                    <input id="new_university" type="text" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->new_university)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Название университета:
+                                                </label>
+                                                <input id="new_university" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->academic_year)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Учебный год:
-                                                    </label>
-                                                    <input id="academic_year" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->academic_year)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Учебный год:
+                                                </label>
+                                                <input id="academic_year" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->midterm_grade)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Оценка за РК1:
-                                                    </label>
-                                                    <input id="midterm_grade" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->midterm_grade)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Оценка за РК1:
+                                                </label>
+                                                <input id="midterm_grade" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->endterm_grade)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Оценка за РК2:
-                                                    </label>
-                                                    <input id="endterm_grade" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->endterm_grade)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Оценка за РК2:
+                                                </label>
+                                                <input id="endterm_grade" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->exam_grade)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Оценка за Экзамен:
-                                                    </label>
-                                                    <input id="exam_grade" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->exam_grade)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Оценка за Экзамен:
+                                                </label>
+                                                <input id="exam_grade" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->semester)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Укажите семестр:
-                                                    </label>
-                                                    <input id="semester" min="1" max="2" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->semester)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Укажите семестр:
+                                                </label>
+                                                <input id="semester" min="1" max="2" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->phone_number)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Укажите контактный телефон:
-                                                    </label>
-                                                    <input id="phone_number" type="number" class="form-control">
-                                                </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->phone_number)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    Укажите контактный телефон:
+                                                </label>
+                                                <input id="phone_number" type="number" class="form-control">
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                    @if($document_details[0]->subject)
+                                    </div>
+                                    <hr>
+                                @endif
+                                @if($document_details[0]->subject)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -245,8 +265,8 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @endif
-                                    @if($document_details[0]->teacher)
+                                @endif
+                                @if($document_details[0]->teacher)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -264,8 +284,8 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    @endif
-                                    @if($document_details[0]->attachments)
+                                @endif
+                                @if($document_details[0]->attachments)
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -289,14 +309,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                    <button id="submit" type="button" class="btn btn-primary">Сохранить</button>
-{{--                                    <button type="button" onclick=""></button>--}}
-                                </div>
+                                @endif
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                <button id="submit" type="button" class="btn btn-primary">Сохранить</button>
+                                {{--                                    <button type="button" onclick=""></button>--}}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -392,20 +412,11 @@
     <script>
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
-        var document_details = <?php  echo json_encode($document_details[0]);?>;
-        $("#starter").show()
-        for (var key in document_details) {
-            if (document_details[key] === 1) {
-                $('#starter').hide()
-{{--             MAKE MODAL BUTTON DISABLE CODE           --}}
-
-{{--        END BLOCK OF CODE--}}
-                break;
-            }
-        }
+{{--        console.log(user);--}}
         const doc = <?php  echo json_encode($document[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document[0]->header}}`;
+{{--        console.log(header);--}}
         const body = `{{$document[0]->body}}`;
         var elementHeader = document.getElementById("header");
         elementHeader.innerHTML = header;

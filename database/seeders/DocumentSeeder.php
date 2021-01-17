@@ -35,7 +35,7 @@ class DocumentSeeder extends Seeder
                              от студента ${user.course_number} курса специальности "${user.speciality_name}", группы ${user.group} - ${user.name}
                              ID студента: ${user.dl_id}';
         $document->title = 'Заявление';
-        $document->body = 'Прошу Вас оставить меня на повторный год обучения по специальности ${user.speciality_code} ${user.speciality_name} дневного отделения в ${new Date().getFullYear()} учебном году, в связи с ${doc.reason}';
+        $document->body = 'Прошу Вас оставить меня на повторный год обучения по специальности ${user.speciality_code} ${user.speciality_name} дневного отделения в ${doc.academic_year} учебном году, в связи с ${doc.reason}';
 //        $document->reason = ' причина ';
         $document->save();
 

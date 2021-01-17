@@ -73,7 +73,7 @@
                                         <th>Номер стадии</th>
                                         <th>Состояние</th>
                                         <th>Комментарий</th>
-                                        <th>От кого</th>
+                                        <th>Исполнитель</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,41 +92,12 @@
                     </div>
                 </div>
             </div>
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <div class="card-title">--}}
-
-{{--                            </div>--}}
-{{--                            <div class="card-text">--}}
-{{--                                @foreach($process_stages as $stage)--}}
-{{--                                    <div class="row mt-5">--}}
-{{--                                        <div class="col-8 offset-2">--}}
-{{--                                            {{$stage->stage_number}}--}}
-{{--                                            {{$stage->status}}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-{{--                                <div class="row mt-5">--}}
-{{--                                    <div class="col-8 offset-2">--}}
-{{--                                        {{$process_stages}}--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-
-
             <script>
                 const user = <?php  echo json_encode($user);?>;
                 const deans = <?php  echo json_encode($deans[0]);?>;
-{{--                        console.log(user);--}}
-                const doc = <?php  echo json_encode($document_data[0]);?>;
+                const doc = <?php  echo json_encode($process[0]);?>;
                 const dav = <?php echo json_encode($dav[0]);?>;
                 const header = `{{$document_data[0]->header}}`;
-                {{--        console.log(header);--}}
                 const body = `{{$document_data[0]->body}}`;
                 var elementHeader = document.getElementById("header");
                 elementHeader.innerHTML = header;

@@ -27,7 +27,7 @@ class CreateProcessesTable extends Migration
             $table->string('new_speciality_code')->nullable();
             $table->unsignedSmallInteger('sum_of_return')->nullable();
             $table->string('new_university')->nullable();
-            $table->date('academic_year')->nullable();
+            $table->unsignedSmallInteger('academic_year')->nullable();
             $table->string('subject')->nullable();
             $table->unsignedFloat('midterm_grade')->nullable();
             $table->unsignedFloat('endterm_grade')->nullable();
