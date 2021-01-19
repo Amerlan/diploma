@@ -35,7 +35,9 @@
     <div class="col-12">
         <h2 class="text-center">{{$qr[0]->title}}</h2>
         <br>
-            @if($qr[0]->document_name)
+        Выдан: <u>"{{$qr[0]->name}}"</u>
+        <br>
+    @if($qr[0]->document_name)
                     @lang('messages.document_name'): <u>"{{$qr[0]->document_name}}"</u>
                 <br><br>
             @endif
@@ -103,12 +105,8 @@
                 @lang('messages.closed_date'): <u>{{$qr[0]->closed_date}}</u>
 
             @endif
-            <p>
-            @if($qr[0]->process_token)
-                {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$qr[0]->process_token); !!}
-                <br><br>
-            @endif
-            </p>
+        <br><br>
+        {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$qr[0]->process_token); !!}
     </div>
 </body>
 </html>

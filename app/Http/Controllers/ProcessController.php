@@ -196,6 +196,7 @@ class ProcessController extends Controller
     {
         $qr = DB::table('processes as p')
             ->join('documents as d', 'd.document_name', '=', 'p.document_name')
+            ->join('users as u', 'u.id', '=', 'p.created_by')
             ->where('process_token', '=', $process_token)
             ->get();
 //        return $qr;
