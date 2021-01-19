@@ -407,9 +407,6 @@
                 flag = false;
             }
         }
-        if (flag === false){
-            // DISABLE MODAL
-        }
         const doc = <?php  echo json_encode($document[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document[0]->header}}`;
@@ -418,5 +415,12 @@
         elementHeader.innerHTML = header;
         var elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
+        if (flag === false){
+            elementBody.dataset.target = '';
+            var d = document.createElement('p');
+            d.innerHTML = elementBody.innerHTML;
+            elementBody.parentNode.replaceChild(d, elementBody);
+            // DISABLE MODAL
+        }
     </script>
 @endsection
