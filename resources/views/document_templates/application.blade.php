@@ -415,7 +415,7 @@
         elementHeader.innerHTML = header;
         var elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
-        if (flag === false){
+        if (flag === true){
             elementBody.dataset.target = '';
             var d = document.createElement('p');
             d.innerHTML = elementBody.innerHTML;
