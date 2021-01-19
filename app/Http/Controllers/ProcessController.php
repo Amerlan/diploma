@@ -33,7 +33,9 @@ class ProcessController extends Controller
     {
         $user =  $request->user()->id;
 
-        $processes = DB::table('processes')->where([['created_by', $user]])
+        $processes = DB::table('processes')
+            ->where([['created_by', $user]])
+            ->where([['draft', 0]])
             ->orderBy('is_closed', 'asc')
             ->orderBy('is_rejected', 'asc')
             ->get(['process_id', 'document_name', 'current_stage',
@@ -149,6 +151,8 @@ class ProcessController extends Controller
                     FROM processes AS p
                     LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage AND
                                                       p.process_id=ps.process_id
+                                                        AND
+                                                      draft = 0
                     ';
 
         if (DB::select($query)){
@@ -190,9 +194,11 @@ class ProcessController extends Controller
 
     public function qr(Request $request, $process_token)
     {
-        $qr = DB::table('processes')->where('process_token', '=', $process_token)
+        $qr = DB::table('processes as p')
+            ->join('documents as d', 'd.document_name', '=', 'p.document_name')
+            ->where('process_token', '=', $process_token)
             ->get();
-        //return $qr;
+//        return $qr;
         return view('qr_details', compact('qr'));
     }
 
@@ -210,23 +216,23 @@ class ProcessController extends Controller
                     ->where('draft', '=', 1)
                     ->update([
                         'last_change_date' => date("Y-m-d H:i:s"),
-                        'created_date' => date("Y-m-d H:i:s"),
-                        'academic_year' => $request->academic_year,
-                        'endterm_grade' => $request->endterm_grade,
-                        'exam_grade' => $request->exam_grade,
-                        'midterm_grade' => $request->midterm_grade,
-                        'new_fio' => $request->new_fio,
-                        'new_speciality' => $request->new_speciality,
-                        'new_speciality_code' => $request->new_speciality_code,
-                        'new_university' => $request->new_university,
-                        'phone_number' => $request->phone_number,
-                        'reason' => $request->reason,
-                        'semester' => $request->semester,
-                        'subject' => $request->subject,
-                        'sum_of_return' => $request->sum_of_return,
-                        'teacher' => $request->teacher
+//                        'created_date' => date("Y-m-d H:i:s"),
+//                        'academic_year' => $request->academic_year,
+//                        'endterm_grade' => $request->endterm_grade,
+//                        'exam_grade' => $request->exam_grade,
+//                        'midterm_grade' => $request->midterm_grade,
+//                        'new_fio' => $request->new_fio,
+//                        'new_speciality' => $request->new_speciality,
+//                        'new_speciality_code' => $request->new_speciality_code,
+//                        'new_university' => $request->new_university,
+//                        'phone_number' => $request->phone_number,
+//                        'reason' => $request->reason,
+//                        'semester' => $request->semester,
+//                        'subject' => $request->subject,
+//                        'sum_of_return' => $request->sum_of_return,
+//                        'teacher' => $request->teacher,
+                        'draft' => 0
                     ]);
-
             }
             else{
                 $process = new Process();
@@ -245,6 +251,7 @@ class ProcessController extends Controller
                 $process->subject = $request->subject;
                 $process->sum_of_return = $request->sum_of_return;
                 $process->teacher = $request->teacher;
+                $process->draft = $request->draft;
                 $process->created_by = $request->user()->id;
                 $process->save();
 
@@ -276,9 +283,29 @@ class ProcessController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function start_process_view(Request $request, $id)
     {
-        //
+        $document = DB::table('documents')
+            ->where('id', '=', $id)
+            ->get();
+        $process = DB::table('processes')
+            ->where('document_name', '=', $document[0]->document_name)
+            ->where('created_by', '=', $request->user()->id)
+            ->get();
+        $deans = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'dean')
+            ->get()
+            ->all();
+        $dav = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'admin')
+            ->get()
+            ->all();
+        $user = $request->user();
+        return view('start_process', compact('process', 'document', 'user', 'dav', 'deans'));;
     }
 
     /**

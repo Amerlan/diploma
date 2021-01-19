@@ -292,7 +292,7 @@
                                     @endif
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                                     <button id="submit" type="button" class="btn btn-primary">Сохранить</button>
 {{--                                    <button type="button" onclick=""></button>--}}
                                 </div>
@@ -302,12 +302,13 @@
                 <script>
                     var submitButton = document.getElementById('submit');
                     submitButton.addEventListener('click', function () {
-                        SubmitData();
+                        SubmitData(true);
+                        window.location.href += "/start";
                     });
                     //all modal data
 
 
-                    function SubmitData() {
+                    function SubmitData(draft_flag) {
                         var url = "{{ route ('create_process') }}";
                         var reason = document.getElementById('reason') != null ? document.getElementById('reason').value : null;
                         var new_fio = document.getElementById('new_fio') != null ? document.getElementById('new_fio').value : null;
@@ -325,7 +326,7 @@
                         var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
                         var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
                         var document_name = document.getElementById('doc_name').innerText;
-
+                        var draft = draft_flag;
                         fetch(url, {
                             method: 'POST',
                             headers:{
@@ -349,6 +350,7 @@
                                 'phone_number': phone_number,
                                 'attachments': attachments,
                                 'document_name': document_name,
+                                'draft': draft,
                             })
                         })
                         .then((response) =>
@@ -356,7 +358,6 @@
                         )
                         .then((data) =>{
                             console.log(data);
-                            window.location.reload();
                         })
 
                     }
@@ -393,15 +394,21 @@
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
         var document_details = <?php  echo json_encode($document_details[0]);?>;
+        console.log(document_details)
         $("#starter").show()
+        $("#starter").on("click", function (){
+            SubmitData(false);
+            window.location.href = "/my_processes";
+        })
+        var flag = true;
         for (var key in document_details) {
             if (document_details[key] === 1) {
                 $('#starter').hide()
-{{--             MAKE MODAL BUTTON DISABLE CODE           --}}
-
-{{--        END BLOCK OF CODE--}}
-                break;
+                flag = false;
             }
+        }
+        if (flag === false){
+            // DISABLE MODAL
         }
         const doc = <?php  echo json_encode($document[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;

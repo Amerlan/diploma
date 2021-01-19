@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach($role_admin);
 
         $dean = new User();
-        $dean->name = 'Муса Исагали Мукатович';
+        $dean->name = 'Уатбаев Муса Муратович';
         $dean->email = 'dean@example.com';
         $dean->password = bcrypt('secret');
         $dean->secret_password = bcrypt('secret');

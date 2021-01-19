@@ -67,6 +67,7 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
 
     Route::get('/templates/{document_id}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
+    Route::get('/templates/{document_id}/start', [Controllers\ProcessController::class, 'start_process_view'])->name('start_process_view');
 
 });
 
