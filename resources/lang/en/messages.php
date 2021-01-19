@@ -120,6 +120,10 @@ return [
     'signing_document'=> 'Order for signing a document',
     'signed'=> 'Signed',
     'denied'=> 'Denied',
+    'full_name'=> 'Full name',
+    'speciality'=> 'Speciality',
+    'speciality_code'=> 'Speciality code',
+    'university'=> 'University',
 
 ];
 

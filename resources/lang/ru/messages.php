@@ -120,6 +120,10 @@ return [
     'signing_document'=> 'Порядок подписания документа',
     'signed'=> 'Подписано',
     'denied'=> 'Отказано',
+    'full_name'=> 'ФИО',
+    'speciality'=> 'Специальность',
+    'speciality_code'=> 'Код специальности',
+    'university'=> 'Университет',
 
 ];
 

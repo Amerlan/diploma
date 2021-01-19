@@ -190,8 +190,10 @@ class ProcessController extends Controller
 
     public function qr(Request $request, $process_token)
     {
-        return DB::table('processes')->where('process_token', '=', $process_token)
+        $qr = DB::table('processes')->where('process_token', '=', $process_token)
             ->get();
+        //return $qr;
+        return view('qr_details', compact('qr'));
     }
 
     public function create_process(Request $request){

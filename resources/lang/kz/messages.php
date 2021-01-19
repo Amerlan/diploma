@@ -120,6 +120,10 @@ return [
     'signing_document'=> 'Құжатқа қол қою кезегі',
     'signed'=> 'Қол қойылған',
     'denied'=> 'Қабылданбады',
+    'full_name'=> 'Толық аты',
+    'speciality'=> 'Mамандық',
+    'speciality_code'=> 'Мамандық коды',
+    'university'=> 'Университет',
 
 ];
 
