@@ -46,16 +46,20 @@
                                     Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
-                            <div id="starter">
+                            <div>
                                 @if(auth()->check())
                                     <div class="row mt-5">
                                         <div class="col-12">
-                                            <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>@lang('messages.start_process')</button>
+                                            <div id="starter">
+                                                <button class="btn btn-primary float-right"><i class="fas fa-play mr-2"></i>@lang('messages.start_process')</button>
+                                            </div>
+                                            <div id="cancel">
+                                                <button class="btn btn-danger float-left">@lang('messages.cancel')</button>
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -93,6 +97,10 @@
         $("#starter").on("click", function (){
             SubmitData();
             window.location.href = "/my_processes";
+        })
+        $("#cancel").show()
+        $("#cancel").on("click", function (){
+            window.location.href = "/home";
         })
         const doc = <?php  echo json_encode($process[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;

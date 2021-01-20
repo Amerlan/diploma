@@ -58,6 +58,8 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
 
     Route::post('/sign_return_reject', [Controllers\UserController::class, 'sign_return_reject'])->name('action');
 
+    // Cancel testing
+    Route::get('/cancel', [Controllers\ProcessController::class, 'cancel'])->name('cancel');
 
     // For ADMIN only
     Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all_processes');;
