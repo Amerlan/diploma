@@ -109,4 +109,6 @@
         {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$qr[0]->process_token); !!}
     </div>
 </body>
+
+
 </html>

@@ -254,11 +254,9 @@
                                                     Преподаватель:
                                                 </label>
                                                 <select id="teacher" class="form-control">
-                                                    <option>Zhuanyshev I.O. - senior lecuter</option>
-                                                    <option>Uatbayev M.M. - senior lecuter</option>
-                                                    <option selected>Tolegenov A.M. - senior lecuter</option>
-                                                    <option>Duzbayev N.T. - associate professor</option>
-                                                    <option>Mukhanov S.B. - senior lecturer</option>
+                                                    @foreach($teachers as $teacher)
+                                                    <option>{{$teacher->id}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -327,13 +325,7 @@
                         var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
                         var document_name = document.getElementById('doc_name').innerText;
                         var draft = draft_flag;
-                        fetch(url, {
-                            method: 'POST',
-                            headers:{
-                                'Content-Type': 'application/json',
-                                "X-CSRF-Token": $('input[name="_token"]').val()
-                            },
-                            body:JSON.stringify({
+                        var send_data = {
                                 'reason': reason,
                                 'new_fio': new_fio,
                                 'new_speciality': new_speciality,
@@ -351,7 +343,14 @@
                                 'attachments': attachments,
                                 'document_name': document_name,
                                 'draft': draft,
-                            })
+                            }
+                        fetch(url, {
+                            method: 'POST',
+                            headers:{
+                                'Content-Type': 'application/json',
+                                "X-CSRF-Token": $('input[name="_token"]').val()
+                            },
+                            body:JSON.stringify(send_data)
                         })
                         .then((response) =>
                             console.log(response)
@@ -394,7 +393,6 @@
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
         var document_details = <?php  echo json_encode($document_details[0]);?>;
-        console.log(document_details)
         $("#starter").show()
         $("#starter").on("click", function (){
             SubmitData(false);

@@ -84,8 +84,22 @@
                         .then((data) =>{
                             console.log(data);
                         })
-
                     }
+
+
+                    function Cancel() {
+                        var url = "{{ route ('cancel') }}";
+                        var document_name = document.getElementById('doc_name').innerText;
+                        fetch(url, {
+                            method: 'POST',
+                            headers:{
+                                'Content-Type': 'application/json',
+                                "X-CSRF-Token": $('input[name="_token"]').val()
+                            },
+                            body:JSON.stringify({
+                                'document_name': document_name
+                            })
+                        })}
                 </script>
             </div>
         </div>
@@ -93,13 +107,12 @@
     <script>
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
-        $("#starter").show()
         $("#starter").on("click", function (){
             SubmitData();
             window.location.href = "/my_processes";
         })
-        $("#cancel").show()
         $("#cancel").on("click", function (){
+            Cancel();
             window.location.href = "/home";
         })
         const doc = <?php  echo json_encode($process[0]);?>;

@@ -23,21 +23,6 @@ class DocumentController extends Controller
         $document = DB::table('documents')
             ->where('id', '=', $document_id)
             ->get()->all();
-        $process = DB::table('processes')
-            ->where('document_name', '=', $document[0]->document_name)
-            ->where('created_by', '=', $user->id)
-            ->where('draft', '=', 1)
-            ->exists();
-        if ($process){
-            $process = DB::table('processes')
-                ->where('document_name', '=', $document[0]->document_name)
-                ->where('created_by', '=', $user->id)
-                ->where('draft', '=', 1)
-                ->get()->all();
-        }
-        else{
-            $process = null;
-        }
         $document_details = DB::table('document_details')
             ->where('document_name', '=', $document[0]->document_name)
             ->get()->all();
@@ -53,10 +38,16 @@ class DocumentController extends Controller
             ->where('roles.role_name', '=', 'admin')
             ->get()
             ->all();
+        $teachers = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'teacher')
+            ->get()
+            ->all();
 
 
         return view('/document_templates/application',
-            compact('document', 'process', 'deans', 'user', 'dav', 'document_details'));
+        compact('document', 'deans', 'user', 'dav', 'document_details', 'teachers'));
     }
 
 

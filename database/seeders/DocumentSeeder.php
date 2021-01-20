@@ -52,10 +52,10 @@ class DocumentSeeder extends Seeder
                                             ID студента: ${user.dl_id}
                                             Контактные тел.: 87776665544';
         $document->title = 'Заявление на пересдачу';
-        $document->body = 'Прошу Вас разрешить пересдать экзамен на платной основе по дисциплине {subject} в связи с тем, что ${doc.reason}
-                            РК-1: ${doc.midterm}
-                            РК-2: ${doc.endterm}
-                            Экзамен: ${doc.exam}
+        $document->body = 'Прошу Вас разрешить пересдать экзамен на платной основе по дисциплине ${doc.subject} в связи с тем, что ${doc.reason}
+                            РК-1: ${doc.midterm_grade}
+                            РК-2: ${doc.endterm_grade}
+                            Экзамен: ${doc.exam_grade}
                             Преподаватель: ${doc.teacher}';
         $document->save();
 

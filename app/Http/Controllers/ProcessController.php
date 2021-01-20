@@ -7,6 +7,7 @@ use App\Models\Process_stages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\DocumentReceived;
+use phpDocumentor\Reflection\Types\Object_;
 
 class ProcessController extends Controller
 {
@@ -210,28 +211,28 @@ class ProcessController extends Controller
                 ->where('document_name', '=', $request->document_name)
                 ->where('created_by', '=', $user->id)
                 ->where('draft', '=', 1)
-                ->exists()){
+                ->exists()) {
                 DB::table('processes')
                     ->where('document_name', '=', $request->document_name)
                     ->where('created_by', '=', $user->id)
                     ->where('draft', '=', 1)
                     ->update([
                         'last_change_date' => date("Y-m-d H:i:s"),
-//                        'created_date' => date("Y-m-d H:i:s"),
-//                        'academic_year' => $request->academic_year,
-//                        'endterm_grade' => $request->endterm_grade,
-//                        'exam_grade' => $request->exam_grade,
-//                        'midterm_grade' => $request->midterm_grade,
-//                        'new_fio' => $request->new_fio,
-//                        'new_speciality' => $request->new_speciality,
-//                        'new_speciality_code' => $request->new_speciality_code,
-//                        'new_university' => $request->new_university,
-//                        'phone_number' => $request->phone_number,
-//                        'reason' => $request->reason,
-//                        'semester' => $request->semester,
-//                        'subject' => $request->subject,
-//                        'sum_of_return' => $request->sum_of_return,
-//                        'teacher' => $request->teacher,
+                        'created_date' => date("Y-m-d H:i:s"),
+                        'academic_year' => $request->academic_year,
+                        'endterm_grade' => $request->endterm_grade,
+                        'exam_grade' => $request->exam_grade,
+                        'midterm_grade' => $request->midterm_grade,
+                        'new_fio' => $request->new_fio,
+                        'new_speciality' => $request->new_speciality,
+                        'new_speciality_code' => $request->new_speciality_code,
+                        'new_university' => $request->new_university,
+                        'phone_number' => $request->phone_number,
+                        'reason' => $request->reason,
+                        'semester' => $request->semester,
+                        'subject' => $request->subject,
+                        'sum_of_return' => $request->sum_of_return,
+                        'teacher' => $request->teacher,
                         'draft' => 0
                     ]);
             }
@@ -286,13 +287,25 @@ class ProcessController extends Controller
      */
     public function start_process_view(Request $request, $id)
     {
+
         $document = DB::table('documents')
             ->where('id', '=', $id)
             ->get();
         $process = DB::table('processes')
             ->where('document_name', '=', $document[0]->document_name)
             ->where('created_by', '=', $request->user()->id)
-            ->get();
+            ->where('draft', '=', 1)
+            ->exists();
+        if ($process){
+            $process = DB::table('processes')
+                ->where('document_name', '=', $document[0]->document_name)
+                ->where('created_by', '=', $request->user()->id)
+                ->where('draft', '=', 1)
+                ->get();
+        }
+        else{
+            abort(404, 'Process not found.');
+        }
         $deans = DB::table('users')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
@@ -306,7 +319,8 @@ class ProcessController extends Controller
             ->get()
             ->all();
         $user = $request->user();
-        return view('start_process', compact('process', 'document', 'user', 'dav', 'deans'));;
+        return view('start_process',
+            compact('process', 'document', 'user', 'dav', 'deans'));;
     }
 
     /**
@@ -315,9 +329,13 @@ class ProcessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function cancel(Request $request)
     {
-        //
+        DB::table('processes')
+            ->where('document_name', '=', $request->document_name)
+            ->where('created_by', '=', $request->user()->id)
+            ->where('draft', '=', 1)
+            ->delete();
     }
 
     /**
