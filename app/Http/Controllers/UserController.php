@@ -104,7 +104,7 @@ class UserController extends Controller
                 ->where('process_id', '=', $request->process_id)
                 ->get('created_by')[0]->created_by;
 
-            $dr = new DocumentReceived('1', $request->process_id);
+            $dr = new DocumentReceived('3', $request->process_id);
 //
             User::findOrFail($to_notify)->notify($dr);
         }
