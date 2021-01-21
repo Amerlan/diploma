@@ -262,12 +262,16 @@
                                     <div>
                                         <div class="small text-gray-500">{{$notification->created_at}}</div>
                                         <span class="font-weight-bold">@lang('messages.document') "{{$notification->data['document_name']}}"
-                                            @if($notification->data['status'] == 1)
-                                                @lang('messages.signed')
-                                            @elseif($notification->data['status'] == 0)
+                                            @if($notification->data['status'] == 0)
                                                 @lang('messages.denied')
+                                            @elseif($notification->data['status'] == 1)
+                                                @lang('messages.signed')
+                                            @elseif($notification->data['status'] == 2)
+                                                @lang('messages.waiting')
                                             @elseif($notification->data['status'] == 3)
-                                                Завершено
+                                                @lang('messages.returned')
+                                            @elseif($notification->data['status'] == 4)
+                                                @lang('messages.completed')
                                             @endif
                                         </span>
                                     </div>

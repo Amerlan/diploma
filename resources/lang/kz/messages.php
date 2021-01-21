@@ -124,6 +124,13 @@ return [
     'speciality'=> 'Mамандық',
     'speciality_code'=> 'Мамандық коды',
     'university'=> 'Университет',
+    'returned'=> 'Тексеруге қайтарылды',
+    'waiting'=> 'Күту',
+    'completed'=> 'Аяқталды',
+    'status'=> 'Статус',
+    'stage_number'=> 'Кезең нөмірі',
+    'condition'=> 'Жағдай',
+    'executor'=> 'Орындаушы',
 
 ];
 

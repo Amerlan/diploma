@@ -124,6 +124,13 @@ return [
     'speciality'=> 'Speciality',
     'speciality_code'=> 'Speciality code',
     'university'=> 'University',
+    'returned'=> 'Returned',
+    'waiting'=> 'Waiting',
+    'completed'=> 'Completed',
+    'status'=> 'Status',
+    'stage_number'=> 'Stage number',
+    'condition'=> 'Condition',
+    'executor'=> 'Executor',
 
 ];
 

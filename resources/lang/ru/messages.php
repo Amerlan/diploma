@@ -124,6 +124,13 @@ return [
     'speciality'=> 'Специальность',
     'speciality_code'=> 'Код специальности',
     'university'=> 'Университет',
+    'returned'=> 'Возвращено на доработку',
+    'waiting'=> 'Ожидание',
+    'completed'=> 'Завершено',
+    'status'=> 'Статус',
+    'stage_number'=> 'Номер стадии',
+    'condition'=> 'Состояние',
+    'executor'=> 'Исполнитель',
 
 ];
 

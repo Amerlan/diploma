@@ -16,7 +16,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{$document_data[0]->document_type}}</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Экспортировать документ</a>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
         </div>
 
         <!-- Content Row -->
@@ -71,16 +71,16 @@
                         <input hidden="true" name="process_id" value="{{$process[0]->process_id}}">
                         <input hidden="true" name="stage" value="{{$process[0]->current_stage}}">
                         <input id="act" hidden="true" name="action" value="">
-                        <label>Comment</label>
+                        <label>@lang('messages.comment')</label>
                         <textarea class="form-control" name="comment" rows="7" placeholder="Enter..."></textarea>
                         <div class="form-group">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <button onclick="document.getElementById('act').value='sign'" class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>Подписать</button>
+                                    <button onclick="document.getElementById('act').value='sign'" class="btn btn-success float-right"><i class="fas fa-check mr-4"></i>@lang('messages.sign')</button>
                                     <br><br>
-                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>Отклонить</button>
+                                    <button onclick="document.getElementById('act').value='reject'" class="btn btn-danger float-right"><i class="fas fa-ban mr-4"></i>@lang('messages.reject')</button>
                                     <br><br>
-                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>Возвратить</button>
+                                    <button onclick="document.getElementById('act').value='return'" class="btn btn-warning float-right"><i class="fas fa-undo mr-2"></i>@lang('messages.return')</button>
                                 </div>
                             </div>
                         </div>

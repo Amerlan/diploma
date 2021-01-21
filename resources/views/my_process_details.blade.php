@@ -64,16 +64,16 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12">
-                                    <h2 class="text-center">Статус</h2>
+                                    <h2 class="text-center">@lang('messages.status')</h2>
                                 </div>
                             </div>
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Номер стадии</th>
-                                        <th>Состояние</th>
-                                        <th>Комментарий</th>
-                                        <th>Исполнитель</th>
+                                        <th>@lang('messages.stage_number')</th>
+                                        <th>@lang('messages.condition')</th>
+                                        <th>@lang('messages.comment')</th>
+                                        <th>@lang('messages.executor')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
