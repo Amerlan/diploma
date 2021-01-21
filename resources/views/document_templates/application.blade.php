@@ -33,7 +33,7 @@
                         <div class="card-text">
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <h2 class="text-center">{{$document[0]->title}}</h2>
+                                    <h2 class="text-center">{{$document[0]->document_type}}</h2>
                                 </div>
                             </div>
                             <div class="row mt-5">

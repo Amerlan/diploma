@@ -12,7 +12,7 @@
 
     <style type="text/css">
         body{
-            background-color: #DCC7C7;
+            background-color: #4c74dc;
         }
         div {
             width: 600px;   /* ширина */
@@ -33,11 +33,11 @@
 </head>
 <body>
     <div class="col-12">
-        <h2 class="text-center">{{$qr[0]->title}}</h2>
+        <h2 class="text-center">{{$qr[0]->document_type}}</h2>
         <br>
         Выдан: <u>"{{$qr[0]->name}}"</u>
         <br>
-    @if($qr[0]->document_name)
+        @if($qr[0]->document_name)
                     @lang('messages.document_name'): <u>"{{$qr[0]->document_name}}"</u>
                 <br><br>
             @endif
@@ -104,7 +104,7 @@
             @if($qr[0]->closed_date)
                 @lang('messages.closed_date'): <u>{{$qr[0]->closed_date}}</u>
 
-            @endif
+        @endif
         <br><br>
         {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$qr[0]->process_token); !!}
     </div>
