@@ -48,19 +48,18 @@
                                     Дата: <b>{{$process[0]->created_date}}</b>
                                 </div>
                             </div>
+                            @if($process[0]->process_token)
                             <div class="row mt-3">
                                 <div class="col-4 offset-8">
                                     Подпись:
                                 </div>
                             </div>
                             <div class="row mt-3 pb-5">
-                                @if($process[0]->process_token)
                                 <div class="col-2 offset-8">
                                     {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$process[0]->process_token); !!}
                                 </div>
-                                @endif
                             </div>
-
+                            @endif
                             <hr>
                             <div class="row">
                                 <div class="col-12">
