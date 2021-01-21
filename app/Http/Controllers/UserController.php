@@ -45,14 +45,6 @@ class UserController extends Controller
     public function toSign($request)
     {
 
-//        $validator_role = DB::table('processes')
-//            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
-//            ->whereColumn('current_stage', '=', 'sign_order')
-//            ->where('current_stage', '=', $request->stage)
-//            ->where('process_id', '=', $request->process_id)
-//            ->get('role_id')->take(1)[0]->role_id;
-
-
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
@@ -104,7 +96,7 @@ class UserController extends Controller
                 ->where('process_id', '=', $request->process_id)
                 ->get('created_by')[0]->created_by;
 
-            $dr = new DocumentReceived('3', $request->process_id);
+            $dr = new DocumentReceived('4', $request->process_id);
 //
             User::findOrFail($to_notify)->notify($dr);
         }
@@ -138,7 +130,7 @@ class UserController extends Controller
             ->where('process_id', '=', $request->process_id)
             ->get('created_by')[0]->created_by;
 
-        $dr = new DocumentReceived('Отказано', $request->process_id);
+        $dr = new DocumentReceived(0, $request->process_id);
 //
         User::findOrFail($to_notify)->notify($dr);
 
@@ -171,6 +163,14 @@ class UserController extends Controller
                     'last_change_date' => date("Y-m-d H:i:s"),
                     'current_stage' => intval($current_stage) - 1
                 ]);
+
+
+            $to_notify = DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->get('created_by')[0]->created_by;
+            $dr = new DocumentReceived(3, $request->process_id);
+//
+            User::findOrFail($to_notify)->notify($dr);
             return redirect('/ongoing');
         }
 
