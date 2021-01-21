@@ -9,11 +9,13 @@
     <meta name="author" content="">
 
     <title>@lang('messages.page_title')</title>
+    <link rel="icon" href="{{asset('design/img/university_logo.png')}}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('design/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="{{ asset('design/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
@@ -72,22 +74,8 @@
                     </a>
                     <div id="statusesPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{route('doctype_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_template')</a>
-                            <a class="collapse-item" href="{{route('see_doctypes')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#documentsPage" aria-expanded="true" aria-controls="documentsPage">
-                        <i class="fas fa-file-alt"></i>
-                        <span>@lang('messages.documents_samples')</span>
-                    </a>
-                    <div id="documentsPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{route('document_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_document')</a>
-                            <a class="collapse-item" href="List of documents"><i class="fas fa-list mr-2"></i>@lang('messages.doc_list')</a>
+                            <a class="collapse-item" href="{{route('create_template_form')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.create_template')</a>
+                            <a class="collapse-item" href="{{route('see_templates')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_templates')</a>
                         </div>
                     </div>
                 </li>
@@ -103,7 +91,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if (auth()->check())
                         @if (!auth()->user()->isAdmin())
-                            <a class="collapse-item" href="{{route('create_process_list')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
+                            <a class="collapse-item" href="{{route('see_templates')}}"><i class="fas fa-plus mr-2"></i>@lang('messages.process_create')</a>
                         @endif
                     @endif
                     @if (auth()->check())
@@ -255,48 +243,41 @@
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3</span>
+                                @if(auth()->user()->unreadNotifications->count())
+                                    <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span>
+                                @endif
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">
                                 @lang('messages.notifications')
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                            @foreach(auth()->user()->unreadNotifications->take(4) as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href={{ route('mark_as_read',['notification_id' => $notification->id, 'process_id' => $notification->data['process_id'] ])}}>
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">12.12.2020</div>
-                                    <span class="font-weight-bold">Документ "Заявление на продление" подписан</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-danger">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    <div>
+                                        <div class="small text-gray-500">{{$notification->created_at}}</div>
+                                        <span class="font-weight-bold">@lang('messages.document') "{{$notification->data['document_name']}}"
+                                            @if($notification->data['status'] == 0)
+                                                @lang('messages.denied')
+                                            @elseif($notification->data['status'] == 1)
+                                                @lang('messages.signed')
+                                            @elseif($notification->data['status'] == 2)
+                                                @lang('messages.waiting')
+                                            @elseif($notification->data['status'] == 3)
+                                                @lang('messages.returned')
+                                            @elseif($notification->data['status'] == 4)
+                                                @lang('messages.completed')
+                                            @endif
+                                        </span>
                                     </div>
-
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">10.12.2020</div>
-                                    Документ "Заявление на продление" отклонен
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">08.12.2020</div>
-                                    Документ "Изменения оценки в DL" подписан
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">@lang('messages.all_notifications')</a>
+                                </a>
+                            @endforeach
+                            <a class="dropdown-item text-center small text-gray-500" href="{{route('all_notifications')}}">@lang('messages.all_notifications')</a>
                         </div>
                     </li>
 

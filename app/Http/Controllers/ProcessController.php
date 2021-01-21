@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Process;
+use App\Models\Process_stages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\DocumentReceived;
 
 class ProcessController extends Controller
 {
@@ -30,7 +33,9 @@ class ProcessController extends Controller
     {
         $user =  $request->user()->id;
 
-        $processes = DB::table('processes')->where([['created_by', $user]])
+        $processes = DB::table('processes')
+            ->where([['created_by', $user]])
+            ->where([['draft', 0]])
             ->orderBy('is_closed', 'asc')
             ->orderBy('is_rejected', 'asc')
             ->get(['process_id', 'document_name', 'current_stage',
@@ -45,21 +50,22 @@ class ProcessController extends Controller
     // Displays all INCOMING requests to sign
     public function ongoing(Request $request)
     {
-        // distinct , done_by
         $query = 'SELECT
-                    p.process_id, p.document_name, created_date, last_change_date, is_rejected, is_closed, current_stage
+                    p.process_id, p.document_name, created_date, last_change_date, is_rejected, is_closed
                     FROM processes AS p
-                    LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
-                     LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
-                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                     WHERE
-                     ru.user_id='.$request->user()->id.' AND (done_by IS NULL
-                      OR
-                    done_by='.$request->user()->id.') AND is_closed=0 AND is_rejected=0';
-
+                    LEFT JOIN document_roles AS dr ON p.document_name=dr.document_name AND
+                    dr.sign_order=p.current_stage
+                    LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
+                    LEFT JOIN process_stages AS ps ON ((ps.stage_number=p.current_stage) AND
+                                                      (ps.process_id=p.process_id))
+                    WHERE user_id='.$request->user()->id.'
+                    AND is_rejected=0
+                    AND is_closed=0
+                    AND draft=0
+                   ';
         $ongoing_processes = DB::select($query);
+//        return $ongoing_processes;
 
-        //return $processes;
 
         return view('ongoing', compact('ongoing_processes'));
     }
@@ -99,38 +105,178 @@ class ProcessController extends Controller
     public function process_details(Request $request, $id)
     {
         $query = 'SELECT
-                    role_name
+                    p.*, ps.*
                     FROM processes AS p
-                    LEFT JOIN process_stages AS ps ON ps.process_id=p.process_id AND current_stage=stage_number
-                     LEFT JOIN document_roles AS dr ON dr.document_name=p.document_name AND stage_number=sign_order
-                     LEFT JOIN role_user AS ru ON ru.role_id=dr.role_id
-                     LEFT JOIN roles on roles.id=ru.role_id
-                     WHERE
-                     ru.user_id='.$request->user()->id.'
-                      AND (done_by IS NULL OR done_by='.$request->user()->id.')
-                    AND is_closed=0
-                    AND is_rejected=0
-                    AND p.process_id='.$id;
+                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage AND
+                                                      p.process_id=ps.process_id
+                    ';
 
         if (DB::select($query)){
-            $validator_role = DB::select($query)[0]->role_name;
+            $process = DB::table('processes')->where('process_id', '=', $id)
+                ->get();
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->get();
+            $document_data = DB::table('documents')
+                ->where('document_name', '=', $process[0]->document_name)
+                ->get();
+            $deans = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'dean')
+                ->get()
+                ->all();
+            $dav = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'admin')
+                ->get()
+                ->all();
+            $user = $request->user();
+
+            //            return compact(['process_stages', 'process']);
+            return view('process_details',
+                compact('process',
+                    'process_stages', 'document_data', 'deans', 'user', 'dav'));
+
         }
         else{
             abort(401, 'This action is unauthorized.');
         }
 
-        if ($request->user()->authorizeRoles($validator_role)){
-
-            $process = DB::table('processes')->where('process_id', '=', $id)
-                ->get();
-
-            return view('process_details', compact('process'));
-        }
     }
 
-    public function index()
+    public static function my_process_details(Request $request, $id)
     {
-        //
+        $query = 'SELECT
+                    p.*, ps.*
+                    FROM processes AS p
+                    LEFT JOIN process_stages AS ps ON ps.stage_number=p.current_stage AND
+                                                      p.process_id=ps.process_id
+                                                        AND
+                                                      draft = 0
+                    ';
+
+        if (DB::select($query)){
+            $process = DB::table('processes')->where('process_id', '=', $id)
+                ->get();
+            $process_stages = DB::table('process_stages')->where('process_id', '=', $id)
+                ->join('users', 'users.id', '=', 'process_stages.done_by')
+                ->get(['stage_number', 'status', 'users.name as done_by', 'comment']);
+            $document_data = DB::table('documents')
+                ->where('document_name', '=', $process[0]->document_name)
+                ->get();
+            $deans = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'dean')
+                ->get()
+                ->all();
+            $dav = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('roles.role_name', '=', 'admin')
+                ->get()
+                ->all();
+            $user = $request->user();
+
+
+
+            //            return compact(['process_stages', 'process']);
+            return view('my_process_details',
+                compact('process',
+                    'process_stages', 'document_data', 'deans', 'user', 'dav'));
+
+        }
+        else{
+            abort(401, 'This action is unauthorized.');
+        }
+
+    }
+
+    public function qr(Request $request, $process_token)
+    {
+        $qr = DB::table('processes as p')
+            ->join('documents as d', 'd.document_name', '=', 'p.document_name')
+            ->join('users as u', 'u.id', '=', 'p.created_by')
+            ->where('process_token', '=', $process_token)
+            ->get();
+//        return $qr;
+        return view('qr_details', compact('qr'));
+    }
+
+    public function create_process(Request $request){
+        $user = $request->user();
+        if (!($user->isAdmin())){
+            if (DB::table('processes')
+                ->where('document_name', '=', $request->document_name)
+                ->where('created_by', '=', $user->id)
+                ->where('draft', '=', 1)
+                ->exists()) {
+                DB::table('processes')
+                    ->where('document_name', '=', $request->document_name)
+                    ->where('created_by', '=', $user->id)
+                    ->where('draft', '=', 1)
+                    ->update([
+                        'last_change_date' => date("Y-m-d H:i:s"),
+                        'created_date' => date("Y-m-d H:i:s"),
+                        'academic_year' => $request->academic_year,
+                        'endterm_grade' => $request->endterm_grade,
+                        'exam_grade' => $request->exam_grade,
+                        'midterm_grade' => $request->midterm_grade,
+                        'new_fio' => $request->new_fio,
+                        'new_speciality' => $request->new_speciality,
+                        'new_speciality_code' => $request->new_speciality_code,
+                        'new_university' => $request->new_university,
+                        'phone_number' => $request->phone_number,
+                        'reason' => $request->reason,
+                        'semester' => $request->semester,
+                        'subject' => $request->subject,
+                        'sum_of_return' => $request->sum_of_return,
+                        'teacher' => $request->teacher,
+                        'draft' => 0
+                    ]);
+            }
+            else{
+                $process = new Process();
+                $process->document_name = $request->document_name;
+                $process->academic_year = $request->academic_year;
+                $process->endterm_grade = $request->endterm_grade;
+                $process->exam_grade = $request->exam_grade;
+                $process->midterm_grade = $request->midterm_grade;
+                $process->new_fio = $request->new_fio;
+                $process->new_speciality = $request->new_speciality;
+                $process->new_speciality_code = $request->new_speciality_code;
+                $process->new_university = $request->new_university;
+                $process->phone_number = $request->phone_number;
+                $process->reason = $request->reason;
+                $process->semester = $request->semester;
+                $process->subject = $request->subject;
+                $process->sum_of_return = $request->sum_of_return;
+                $process->teacher = $request->teacher;
+                $process->draft = $request->draft;
+                $process->created_by = $request->user()->id;
+                $process->save();
+
+                $process_id = DB::table('processes')
+                    ->latest('created_date')
+                    ->first('process_id')->process_id;
+
+                $stages = DB::table('documents')
+                    ->where('document_name', '=', $request->document_name)
+                    ->get('stageCount')[0]->stageCount;
+
+                for ($i=1; $i < $stages + 1; $i++){
+                    $process_stages = new Process_stages();
+                    $process_stages->process_id = $process_id;
+                    $process_stages->stage_number = $i;
+                    $process_stages->status = 'Ожидание';
+                    $process_stages->save();
+                }
+            }
+
+            return response()->json(1);
+        }
+        return response()->json(0);
     }
 
     /**
@@ -139,9 +285,42 @@ class ProcessController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function start_process_view(Request $request, $id)
     {
-        //
+
+        $document = DB::table('documents')
+            ->where('id', '=', $id)
+            ->get();
+        $process = DB::table('processes')
+            ->where('document_name', '=', $document[0]->document_name)
+            ->where('created_by', '=', $request->user()->id)
+            ->where('draft', '=', 1)
+            ->exists();
+        if ($process){
+            $process = DB::table('processes')
+                ->where('document_name', '=', $document[0]->document_name)
+                ->where('created_by', '=', $request->user()->id)
+                ->where('draft', '=', 1)
+                ->get();
+        }
+        else{
+            abort(404, 'Process not found.');
+        }
+        $deans = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'dean')
+            ->get()
+            ->all();
+        $dav = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('roles.role_name', '=', 'admin')
+            ->get()
+            ->all();
+        $user = $request->user();
+        return view('start_process',
+            compact('process', 'document', 'user', 'dav', 'deans'));;
     }
 
     /**
@@ -150,9 +329,13 @@ class ProcessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function cancel(Request $request)
     {
-        //
+        DB::table('processes')
+            ->where('document_name', '=', $request->document_name)
+            ->where('created_by', '=', $request->user()->id)
+            ->where('draft', '=', 1)
+            ->delete();
     }
 
     /**

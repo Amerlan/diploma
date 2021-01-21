@@ -14,16 +14,25 @@ class CreateDocumentDetailsTable extends Migration
     public function up()
     {
         Schema::create('document_details', function (Blueprint $table) {
-            $table->id();
-            $table->string('document_name');
-            $table->boolean('from_date');
-            $table->boolean('to_date');
-            $table->boolean('reason');
-            $table->boolean('subject');
-            $table->boolean('attachments');
+            $table->string('document_name')->unique();
+            $table->boolean('reason')->default(False);
+            $table->boolean('new_fio')->default(False);
+            $table->boolean('new_speciality')->default(False);
+            $table->boolean('new_speciality_code')->default(False);
+            $table->boolean('sum_of_return')->default(False);
+            $table->boolean('new_university')->default(False);
+            $table->boolean('academic_year')->default(False);
+            $table->boolean('subject')->default(False);
+            $table->boolean('midterm_grade')->default(False);
+            $table->boolean('endterm_grade')->default(False);
+            $table->boolean('exam_grade')->default(False);
+            $table->boolean('teacher')->default(False);
+            $table->boolean('semester')->default(False);
+            $table->boolean('phone_number')->default(False);
+            $table->boolean('attachments')->default(False);
 
             // FK
-            $table->foreign('document_name')->references('document_name')->on('documents');
+            $table->foreign('document_name')->references('document_name')->on('documents')->onDelete('cascade');
         });
     }
 

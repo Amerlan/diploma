@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Notifications\DocumentReceived;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
@@ -21,39 +23,43 @@ use Auth;
 Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Auth::routes();
 
+    //All notifications
+    Route::get('/all_notifications', [Controllers\UserController::class, 'all_notifications'])->name('all_notifications');
+    Route::get('/mark_as_read/{notification_id}/{process_id}', [Controllers\UserController::class, 'mark_as_read'])->name('mark_as_read');
+
+    //TESTING
+    Route::post('create_process', [Controllers\ProcessController::class, 'create_process'])->name('create_process');
+    //TESTING
+
     # HOME PAGE
     Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
     Route::redirect('/home', '/');
+    Route::get('/qr/{process_token}', [Controllers\ProcessController::class, 'qr'])->name('qr');
 
     # Get all document types (for admin only)
     Route::get('/doc_types', [Controllers\DocumentTypeController::class, 'index'])->name('see_doctypes');
 
-    # Create and insert Document Types
-    Route::get('/doc_types/create_form', [Controllers\DocumentTypeController::class, 'create'])->name('doctype_form');
-    Route::post('/create_document_type', [Controllers\DocumentTypeController::class, 'store'])->name('create_doctype');
+    Route::get('/templates', [Controllers\DocumentController::class, 'see_templates'])->name('see_templates');
 
-    # Create and insert Documents
-    Route::get('documents/create_form', [Controllers\DocumentController::class, 'create'])->name('document_form');
-    Route::post('/create_document', [Controllers\DocumentController::class, 'store'])->name('create_doc');
+    # Create and insert Document Types
+    Route::get('/templates/create_form', [Controllers\DocumentController::class, 'create'])->name('create_template_form');
+    Route::post('/create_document_template', [Controllers\DocumentController::class, 'store'])->name('create_document_template');
+
 
     # Get User's Processes
     Route::get('/my_processes', [Controllers\ProcessController::class, 'user_processes'])->name('processes');
     Route::get('/ongoing', [Controllers\ProcessController::class, 'ongoing'])->name('ongoing');
     Route::get('/signed', [Controllers\ProcessController::class, 'signed'])->name('signed');
 
-    Route::get('/create_process_list', [Controllers\ProcessController::class, 'create_process_list'])->name('create_process_list');
     Route::get('create_process/{document_id}', [Controllers\ProcessController::class, 'create'])->name('create_proc');
 
-//    Route::post('/create_process_post', [Controllers\ProcessController::class, 'create_process_post'])->name('create_process_post');
     Route::get('/process_details/{id}', [Controllers\ProcessController::class, 'process_details'])->name('process_details');
+    Route::get('/my_process_details/{id}', [Controllers\ProcessController::class, 'my_process_details'])->name('my_process_details');
 
-//    Route::post('/sign/{doc_id}', [Controllers\UserController::class, 'toSign'])->name('sign');
-//    Route::get('/reject/{doc_id}', [Controllers\UserController::class, 'toReject'])->name('reject');
-//    Route::get('/return/{doc_id}', [Controllers\UserController::class, 'toReturn'])->name('return');
+    Route::post('/sign_return_reject', [Controllers\UserController::class, 'sign_return_reject'])->name('action');
 
-//    TEST
-    Route::post('/sign', [Controllers\UserController::class, 'toSign'])->name('sign');
-//    TEST
+    // Cancel testing
+    Route::post('/cancel', [Controllers\ProcessController::class, 'cancel'])->name('cancel');
 
     // For ADMIN only
     Route::get('/processes/all', [Controllers\ProcessController::class, 'all'])->name('all_processes');;
@@ -61,6 +67,9 @@ Route::group(['prefix' => Middleware\LocaleMiddleware::getLocale()], function(){
     Route::get('/roles_list', [Controllers\RoleController::class, 'all_roles'])->name('roles_list');
 
     Route::get('/profile', [Controllers\UserController::class, 'show'])->name('profile');
+
+    Route::get('/templates/{document_id}', [Controllers\DocumentController::class, 'show_document'])->name('templates_application');
+    Route::get('/templates/{document_id}/start', [Controllers\ProcessController::class, 'start_process_view'])->name('start_process_view');
 
 });
 

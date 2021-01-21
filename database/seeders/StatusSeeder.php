@@ -27,7 +27,7 @@ class StatusSeeder extends Seeder
         $status->save();
 
         $status = new Statuses();
-        $status->status = 'Возравщено на доработку';
+        $status->status = 'Возвращено на доработку';
         $status->save();
     }
 }

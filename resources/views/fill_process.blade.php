@@ -2,24 +2,23 @@
 
 @section('content')
     <div class="container-fluid">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
-            <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
-        </ol>
-    </nav>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">@lang('messages.home')</a></li>
+                <li class="breadcrumb-item"><a href="{{route('create_process_list')}}">@lang('messages.process_create')</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@lang('messages.fill_process')</li>
+            </ol>
+        </nav>
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">@lang('messages.fill_process')</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
-    </div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">@lang('messages.fill_process')</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> @lang('messages.export_document')</a>
+        </div>
 
         <!-- Content Row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">{{$document[0]->document_name}}</h5>
                     <div class="card-body">
                         <div class="card-title">
                             <div class="row">
@@ -47,7 +46,7 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-4 offset-8">
-                                    Дата: <b>13/12/2020</b>
+                                    Дата: <b>{{date('d/m/Y')}}</b>
                                 </div>
                             </div>
                             <div class="row mt-3">

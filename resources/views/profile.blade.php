@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -18,8 +17,8 @@
             <div class="card card-primary align-items-center">
                 <div class="card-body box-profile">
                     <div class="text-center">
-                        <img class="img-profile rounded-circle" src={{$user->url}}>
-                        <h3>{{$user->name}}</h3>
+                        <img class="img-profile rounded-circle" style="width: 50%;" src={{$user->url}}>
+                        <h3 id="name"></h3>
                         <p class="text-muted">@lang('messages.role') - {{$user->roles}}</p>
                         <ul class="list-group">
                             <li class="list-group-item">
@@ -40,5 +39,10 @@
             </div>
         </div>
     @endforeach
-
+    <script>
+    const user = <?php  echo json_encode($user);?>;
+    const str = `{{$user->name}}`;
+    var element = document.getElementById("name");
+    element.innerHTML = str;
+</script>
 @endsection

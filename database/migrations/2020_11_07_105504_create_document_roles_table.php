@@ -20,7 +20,7 @@ class CreateDocumentRolesTable extends Migration
             $table->unsignedSmallInteger('sign_order');
 
             # foreign keys
-            $table->foreign('document_name')->references('document_name')->on('documents');
+            $table->foreign('document_name')->references('document_name')->on('documents')->onDelete('cascade');
         });
     }
 

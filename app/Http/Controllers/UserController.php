@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document_stages;
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\DocumentReceived;
+use Illuminate\Support\Str;
+
+
 
 class UserController extends Controller
 {
@@ -38,44 +42,37 @@ class UserController extends Controller
     }
 
 
-    public function toSign(Request $request)
+    public function toSign($request)
     {
-
-        $validator_role = DB::table('processes')
-            ->join('document_roles', 'processes.document_name', '=','document_roles.document_name')
-            ->whereColumn('current_stage', '=', 'sign_order')
-            ->where('current_stage', '=', $request->stage)
-            ->where('process_id', '=', $request->process_id)
-            ->get('role_id')->take(1)[0]->role_id;
-
 
         $last_stage = DB::table('processes as p')
             ->join('documents as d', 'p.document_name', '=', 'd.document_name')
             ->where('p.process_id', '=', $request->process_id)
             ->get('stageCount')->take(1)[0]->stageCount;
 
-//        if ($request->user()->authorizeRoles([$validator_role]) ){
-//
-//            return $request;
-//        }
-//        $last_stage = DB::table('processes as p')
-//            ->join('documents as d', 'p.document_name', '=', 'd.document_name')
-//            ->where('p.process_id', '=', $request->process_id)
-//            ->get('stageCount')->take(1)[0]->stageCount;
-//
+
         $current_stage = DB::table('processes')
             ->where('process_id', '=', $request->process_id)
             ->get('current_stage')->take(1)[0]->current_stage;
-//
+
         DB::table('process_stages as ps')
             ->where('stage_number', '=',  $request->stage)
             ->where('process_id', '=', $request->process_id)
             ->update([
-                'status' => 'Подписано',
+                'status' => '1',
                 'done_by' => $request->user()->id,
                 'comment' => $request->comment,
                 'last_edited_date' => date("Y-m-d H:i:s")
             ]);
+
+        $to_notify = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('created_by')[0]->created_by;
+
+        $dr = new DocumentReceived('1', $request->process_id);
+//
+        User::findOrFail($to_notify)->notify($dr);
+//        Notification::send($user, new DocumentReceived());
 
         if (intval($request->stage) < intval($last_stage)){
 
@@ -92,63 +89,117 @@ class UserController extends Controller
                 ->update([
                     'is_closed' => 1,
                     'last_change_date' => date("Y-m-d H:i:s"),
-                    'closed_date' => date("Y-m-d H:i:s")
+                    'closed_date' => date("Y-m-d H:i:s"),
+                    'process_token' => Str::random(32),
                     ]);
+            $to_notify = DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->get('created_by')[0]->created_by;
+
+            $dr = new DocumentReceived('4', $request->process_id);
+//
+            User::findOrFail($to_notify)->notify($dr);
         }
 
 
         return redirect('/ongoing');
     }
 
-    public function toReject(Request $request, $doc_id)
+    public function toReject($request)
     {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
+        DB::table('process_stages as ps')
+            ->where('stage_number', '=',  $request->stage)
+            ->where('process_id', '=', $request->process_id)
+            ->update([
+                'status' => '0',
+                'done_by' => $request->user()->id,
+                'comment' => $request->comment,
+                'last_edited_date' => date("Y-m-d H:i:s")
+            ]);
 
-        $document->update(['current_stage' => -1]); // increment our stage because of signing
-        $document->update(['last_change_date' => date("Y-m-d H:i:s")]);
-        $document->update(['is_rejected' => True]);
 
-       return redirect()->back();
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'is_rejected' => 1,
+                    'is_closed' => 1,
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'closed_date' => date("Y-m-d H:i:s")
+                ]);
+        $to_notify = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('created_by')[0]->created_by;
+
+        $dr = new DocumentReceived(0, $request->process_id);
+//
+        User::findOrFail($to_notify)->notify($dr);
+
+        return redirect('/ongoing');
     }
 
-    public function toReturn(Request $request, $doc_id)
+    public function toReturn($request)
     {
-        $document = DB::table('documents')->where('document_id', $doc_id); // searching our doc by id
-        $current_stage = $document->get('current_stage')->take(1)[0]->current_stage; // get current stage
-        if ($current_stage != 1) {
-            $document->update(['current_stage' => ($current_stage - 1)]);
+        $current_stage = DB::table('processes')
+            ->where('process_id', '=', $request->process_id)
+            ->get('current_stage')->take(1)[0]->current_stage;
+
+        if (intval($current_stage)===1){
+            return 0;
+        }
+        else{
+            DB::table('process_stages as ps')
+                ->where('stage_number', '=',  $request->stage)
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'status' => '3',
+                    'done_by' => $request->user()->id,
+                    'comment' => $request->comment,
+                    'last_edited_date' => date("Y-m-d H:i:s")
+                ]);
+
+            DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->update([
+                    'last_change_date' => date("Y-m-d H:i:s"),
+                    'current_stage' => intval($current_stage) - 1
+                ]);
+
+
+            $to_notify = DB::table('processes')
+                ->where('process_id', '=', $request->process_id)
+                ->get('created_by')[0]->created_by;
+            $dr = new DocumentReceived(3, $request->process_id);
+//
+            User::findOrFail($to_notify)->notify($dr);
+            return redirect('/ongoing');
         }
 
-        return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function sign_return_reject(Request $request){
+        if ($request->action === 'sign'){
+            return $this->toSign($request);
+        }
+        if ($request->action === 'return'){
+            return $this->toReturn($request);
+        }
+        if ($request->action === 'reject'){
+            return $this->toReject($request);
+        }
+    }
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         if ($request->user()) {
@@ -168,13 +219,32 @@ class UserController extends Controller
                 ->get()
                 ->all();
 
-                //return $user;
+//                return $user;
                 return view('profile', compact('user'));
         }
 
         return abort(401, 'Unauthorized request');
 
 
+    }
+
+    public function all_notifications()
+    {
+        $notifications = auth()->user()->notifications()->orderBy('created_at','desc')->get()->toArray();
+
+        return view('all_notifications' , compact("notifications"));
+
+    }
+
+    public function mark_as_read(Request $request, $notification_id, $process_id)
+    {
+        $notification = auth()->user()->notifications()->where('id', $notification_id)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        //app('App\Http\Controllers\ProcessController')->my_process_details($request, $process_id);
+        return \Redirect::route('my_process_details', ['id' => $process_id]);
     }
 
     /**
