@@ -171,9 +171,9 @@
             'use strict';
             window.addEventListener('load', function() {
                 // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
+                let forms = document.getElementsByClassName('needs-validation');
                 // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
+                let validation = Array.prototype.filter.call(forms, function(form) {
                     form.addEventListener('submit', function(event) {
                         if (form.checkValidity() === false) {
                             event.preventDefault();
@@ -188,24 +188,24 @@
 
     <script>
  {{-- Plus-Minus button script --}}
-        var element = document.getElementById('add_role');
-        var stage = document.getElementById('stage');
+        let element = document.getElementById('add_role');
+        let stage = document.getElementById('stage');
         element.addEventListener('click', function(){
             $('.role_selection:last').clone().insertAfter('.role_selection:last');
             stage.value = $('.select').length;
          });
-         var rm = document.getElementById("remove_role");
+         let rm = document.getElementById("remove_role");
          rm.addEventListener('click', function(){
             $('.role_selection').not(':first').last().remove();
             stage.value = $('.select').length;
          });
 
-         var form = document.getElementById('hidden_submit');
-         var send = document.getElementById('sbmt');
+         let form = document.getElementById('hidden_submit');
+         let send = document.getElementById('sbmt');
          send.addEventListener('click', function(){
-            var order = [];
-            var sel = $('.select');
-            for (var i = 0; i < sel.length; i++){
+             let order = [];
+            let sel = $('.select');
+            for (let i = 0; i < sel.length; i++){
                 order.push(sel[i].value);
             }
             document.getElementById('role_order').value = order.join(',');

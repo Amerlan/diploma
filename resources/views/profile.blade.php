@@ -42,7 +42,7 @@
     <script>
     const user = <?php  echo json_encode($user);?>;
     const str = `{{$user->name}}`;
-    var element = document.getElementById("name");
+    let element = document.getElementById("name");
     element.innerHTML = str;
 </script>
 @endsection

@@ -33,7 +33,7 @@
 </head>
 <body>
     <div class="col-12">
-        <h2 class="text-center">{{$qr[0]->document_type}}</h2>
+        <h2 class="text-center" style="margin-left: 250px">{{$qr[0]->document_type}}</h2>
         <br>
         Выдан: <u>"{{$qr[0]->name}}"</u>
         <br>
@@ -105,8 +105,10 @@
                 @lang('messages.closed_date'): <u>{{$qr[0]->closed_date}}</u>
 
         @endif
-        <br><br>
+        <br><br><br><br><br><br>
+        <span class="col-12" style="margin-left: 450px">
         {!! QrCode::generate('http://127.0.0.1:8000/qr/'.$qr[0]->process_token); !!}
+        </span>
     </div>
 </body>
 
