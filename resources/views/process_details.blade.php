@@ -98,9 +98,9 @@
         const header = `{{$document_data[0]->header}}`;
             {{--        console.log(header);--}}
         const body = `{{$document_data[0]->body}}`;
-        var elementHeader = document.getElementById("header");
+        let elementHeader = document.getElementById("header");
         elementHeader.innerHTML = header;
-        var elementBody = document.getElementById("body");
+        let elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
     </script>
     <!-- /.container-fluid -->

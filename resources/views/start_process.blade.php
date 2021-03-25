@@ -66,8 +66,8 @@
 
                 <script>
                     function SubmitData() {
-                        var url = "{{ route ('create_process') }}";
-                        var document_name = document.getElementById('doc_name').innerText;
+                        let url = "{{ route ('create_process') }}";
+                        let document_name = document.getElementById('doc_name').innerText;
                         fetch(url, {
                             method: 'POST',
                             headers:{
@@ -88,8 +88,8 @@
 
 
                     function Cancel() {
-                        var url = "{{ route ('cancel') }}";
-                        var document_name = document.getElementById('doc_name').innerText;
+                        let url = "{{ route ('cancel') }}";
+                        let document_name = document.getElementById('doc_name').innerText;
                         fetch(url, {
                             method: 'POST',
                             headers:{
@@ -119,9 +119,9 @@
         const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document[0]->header}}`;
         const body = `{{$document[0]->body}}`;
-        var elementHeader = document.getElementById("header");
+        let elementHeader = document.getElementById("header");
         elementHeader.innerHTML = header;
-        var elementBody = document.getElementById("body");
+        let elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
     </script>
 @endsection
