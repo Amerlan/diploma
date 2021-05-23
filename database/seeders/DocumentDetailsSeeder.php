@@ -7,9 +7,6 @@ use App\Models\Document_details;
 
 class DocumentDetailsSeeder extends Seeder
 {
-     // Я УБРАЛ phone number как дефолт ТРУ, надо где он нужен вручную вставить
-    // (Касается Амиржана и Амерлана, Мадияр норм сразу сделал)
-    // $document_details->phone_number = True;
     public function run()
     {
         $document_details = new Document_details();

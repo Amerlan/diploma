@@ -255,7 +255,7 @@
                                                 </label>
                                                 <select id="teacher" class="form-control">
                                                     @foreach($teachers as $teacher)
-                                                    <option>{{$teacher->id}}</option>
+                                                    <option value="{{$teacher->user_id}}">{{$teacher->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -343,7 +343,7 @@
                                 'attachments': attachments,
                                 'document_name': document_name,
                                 'draft': draft,
-                            }
+                            };
                         fetch(url, {
                             method: 'POST',
                             headers:{

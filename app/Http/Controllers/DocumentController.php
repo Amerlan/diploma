@@ -45,7 +45,6 @@ class DocumentController extends Controller
             ->get()
             ->all();
 
-
         return view('/document_templates/application',
         compact('document', 'deans', 'user', 'dav', 'document_details', 'teachers'));
     }

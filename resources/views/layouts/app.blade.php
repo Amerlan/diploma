@@ -243,8 +243,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                                @if(auth()->user()->unreadNotifications->count())
+                                @if(auth()->user())
+                                    @if(auth()->user()->unreadNotifications)
                                     <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span>
+                                    @endif
                                 @endif
                         </a>
                         <!-- Dropdown - Alerts -->
@@ -252,6 +254,8 @@
                             <h6 class="dropdown-header">
                                 @lang('messages.notifications')
                             </h6>
+                            @if(auth()->user())
+                                @if(auth()->user()->unreadNotifications)
                             @foreach(auth()->user()->unreadNotifications->take(4) as $notification)
                                 <a class="dropdown-item d-flex align-items-center" href={{ route('mark_as_read',['notification_id' => $notification->id, 'process_id' => $notification->data['process_id'] ])}}>
                                     <div class="mr-3">
@@ -277,6 +281,8 @@
                                     </div>
                                 </a>
                             @endforeach
+                                @endif
+                            @endif
                             <a class="dropdown-item text-center small text-gray-500" href="{{route('all_notifications')}}">@lang('messages.all_notifications')</a>
                         </div>
                     </li>

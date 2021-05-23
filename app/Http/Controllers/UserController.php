@@ -41,7 +41,6 @@ class UserController extends Controller
         return abort(401, 'Unauthorized request');
     }
 
-
     public function toSign($request)
     {
 

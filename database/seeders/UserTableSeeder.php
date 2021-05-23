@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
         $role_dean = Role::where('role_name', 'dean')->first();
 
         $admin = new User();
-        $admin->name = 'Admin Name';
+        $admin->name = 'Админ Админов';
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('secret');
         $admin->secret_password = bcrypt('secret');
@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach($role_admin);
 
         $dean = new User();
-        $dean->name = 'Уатбаев Муса Муратович';
+        $dean->name = 'Деканов Декан Деканович';
         $dean->email = 'dean@example.com';
         $dean->password = bcrypt('secret');
         $dean->secret_password = bcrypt('secret');
@@ -46,7 +46,7 @@ class UserTableSeeder extends Seeder
         $dean->roles()->attach($role_admin);
 
         $zafKafedroi = new User();
-        $zafKafedroi->name = 'zafKafedroi Name';
+        $zafKafedroi->name = 'Заведующий Кафедрой';
         $zafKafedroi->email = 'zafKafedroi@example.com';
         $zafKafedroi->password = bcrypt('secret');
         $zafKafedroi->secret_password = bcrypt('secret');
@@ -58,7 +58,7 @@ class UserTableSeeder extends Seeder
         $zafKafedroi->roles()->attach($role_zafKafedroi);
 
         $adminKafedri = new User();
-        $adminKafedri->name = 'adminKafedri Name';
+        $adminKafedri->name = 'Администратор Кафедры';
         $adminKafedri->email = 'adminKafedri@example.com';
         $adminKafedri->password = bcrypt('secret');
         $adminKafedri->secret_password = bcrypt('secret');
@@ -70,7 +70,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->roles()->attach($role_adminKafedri);
 
         $teacher = new User();
-        $teacher->name = 'Teacher Name';
+        $teacher->name = 'Преподавателев Преподаватель';
         $teacher->email = 'teacher@example.com';
         $teacher->password = bcrypt('secret');
         $teacher->secret_password = bcrypt('secret');
@@ -83,7 +83,7 @@ class UserTableSeeder extends Seeder
         $teacher->roles()->attach($role_techer_zamena);
 
         $student = new User();
-        $student->name = 'Student Name';
+        $student->name = 'Студентов Студент Студентович';
         $student->email = 'student@example.com';
         $student->password = bcrypt('secret');
         $student->secret_password = bcrypt('secret');
@@ -103,7 +103,7 @@ class UserTableSeeder extends Seeder
         $student->roles()->attach($role_student);
 
         $teacher = new User();
-        $teacher->name = 'TeacherTest Name';
+        $teacher->name = 'Преподавателев Преподаватель2';
         $teacher->email = 'teachertest@example.com';
         $teacher->password = bcrypt('secret');
         $teacher->secret_password = bcrypt('secret');

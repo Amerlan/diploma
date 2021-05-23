@@ -63,8 +63,10 @@
                         </div>
                     </div>
                 </div>
-
-                <script>
+            </div>
+        </div>
+    </div>
+    <script>
                     function SubmitData() {
                         let url = "{{ route ('create_process') }}";
                         let document_name = document.getElementById('doc_name').innerText;
@@ -78,9 +80,9 @@
                                 'document_name': document_name
                             })
                         })
-                        .then((response) =>
-                            console.log(response)
-                        )
+                        .then((response) =>{
+                            console.log(response);
+                        })
                         .then((data) =>{
                             console.log(data);
                         })
@@ -101,9 +103,6 @@
                             })
                         })}
                 </script>
-            </div>
-        </div>
-    </div>
     <script>
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
