@@ -125,7 +125,6 @@
                     </a>
                     <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="Create user"><i class="fas fa-plus mr-2"></i>@lang('messages.add_user')</a>
                             <a class="collapse-item" href="{{route('users_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_users')</a>
                         </div>
                     </div>
@@ -139,7 +138,6 @@
                     </a>
                     <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="Create role"><i class="fas fa-plus mr-2"></i>@lang('messages.add_role')</a>
                             <a class="collapse-item" href="{{route('roles_list')}}"><i class="fas fa-list mr-2"></i>@lang('messages.list_roles')</a>
                         </div>
                     </div>
@@ -150,14 +148,6 @@
         @endif
     @endif
     <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>@lang('messages.statistics')</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -299,14 +289,6 @@
                             <a class="dropdown-item" href="{{route('profile')}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 @lang('messages.profile')
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                @lang('messages.options')
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                @lang('messages.action_history')
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
