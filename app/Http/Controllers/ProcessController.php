@@ -134,7 +134,8 @@ class ProcessController extends Controller
                     ->all();
                 $user = $request->user();
 
-                //            return compact(['process_stages', 'process']);
+//                            return compact('process',
+//                                'process_stages', 'document_data', 'deans', 'user', 'dav');
                 return view('process_details',
                     compact('process',
                         'process_stages', 'document_data', 'deans', 'user', 'dav'));
@@ -219,22 +220,22 @@ class ProcessController extends Controller
                     ->where('created_by', '=', $user->id)
                     ->where('draft', '=', 1)
                     ->update([
-                        'last_change_date' => date("Y-m-d H:i:s"),
-                        'created_date' => date("Y-m-d H:i:s"),
-                        'academic_year' => $request->academic_year,
-                        'endterm_grade' => $request->endterm_grade,
-                        'exam_grade' => $request->exam_grade,
-                        'midterm_grade' => $request->midterm_grade,
-                        'new_fio' => $request->new_fio,
-                        'new_speciality' => $request->new_speciality,
-                        'new_speciality_code' => $request->new_speciality_code,
-                        'new_university' => $request->new_university,
-                        'phone_number' => $request->phone_number,
-                        'reason' => $request->reason,
-                        'semester' => $request->semester,
-                        'subject' => $request->subject,
-                        'sum_of_return' => $request->sum_of_return,
-                        'teacher' => $request->teacher,
+//                        'last_change_date' => date("Y-m-d H:i:s"),
+//                        'created_date' => date("Y-m-d H:i:s"),
+//                        'academic_year' => $request->academic_year,
+//                        'endterm_grade' => $request->endterm_grade,
+//                        'exam_grade' => $request->exam_grade,
+//                        'midterm_grade' => $request->midterm_grade,
+//                        'new_fio' => $request->new_fio,
+//                        'new_speciality' => $request->new_speciality,
+//                        'new_speciality_code' => $request->new_speciality_code,
+//                        'new_university' => $request->new_university,
+//                        'phone_number' => $request->phone_number,
+//                        'reason' => $request->reason,
+//                        'semester' => $request->semester,
+//                        'subject' => $request->subject,
+//                        'sum_of_return' => $request->sum_of_return,
+//                        'teacher' => $request->teacher,
                         'draft' => 0
                     ]);
             }

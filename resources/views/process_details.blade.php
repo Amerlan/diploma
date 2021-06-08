@@ -93,7 +93,7 @@
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
             {{--                        console.log(user);--}}
-        const doc = <?php  echo json_encode($document_data[0]);?>;
+        const doc = <?php  echo json_encode($process[0]);?>;
         const dav = <?php echo json_encode($dav[0]);?>;
         const header = `{{$document_data[0]->header}}`;
             {{--        console.log(header);--}}
@@ -102,6 +102,7 @@
         elementHeader.innerHTML = header;
         let elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
+
     </script>
     <!-- /.container-fluid -->
 @endsection
