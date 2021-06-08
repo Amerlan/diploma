@@ -69,7 +69,7 @@ class DocumentSeeder extends Seeder
                                             ID студента: ${user.dl_id}
                                             Контактные тел.: 87776665544';
         $document->title = 'Заявление';
-        $document->body = '';
+        $document->body = '${doc.reason}';
         $document->save();
 
         //справка - приложение 4

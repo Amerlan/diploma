@@ -128,7 +128,7 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label>
-                                                        Код новой специальности:
+                                                        Сумма возврата:
                                                     </label>
                                                     <input id="sum_of_return" type="number" class="form-control">
                                                 </div>
@@ -255,7 +255,7 @@
                                                 </label>
                                                 <select id="teacher" class="form-control">
                                                     @foreach($teachers as $teacher)
-                                                    <option>{{$teacher->id}}</option>
+                                                    <option value="{{$teacher->user_id}}">{{$teacher->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -291,7 +291,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    @if(auth()->check())
+                                        @if(!auth()->user()->isAdmin())
                                     <button id="submit" type="button" class="btn btn-primary">Сохранить</button>
+                                        @endif
+                                    @endif
 {{--                                    <button type="button" onclick=""></button>--}}
                                 </div>
                             </div>
@@ -343,7 +347,7 @@
                                 'attachments': attachments,
                                 'document_name': document_name,
                                 'draft': draft,
-                            }
+                            };
                         fetch(url, {
                             method: 'POST',
                             headers:{
