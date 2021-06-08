@@ -18,7 +18,7 @@ class DocumentSeeder extends Seeder
         $document = new Documents();
         $document->document_name = 'Заявление на допуск к учебе';
         $document->document_type = 'Заявление';
-        $document->stageCount = 2;
+        $document->stageCount = 1;
         $document->header = 'Декану факультета ${deans.faculty_name} ${deans.name}
                              от студента ${user.course_number} курса специальности ${user.speciality_name}, группы ${user.group} - ${user.name}
                              ID студента: ${user.dl_id}';
@@ -30,7 +30,7 @@ class DocumentSeeder extends Seeder
         $document = new Documents();
         $document->document_name = 'Заявление на перекурс';
         $document->document_type = 'Заявление';
-        $document->stageCount = 4;
+        $document->stageCount = 1;
         $document->header = 'Декану факультета ${deans.faculty_name} ${deans.name}
                              от студента ${user.course_number} курса специальности "${user.speciality_name}", группы ${user.group} - ${user.name}
                              ID студента: ${user.dl_id}';

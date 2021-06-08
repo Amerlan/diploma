@@ -67,43 +67,6 @@
         </div>
     </div>
     <script>
-                    function SubmitData() {
-                        let url = "{{ route ('create_process') }}";
-                        let document_name = document.getElementById('doc_name').innerText;
-                        fetch(url, {
-                            method: 'POST',
-                            headers:{
-                                'Content-Type': 'application/json',
-                                "X-CSRF-Token": $('input[name="_token"]').val()
-                            },
-                            body:JSON.stringify({
-                                'document_name': document_name
-                            })
-                        })
-                        .then((response) =>{
-                            console.log(response);
-                        })
-                        .then((data) =>{
-                            console.log(data);
-                        })
-                    }
-
-
-                    function Cancel() {
-                        let url = "{{ route ('cancel') }}";
-                        let document_name = document.getElementById('doc_name').innerText;
-                        fetch(url, {
-                            method: 'POST',
-                            headers:{
-                                'Content-Type': 'application/json',
-                                "X-CSRF-Token": $('input[name="_token"]').val()
-                            },
-                            body:JSON.stringify({
-                                'document_name': document_name
-                            })
-                        })}
-                </script>
-    <script>
         const user = <?php  echo json_encode($user);?>;
         const deans = <?php  echo json_encode($deans[0]);?>;
         $("#starter").on("click", function (){
@@ -122,5 +85,44 @@
         elementHeader.innerHTML = header;
         let elementBody = document.getElementById("body");
         elementBody.innerHTML = body;
+    </script>
+    <script>
+            function SubmitData() {
+                let url = "{{ route ('create_process') }}";
+                let document_name = document.getElementById('doc_name').innerText;
+                fetch(url, {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        "X-CSRF-Token": $('input[name="_token"]').val()
+                    },
+                    body:JSON.stringify({
+                        'document_name': document_name,
+                        'body': elementBody.innerHTML,
+                        'header': elementHeader.innerText,
+                    })
+                })
+                .then((response) =>{
+                    console.log(response);
+                })
+                .then((data) =>{
+                    console.log(data);
+                })
+            }
+
+
+            function Cancel() {
+                let url = "{{ route ('cancel') }}";
+                let document_name = document.getElementById('doc_name').innerText;
+                fetch(url, {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        "X-CSRF-Token": $('input[name="_token"]').val()
+                    },
+                    body:JSON.stringify({
+                        'document_name': document_name
+                    })
+                })}
     </script>
 @endsection

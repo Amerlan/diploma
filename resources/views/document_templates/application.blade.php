@@ -301,70 +301,6 @@
                             </div>
                     </div>
                 </div>
-                <script>
-                    var submitButton = document.getElementById('submit');
-                    submitButton.addEventListener('click', function () {
-                        SubmitData(true);
-                        window.location.href += "/start";
-                    });
-                    //all modal data
-
-
-                    function SubmitData(draft_flag) {
-                        var url = "{{ route ('create_process') }}";
-                        var reason = document.getElementById('reason') != null ? document.getElementById('reason').value : null;
-                        var new_fio = document.getElementById('new_fio') != null ? document.getElementById('new_fio').value : null;
-                        var new_speciality = document.getElementById('new_speciality') != null ? document.getElementById('new_speciality').value : null;
-                        var new_speciality_code = document.getElementById('new_speciality_code') != null ? document.getElementById('new_speciality_code').value : null;
-                        var sum_of_return = document.getElementById('sum_of_return') != null ? document.getElementById('sum_of_return').value : null;
-                        var new_university = document.getElementById('new_university') != null ? document.getElementById('new_university').value : null;
-                        var academic_year = document.getElementById('academic_year') != null ? document.getElementById('academic_year').value : null;
-                        var subject = document.getElementById('subject') != null ? document.getElementById('subject').value : null;
-                        var midterm_grade = document.getElementById('midterm_grade') != null ? document.getElementById('midterm_grade').value : null;
-                        var endterm_grade = document.getElementById('endterm_grade') != null ? document.getElementById('endterm_grade').value : null;
-                        var exam_grade = document.getElementById('exam_grade') != null ? document.getElementById('exam_grade').value : null;
-                        var teacher = document.getElementById('teacher') != null ? document.getElementById('teacher').value : null;
-                        var semester = document.getElementById('semester') != null ? document.getElementById('semester').value : null;
-                        var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
-                        var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
-                        var document_name = document.getElementById('doc_name').innerText;
-                        var draft = draft_flag;
-                        var send_data = {
-                                'reason': reason,
-                                'new_fio': new_fio,
-                                'new_speciality': new_speciality,
-                                'new_speciality_code': new_speciality_code,
-                                'sum_of_return': sum_of_return,
-                                'new_university': new_university,
-                                'academic_year': academic_year,
-                                'subject': subject,
-                                'midterm_grade': midterm_grade,
-                                'endterm_grade': endterm_grade,
-                                'exam_grade': exam_grade,
-                                'teacher': teacher,
-                                'semester': semester,
-                                'phone_number': phone_number,
-                                'attachments': attachments,
-                                'document_name': document_name,
-                                'draft': draft,
-                            };
-                        fetch(url, {
-                            method: 'POST',
-                            headers:{
-                                'Content-Type': 'application/json',
-                                "X-CSRF-Token": $('input[name="_token"]').val()
-                            },
-                            body:JSON.stringify(send_data)
-                        })
-                        .then((response) =>
-                            console.log(response)
-                        )
-                        .then((data) =>{
-                            console.log(data);
-                        })
-
-                    }
-                </script>
                 <!-- Sign Modal -->
                 <div class="modal fade" id="signModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
@@ -425,4 +361,74 @@
             // DISABLE MODAL
         }
     </script>
+    <script>
+                    var submitButton = document.getElementById('submit');
+                    submitButton.addEventListener('click', function () {
+                        SubmitData(true);
+                        window.location.href += "/start";
+                    });
+                    //all modal data
+
+
+                    function SubmitData(draft_flag) {
+                        var url = "{{ route ('create_process') }}";
+                        var reason = document.getElementById('reason') != null ? document.getElementById('reason').value : null;
+                        var new_fio = document.getElementById('new_fio') != null ? document.getElementById('new_fio').value : null;
+                        var new_speciality = document.getElementById('new_speciality') != null ? document.getElementById('new_speciality').value : null;
+                        var new_speciality_code = document.getElementById('new_speciality_code') != null ? document.getElementById('new_speciality_code').value : null;
+                        var sum_of_return = document.getElementById('sum_of_return') != null ? document.getElementById('sum_of_return').value : null;
+                        var new_university = document.getElementById('new_university') != null ? document.getElementById('new_university').value : null;
+                        var academic_year = document.getElementById('academic_year') != null ? document.getElementById('academic_year').value : null;
+                        var subject = document.getElementById('subject') != null ? document.getElementById('subject').value : null;
+                        var midterm_grade = document.getElementById('midterm_grade') != null ? document.getElementById('midterm_grade').value : null;
+                        var endterm_grade = document.getElementById('endterm_grade') != null ? document.getElementById('endterm_grade').value : null;
+                        var exam_grade = document.getElementById('exam_grade') != null ? document.getElementById('exam_grade').value : null;
+                        var teacher = document.getElementById('teacher') != null ? document.getElementById('teacher').value : null;
+                        var semester = document.getElementById('semester') != null ? document.getElementById('semester').value : null;
+                        var phone_number = document.getElementById('phone_number') != null ? document.getElementById('phone_number').value : null;
+                        var attachments = document.getElementById('attachments') != null ? document.getElementById('attachments').value : null;
+                        var document_name = document.getElementById('doc_name').innerText;
+                        var draft = draft_flag;
+                        var body = elementBody.innerText;
+                        var header = elementHeader.innerText;
+
+                        var send_data = {
+                                'reason': reason,
+                                'new_fio': new_fio,
+                                'new_speciality': new_speciality,
+                                'new_speciality_code': new_speciality_code,
+                                'sum_of_return': sum_of_return,
+                                'new_university': new_university,
+                                'academic_year': academic_year,
+                                'subject': subject,
+                                'midterm_grade': midterm_grade,
+                                'endterm_grade': endterm_grade,
+                                'exam_grade': exam_grade,
+                                'teacher': teacher,
+                                'semester': semester,
+                                'phone_number': phone_number,
+                                'attachments': attachments,
+                                'document_name': document_name,
+                                'draft': draft,
+                                'body': body,
+                                'header': header,
+                            };
+
+                        fetch(url, {
+                                    method: 'POST',
+                                    headers:{
+                                        'Content-Type': 'application/json',
+                                        "X-CSRF-Token": $('input[name="_token"]').val()
+                                    },
+                                    body:JSON.stringify(send_data)
+                                })
+                                .then((response) =>
+                                    console.log(response)
+                                )
+                                .then((data) =>{
+                                    console.log(data);
+                                })
+
+        }
+</script>
 @endsection

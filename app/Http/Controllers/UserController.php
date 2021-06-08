@@ -143,7 +143,7 @@ class UserController extends Controller
             ->get('current_stage')->take(1)[0]->current_stage;
 
         if (intval($current_stage)===1){
-            return 0;
+            return redirect('/ongoing');;
         }
         else{
             DB::table('process_stages as ps')

@@ -15,34 +15,70 @@ class DocumentRolesSeeder extends Seeder
     public function run()
     {
         $docrole = new Document_roles();
-        $docrole->document_name = 'Продление РК 1';
-        $docrole->role_id = 3;
+        $docrole->document_name = 'Заявление на допуск к учебе';
+        $docrole->role_id = 7;
         $docrole->sign_order = 1;
         $docrole->save();
 
         $docrole = new Document_roles();
-        $docrole->document_name = 'Обходной лист';
-        $docrole->role_id = 4;
+        $docrole->document_name = 'Заявление на перекурс';
+        $docrole->role_id = 7;
         $docrole->sign_order = 1;
         $docrole->save();
 
         $docrole = new Document_roles();
-        $docrole->document_name = 'Обходной лист';
-        $docrole->role_id = 3;
-        $docrole->sign_order = 2;
+        $docrole->document_name = 'Заявление на пересдачу';
+        $docrole->role_id = 8;
+        $docrole->sign_order = 1;
         $docrole->save();
 
         $docrole = new Document_roles();
-        $docrole->document_name = 'Обходной лист';
-        $docrole->role_id = 2;
-        $docrole->sign_order = 3;
+        $docrole->document_name = 'Объяснительная';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
         $docrole->save();
 
 
         $docrole = new Document_roles();
-        $docrole->document_name = 'Обходной лист';
-        $docrole->role_id = 6;
-        $docrole->sign_order = 4;
+        $docrole->document_name = 'Справка - Приложение 4';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка - Приложение 2';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка - Приложение 2-1';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка - Приложение 6';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка - Приложение 8';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка - Приложение 9';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
+        $docrole->save();
+
+        $docrole = new Document_roles();
+        $docrole->document_name = 'Справка по месту требования';
+        $docrole->role_id = 7;
+        $docrole->sign_order = 1;
         $docrole->save();
     }
 }

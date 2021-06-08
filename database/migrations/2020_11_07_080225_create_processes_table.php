@@ -45,6 +45,8 @@ class CreateProcessesTable extends Migration
             $table->dateTime('last_change_date', 0)->useCurrent();
             $table->dateTime('created_date', 0)->useCurrent();
             $table->dateTime('closed_date', 0)->nullable();
+            $table->longText('body')->nullable();
+            $table->longText('header')->nullable();
 
             # foreign keys
             $table->foreign('document_name')->references('document_name')->on('documents')->onDelete('cascade');

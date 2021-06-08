@@ -19,6 +19,7 @@ class UserTableSeeder extends Seeder
         $role_adminKafedri = Role::where('role_name', 'adminKafedri')->first();
         $role_techer_zamena = Role::where('role_name', 'teacher_zamena')->first();
         $role_dean = Role::where('role_name', 'dean')->first();
+        $role_dav = Role::where('role_name', 'dav')->first();
 
         $admin = new User();
         $admin->name = 'Админ Админов';
@@ -43,7 +44,7 @@ class UserTableSeeder extends Seeder
         $dean->faculty_name = 'ДИТ';
         $dean->save();
         $dean->roles()->attach($role_dean);
-        $dean->roles()->attach($role_admin);
+//        $dean->roles()->attach($role_admin);
 
         $zafKafedroi = new User();
         $zafKafedroi->name = 'Заведующий Кафедрой';
@@ -70,7 +71,7 @@ class UserTableSeeder extends Seeder
         $adminKafedri->roles()->attach($role_adminKafedri);
 
         $teacher = new User();
-        $teacher->name = 'Преподавателев Преподаватель';
+        $teacher->name = 'Жуанышев Ильяс';
         $teacher->email = 'teacher@example.com';
         $teacher->password = bcrypt('secret');
         $teacher->secret_password = bcrypt('secret');
@@ -83,7 +84,7 @@ class UserTableSeeder extends Seeder
         $teacher->roles()->attach($role_techer_zamena);
 
         $student = new User();
-        $student->name = 'Студентов Студент Студентович';
+        $student->name = 'Тохтаров Амерлан Аркатович';
         $student->email = 'student@example.com';
         $student->password = bcrypt('secret');
         $student->secret_password = bcrypt('secret');
@@ -103,7 +104,7 @@ class UserTableSeeder extends Seeder
         $student->roles()->attach($role_student);
 
         $teacher = new User();
-        $teacher->name = 'Преподавателев Преподаватель2';
+        $teacher->name = 'Рахимжанова Назгуль Кадыровна';
         $teacher->email = 'teachertest@example.com';
         $teacher->password = bcrypt('secret');
         $teacher->secret_password = bcrypt('secret');
@@ -113,5 +114,18 @@ class UserTableSeeder extends Seeder
         //$teacher->department = 4;
         $teacher->save();
         $teacher->roles()->attach($role_teacher);
+
+
+        $dav = new User();
+        $dav->name = 'Директор_ДАВ_ФИО';
+        $dav->email = 'dav@example.com';
+        $dav->password = bcrypt('secret');
+        $dav->secret_password = bcrypt('secret');
+        $dav->dl_id = 24000;
+        $dav->dl_mail = '24000@iitu.kz';
+        $dav->url = 'https://static.wikia.nocookie.net/disneythehunchbackofnotredame/images/1/19/Naruto_Shippuuden_176-341.jpg/revision/latest/scale-to-width-down/340?cb=20140614002251';
+        //$dav->department = 4;
+        $dav->save();
+        $dav->roles()->attach($role_dav);
     }
 }
